@@ -33,7 +33,7 @@ bot.dialog('/', [
         builder.Prompts.choice(session, "command?", ["north", "look"]);
     },
     function (session, results) {
-        switch (results.repsonse.entity) {
+        switch (results.response.entity) {
             case "north":
                 session.replaceDialog("/room1");
                 break;
@@ -49,7 +49,7 @@ bot.dialog('/room1', [
         builder.Prompts.choice(session, "command?", ["open gate", "south", "west", "look"]);
     },
     function (session, results) {
-        switch (results.repsonse.entity) {
+        switch (results.response.entity) {
             case "open gate":
                 session.replaceDialog("/room2");
                 break;
