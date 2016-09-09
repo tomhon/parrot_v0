@@ -27,7 +27,7 @@ server.post('/api/messages', connector.listen());
 //     session.send("Hello Parrot World");
 // });
 
-bot.dialog('/room1', [
+bot.dialog('/', [
     function (session) {
         session.send("You're in a large clearing. There's a path to the north.");
         builder.Prompts.choice(session, "command?", ["north", "look"]);
@@ -43,7 +43,7 @@ bot.dialog('/room1', [
         }
     }
 ]);
-bot.dialog('/', [
+bot.dialog('/room1', [
     function (session) {
         session.send("There's a small house here surrounded by a white fence with a gate. There's a path to the south and west.");
         builder.Prompts.choice(session, "command?", ["open gate", "south", "west", "look"]);
