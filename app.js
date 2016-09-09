@@ -24,9 +24,9 @@ server.post('/api/messages', connector.listen());
 //=========================================================
 
 bot.dialog('/', function (session) {
-    session.send("Hello World");
+    session.send("Hello Parrot World");
 });
 
 server.get('/', function (req, res) { 
-    res.send('GTM Bot Running'); 
+    res.send('Parrot Bot is online'); 
     }); 
