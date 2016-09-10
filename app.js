@@ -29,13 +29,16 @@ server.post('/api/messages', connector.listen());
 
 bot.dialog('/', [
     function (session) {
-        session.send("You're in a large clearing. There's a path to the north.");
-        builder.Prompts.choice(session, "command?", ["north", "look"]);
+        session.send("Welcome to Parrot. Which game are you watching?");
+        builder.Prompts.choice(session, "command?", ["Game Details", "Kick Off"]);
     },
     function (session, results) {
         switch (results.response.entity) {
-            case "north":
-                session.replaceDialog("/room1");
+            case "Game Details":
+                session.replaceDialog("/gameDetails");
+                break;
+            case "Kick Off":
+                session.replaceDialog("/kickedOff");
                 break;
             default:
                 session.replaceDialog("/");
