@@ -29,17 +29,17 @@ server.post('/api/messages', connector.listen());
 
 bot.dialog('/', [
     function (session) {
-        session.send("Welcome to Parrot. Which game are you watching?");
-        builder.Prompts.choice(session, "command?", ["Game Details", "Kick Off"]);
+        session.send("Welcome to Parrot! Which game are you watching? Let me know when it kicks off.");
+        builder.Prompts.choice(session, "command?", ["GameDetails", "KickOff"]);
     },
     function (session, results) {
         switch (results.response.entity) {
-            case "Game Details":
+            case "GameDetails":
                 session.replaceDialog("/gameDetails");
                 break;
-            case "Kick Off":
-                session.replaceDialog("/kickedOff");
-                break;
+            // case "Kick Off":
+            //     session.replaceDialog("/kickedOff");
+            //     break;
             default:
                 session.replaceDialog("/");
                 break;
