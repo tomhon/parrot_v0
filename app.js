@@ -30,40 +30,43 @@ server.post('/api/messages', connector.listen());
 bot.dialog('/', [
     function (session) {
         session.send("Welcome to Parrot! Which game are you watching? Let me know when it kicks off.");
-        builder.Prompts.choice(session, "command?", ["GameDetails", "KickOff"]);
+        builder.Prompts.choice(session, "command?", ["Game Details", "Kick Off"]);
     },
     function (session, results) {
         switch (results.response.entity) {
-            case "GameDetails":
+            case "Game Details":
                 session.replaceDialog("/gameDetails");
                 break;
-            // case "Kick Off":
-            //     session.replaceDialog("/kickedOff");
-            //     break;
+            case "Kick Off":
+                session.replaceDialog("/kickedOff");
+                break;
             default:
                 session.replaceDialog("/");
                 break;
         }
     }
 ]);
-bot.dialog('/room1', [
+bot.dialog('/gameDetails', [
     function (session) {
-        session.send("There's a small house here surrounded by a white fence with a gate. There's a path to the south and west.");
-        builder.Prompts.choice(session, "command?", ["open gate", "south", "west", "look"]);
+        session.send("Before the game gets underway, it would be great if you can give me some details of the game.");
+        builder.Prompts.choice(session, "Who's playing? Which field? What's the schedule? What's the weather?", ["Teams", "Location", "Schedule", "Weather"]);
     },
     function (session, results) {
         switch (results.response.entity) {
-            case "open gate":
-                session.replaceDialog("/room2");
+            case "Teams":
+                session.replaceDialog("/teams");
                 break;
-            case "south":
-                session.replaceDialog("/");
+            case "Location":
+                session.replaceDialog("/location");
                 break;
-            case "west":
-                session.replaceDialog("/room3");
+            case "Schedule":
+                session.replaceDialog("/schedule");
+                break;
+            case "Weather":
+                session.replaceDialog("/weather");
                 break;
             default:
-                session.replaceDialog("/room1");
+                session.replaceDialog("/");
                 break;
         }
     }
