@@ -46,6 +46,7 @@ bot.dialog('/', [
         }
     }
 ]);
+
 bot.dialog('/gameDetails', [
     function (session) {
         session.send("Before the game gets underway, it would be great if you can give me some details of the game.");
@@ -66,7 +67,7 @@ bot.dialog('/gameDetails', [
                 session.replaceDialog("/weather");
                 break;
             default:
-                session.replaceDialog("/");
+                session.replaceDialog("/gameDetails");
                 break;
         }
     }
