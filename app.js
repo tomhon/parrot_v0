@@ -81,6 +81,7 @@ bot.dialog('/cards', [
                 new builder.HeroCard(session)
                     .title("Hero Card")
                     .subtitle("Space Needle")
+                    .buttons("Press Me")
                     .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
                     .images([
                         builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
