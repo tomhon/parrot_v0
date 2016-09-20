@@ -219,7 +219,7 @@ bot.dialog('/matchDetails', [
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress|goal|whistle|shot|matchDetails");
+        builder.Prompts.choice(session, msg, "awayTeam|homeTeam|location|schedule|weather|matchProgress|goal|whistle|shot|matchDetails");
 
     },
     function (session, results) {
