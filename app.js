@@ -340,15 +340,17 @@ bot.dialog('/carousel', [
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                 new builder.HeroCard(session)
-                    .title("Space Needle")
+                    .title("Club Home <score> : <score> Club Away")
                     // .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
                     // .images([
                     //     builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
                     //         .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
                     // ])
                     .buttons([
-                        builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/Space_Needle", "Wikipedia"),
-                        builder.CardAction.imBack(session, "select:100", "Select")
+                        builder.CardAction.imBack(session, "select:100", "Overview"),
+                        builder.CardAction.imBack(session, "select:100", "Live Ticker"),
+                        builder.CardAction.imBack(session, "select:100", "Lineup"),
+                        builder.CardAction.imBack(session, "select:100", "Stats")
                     ]),
                 new builder.HeroCard(session)
                     .title("Pikes Place Market")
