@@ -123,7 +123,9 @@ bot.dialog('/menu', [
                     // ])
                     .buttons([
                         builder.CardAction.imBack(session, "select:100", "Login"),
-                        builder.CardAction.dialogAction(session, "matchDetails","Seattle", "Match Details")
+                        builder.CardAction.imBack(session, "select:100", "Match Details")
+                        // ,
+                        // builder.CardAction.dialogAction(session, "matchDetails","Seattle", "Match Details")
                     ]),
      
             ]);
