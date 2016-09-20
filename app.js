@@ -206,7 +206,6 @@ bot.dialog('/matchDetails', [
                         builder.CardAction.imBack(session, "goal", "Goal"),
                         builder.CardAction.imBack(session, "whistle", "Whistle"),
                         builder.CardAction.imBack(session, "shot", "Shot"),
-                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
                     .title("<Home> <score> : <score> <Away>")
@@ -263,7 +262,6 @@ bot.dialog('/goal', [
                     .title("What's happening?")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "goal", "Goal"),
                         builder.CardAction.imBack(session, "whistle", "Whistle"),
                         builder.CardAction.imBack(session, "shot", "Shot"),
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
@@ -279,7 +277,7 @@ bot.dialog('/goal', [
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress");
+        builder.Prompts.choice(session, msg, "homeTeam|awayTeam|location|schedule|weather|matchProgress|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
 
     },
     function (session, results) {
