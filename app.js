@@ -58,7 +58,7 @@ bot.dialog('/gameDetails', [
                 session.replaceDialog("/actions");
                 break;
             case "Location":
-                session.replaceDialog("/location");
+                session.replaceDialog("/signin");
                 break;
             case "Schedule":
                 session.replaceDialog("/schedule");
@@ -136,3 +136,28 @@ bot.dialog('/weather', [
 ]);
 
 bot.beginDialogAction('weather', '/weather');   // <-- no 'matches' option means this can only be triggered by a button.
+
+
+bot.dialog('/signin', [ 
+
+    function (session) { 
+
+        // Send a signin 
+
+        var msg = new builder.Message(session) 
+
+            .attachments([ 
+
+                new builder.SigninCard(session) 
+
+                    .text("You must first signin to your account.") 
+
+                    .button("signin", "http://example.com/") 
+
+            ]); 
+
+        session.endDialog(msg); 
+
+    } 
+
+]); 
