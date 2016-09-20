@@ -132,6 +132,8 @@ bot.dialog('/menu', [
             ]);
         // builder.Prompts.choice(session, msg, "select:100|select:101|select:102");
         session.send(msg);
+        session.endDialog("Press these buttons anytime");
+
     },
     function (session, results) {
         if (results.response && results.response.entity != '(quit)') {
