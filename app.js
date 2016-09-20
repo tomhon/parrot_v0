@@ -72,8 +72,8 @@ bot.dialog('/menu', [
                             .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
                     ])
                     .buttons([
-                        builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/Space_Needle", "Wikipedia"),
-                        builder.CardAction.imBack(session, "select:100", "Select")
+                        builder.CardAction.imBack(session, "select:100", "Latest Score?"),
+                        builder.CardAction.imBack(session, "select:100", "What's happened?")
                     ]),
                 new builder.HeroCard(session)
                     .title("Did you see that?")
@@ -83,7 +83,6 @@ bot.dialog('/menu', [
                             .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/en/thumb/2/2a/PikePlaceMarket.jpg/800px-PikePlaceMarket.jpg")),
                     ])
                     .buttons([
-                        builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/Pike_Place_Market", "Wikipedia"),
                         builder.CardAction.imBack(session, "select:101", "Whistle"),
                         builder.CardAction.imBack(session, "select:101", "Goal"),
                         builder.CardAction.imBack(session, "select:101", "Shot")
@@ -96,7 +95,6 @@ bot.dialog('/menu', [
                             .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Night_Exterior_EMP.jpg/800px-Night_Exterior_EMP.jpg"))
                     ])
                     .buttons([
-                        builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/EMP_Museum", "Wikipedia"),
                         builder.CardAction.imBack(session, "select:101", "Teams"),
                         builder.CardAction.imBack(session, "select:101", "Location"),
                         builder.CardAction.imBack(session, "select:101", "Schedule"),
