@@ -121,6 +121,11 @@ bot.dialog('/help', [
     }
 ]);
 
+//=========================================================
+// Top Level Dialogs
+//=========================================================
+
+
 bot.dialog('/matchProgress', [
     function (session) {
         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
@@ -172,8 +177,6 @@ bot.dialog('/matchProgress', [
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
-
-
 bot.dialog('/matchDetails', [
     function (session) {
         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
@@ -192,7 +195,7 @@ bot.dialog('/matchDetails', [
                     .buttons([
                         builder.CardAction.imBack(session, "teams", "Teams"),
                         builder.CardAction.imBack(session, "location", "Location"),
-                        builder.CardAction.imBack(session, "wchedule", "Schedule"),
+                        builder.CardAction.imBack(session, "schedule", "Schedule"),
                         builder.CardAction.imBack(session, "weather", "Weather"),
                         builder.CardAction.imBack(session, "matchProgress", "Back")
                     ]),
@@ -233,68 +236,6 @@ bot.dialog('/matchDetails', [
         session.replaceDialog('/menu');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
-
-
-bot.dialog('/whistle', [
-    function (session) {
-        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
-        // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
-        // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
-                // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
-        
-        // Ask the user to select an item from a carousel.
-        var msg = new builder.Message(session)
-            .textFormat(builder.TextFormat.xml)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                 new builder.HeroCard(session)
-                    .title("Tell me about the match")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "teams", "Teams"),
-                        builder.CardAction.imBack(session, "location", "Location"),
-                        builder.CardAction.imBack(session, "wchedule", "Schedule"),
-                        builder.CardAction.imBack(session, "weather", "Weather"),
-                        builder.CardAction.imBack(session, "matchProgress", "Back")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("What's happening?")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "goal", "Goal"),
-                        builder.CardAction.imBack(session, "whistle", "Whistle"),
-                        builder.CardAction.imBack(session, "shot", "Shot"),
-                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
-                    ]),
-               new builder.HeroCard(session)
-                    .title("<Home> <score> : <score> <Away>")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Overview"),
-                        builder.CardAction.imBack(session, "select:100", "Live Ticker"),
-                        builder.CardAction.imBack(session, "select:100", "Lineup"),
-                        builder.CardAction.imBack(session, "select:100", "Stats")
-                    ])
-     
-            ]);
-        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress");
-
-    },
-    function (session, results) {
-        if (results.response && results.response.entity != '(quit)') {
-            // Launch demo dialog
-            session.beginDialog('/' + results.response.entity);
-        } else {
-            // Exit the menu
-            session.endDialog();
-        }
-    },
-    function (session, results) {
-        // The menu runs a loop until the user chooses to (quit).
-        session.replaceDialog('/menu');
-    }
-]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
-
 
 bot.dialog('/goal', [
     function (session) {
@@ -309,12 +250,12 @@ bot.dialog('/goal', [
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                  new builder.HeroCard(session)
-                    .title("Tell me about the match")
+                    .title("Tell me about the goal")
 
                     .buttons([
                         builder.CardAction.imBack(session, "teams", "Teams"),
                         builder.CardAction.imBack(session, "location", "Location"),
-                        builder.CardAction.imBack(session, "wchedule", "Schedule"),
+                        builder.CardAction.imBack(session, "schedule", "Schedule"),
                         builder.CardAction.imBack(session, "weather", "Weather"),
                         builder.CardAction.imBack(session, "matchProgress", "Back")
                     ]),
@@ -356,6 +297,65 @@ bot.dialog('/goal', [
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
+bot.dialog('/whistle', [
+    function (session) {
+        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
+        // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
+        // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
+                // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
+        
+        // Ask the user to select an item from a carousel.
+        var msg = new builder.Message(session)
+            .textFormat(builder.TextFormat.xml)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                 new builder.HeroCard(session)
+                    .title("Why was the whistle blown?")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "teams", "Teams"),
+                        builder.CardAction.imBack(session, "location", "Location"),
+                        builder.CardAction.imBack(session, "schedule", "Schedule"),
+                        builder.CardAction.imBack(session, "weather", "Weather"),
+                        builder.CardAction.imBack(session, "matchProgress", "Back")
+                    ]),
+                new builder.HeroCard(session)
+                    .title("What's happening?")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "goal", "Goal"),
+                        builder.CardAction.imBack(session, "whistle", "Whistle"),
+                        builder.CardAction.imBack(session, "shot", "Shot"),
+                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
+                    ]),
+               new builder.HeroCard(session)
+                    .title("<Home> <score> : <score> <Away>")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "select:100", "Overview"),
+                        builder.CardAction.imBack(session, "select:100", "Live Ticker"),
+                        builder.CardAction.imBack(session, "select:100", "Lineup"),
+                        builder.CardAction.imBack(session, "select:100", "Stats")
+                    ])
+     
+            ]);
+        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress");
+
+    },
+    function (session, results) {
+        if (results.response && results.response.entity != '(quit)') {
+            // Launch demo dialog
+            session.beginDialog('/' + results.response.entity);
+        } else {
+            // Exit the menu
+            session.endDialog();
+        }
+    },
+    function (session, results) {
+        // The menu runs a loop until the user chooses to (quit).
+        session.replaceDialog('/menu');
+    }
+]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
 bot.dialog('/shot', [
     function (session) {
@@ -370,12 +370,12 @@ bot.dialog('/shot', [
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                  new builder.HeroCard(session)
-                    .title("Tell me about the match")
+                    .title("Tell me about the shot")
 
                     .buttons([
                         builder.CardAction.imBack(session, "teams", "Teams"),
                         builder.CardAction.imBack(session, "location", "Location"),
-                        builder.CardAction.imBack(session, "wchedule", "Schedule"),
+                        builder.CardAction.imBack(session, "schedule", "Schedule"),
                         builder.CardAction.imBack(session, "weather", "Weather"),
                         builder.CardAction.imBack(session, "matchProgress", "Back")
                     ]),
@@ -416,6 +416,9 @@ bot.dialog('/shot', [
         session.replaceDialog('/menu');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+
+
+
 
 // bot.dialog('/actions', [
 //     function (session) { 
