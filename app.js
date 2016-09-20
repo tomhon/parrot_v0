@@ -66,6 +66,9 @@ bot.dialog('/', [
     }
 ]);
 
+//=========================================================
+// Main Menu Dialog
+//=========================================================
 
 
 bot.dialog('/menu', [
@@ -159,7 +162,7 @@ bot.dialog('/matchProgress', [
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "login|matchDetails");
+        builder.Prompts.choice(session, msg, "goal|whistle|shot|matchDetails");
 
     },
     function (session, results) {
