@@ -86,7 +86,7 @@ bot.dialog('/help', [
 bot.dialog('/Match Details', [
     function (session) {
         session.send("Before the game gets underway, it would be great if you can give me some details of the game.");
-        builder.Prompts.choice(session, "Who's playing? Which field? What's the schedule? What's the weather?", ["Teams", "Location", "Schedule", "Weather"]);
+        builder.Prompts.choice(session, "Who's playing? Which field? What's the schedule? What's the weather? Actions", ["Teams", "Location", "Schedule", "Weather", "Actions"]);
     },
     function (session, results) {
         if (results.response && results.response.entity != '(quit)') {
@@ -166,7 +166,8 @@ bot.dialog('/actions', [
                         builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
                     ])
                     .buttons([
-                        builder.CardAction.dialogAction(session, "weather", "Seattle, WA", "Current Weather")
+                        builder.CardAction.dialogAction(session, "SEA weather", "Seattle, WA", "Current Weather"),
+                        builder.CardAction.dialogAction(session, "PDC weather", "Portland, OR", "Current Weather")
                     ])
             ]);
         session.send(msg);
