@@ -105,27 +105,41 @@ bot.dialog('/menu', [
         builder.Prompts.choice(session, msg, "select:100|select:101|select:102");
     },
     function (session, results) {
-        var action, item;
-        var kvPair = results.response.entity.split(':');
-        switch (kvPair[0]) {
-            case 'select':
-                action = 'selected';
-                break;
+        if (results.response && results.response.entity != '(quit)') {
+            // Launch demo dialog
+            session.beginDialog('/' + results.response.entity);
+        } else {
+            // Exit the menu
+            session.endDialog();
         }
-        switch (kvPair[1]) {
-            case '100':
-                item = "the <b>Space Needle</b>";
-                break;
-            case '101':
-                item = "<b>Pikes Place Market</b>";
-                break;
-            case '102':
-                item = "the <b>EMP Museum</b>";
-                break;
-        }
-        session.endDialog('You %s "%s"', action, item);
-    }    
-]);
+    },
+    function (session, results) {
+        // The menu runs a loop until the user chooses to (quit).
+        session.replaceDialog('/menu');
+    }
+]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+
+//         var action, item;
+//         var kvPair = results.response.entity.split(':');
+//         switch (kvPair[0]) {
+//             case 'select':
+//                 action = 'selected';
+//                 break;
+//         }
+//         switch (kvPair[1]) {
+//             case '100':
+//                 item = "the <b>Space Needle</b>";
+//                 break;
+//             case '101':
+//                 item = "<b>Pikes Place Market</b>";
+//                 break;
+//             case '102':
+//                 item = "the <b>EMP Museum</b>";
+//                 break;
+//         }
+//         session.endDialog('You %s "%s"', action, item);
+//     }    
+// ]);
 
 
 
