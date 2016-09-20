@@ -60,48 +60,86 @@ bot.dialog('/menu', [
         session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
         
         // Ask the user to select an item from a carousel.
-        var msg = new builder.Message(session)
+                var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.xml)
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                 new builder.HeroCard(session)
-                    .title("What's happened so far?")
-                    .text("I can tell you the latst score or give you a full run down of the highlights so far.")
+                    .title("Space Needle")
+                    .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
                     .images([
                         builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
                             .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
                     ])
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Latest Score?"),
-                        builder.CardAction.imBack(session, "select:100", "What's happened?")
+                        builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/Space_Needle", "Wikipedia"),
+                        builder.CardAction.imBack(session, "select:100", "Select")
                     ]),
                 new builder.HeroCard(session)
-                    .title("Did you see that?")
-                    .text("Did you hear a whistle? Did someone score? Did someone take a shot? Did the ref blow the whistle?")
+                    .title("Pikes Place Market")
+                    .text("<b>Pike Place Market</b> is a public market overlooking the Elliott Bay waterfront in Seattle, Washington, United States.")
                     .images([
                         builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/en/thumb/2/2a/PikePlaceMarket.jpg/320px-PikePlaceMarket.jpg")
                             .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/en/thumb/2/2a/PikePlaceMarket.jpg/800px-PikePlaceMarket.jpg")),
                     ])
                     .buttons([
-                        builder.CardAction.imBack(session, "select:101", "Whistle"),
-                        builder.CardAction.imBack(session, "select:101", "Goal"),
-                        builder.CardAction.imBack(session, "select:101", "Shot")
+                        builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/Pike_Place_Market", "Wikipedia"),
+                        builder.CardAction.imBack(session, "select:101", "Select")
                     ]),
                 new builder.HeroCard(session)
-                    .title("Match Details")
-                    .text("Let me know details of the match. Who's Playing? What's the location? What time does it start? What's the weather?")
+                    .title("EMP Museum")
+                    .text("<b>EMP Musem</b> is a leading-edge nonprofit museum, dedicated to the ideas and risk-taking that fuel contemporary popular culture.")
                     .images([
                         builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Night_Exterior_EMP.jpg/320px-Night_Exterior_EMP.jpg")
                             .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Night_Exterior_EMP.jpg/800px-Night_Exterior_EMP.jpg"))
                     ])
                     .buttons([
-                        builder.CardAction.imBack(session, "select:101", "Teams"),
-                        builder.CardAction.imBack(session, "select:101", "Location"),
-                        builder.CardAction.imBack(session, "select:101", "Schedule"),
-                        builder.CardAction.imBack(session, "select:101", "Weather")
-
+                        builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/EMP_Museum", "Wikipedia"),
+                        builder.CardAction.imBack(session, "select:102", "Select")
                     ])
             ]);
+        // var msg = new builder.Message(session)
+        //     .textFormat(builder.TextFormat.xml)
+        //     .attachmentLayout(builder.AttachmentLayout.carousel)
+        //     .attachments([
+        //         new builder.HeroCard(session)
+        //             .title("What's happened so far?")
+        //             .text("I can tell you the latst score or give you a full run down of the highlights so far.")
+        //             .images([
+        //                 builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
+        //                     .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
+        //             ])
+        //             .buttons([
+        //                 builder.CardAction.imBack(session, "select:100", "Latest Score?"),
+        //                 builder.CardAction.imBack(session, "select:100", "What's happened?")
+        //             ]),
+        //         new builder.HeroCard(session)
+        //             .title("Did you see that?")
+        //             .text("Did you hear a whistle? Did someone score? Did someone take a shot? Did the ref blow the whistle?")
+        //             .images([
+        //                 builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/en/thumb/2/2a/PikePlaceMarket.jpg/320px-PikePlaceMarket.jpg")
+        //                     .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/en/thumb/2/2a/PikePlaceMarket.jpg/800px-PikePlaceMarket.jpg")),
+        //             ])
+        //             .buttons([
+        //                 builder.CardAction.imBack(session, "select:101", "Whistle"),
+        //                 builder.CardAction.imBack(session, "select:101", "Goal"),
+        //                 builder.CardAction.imBack(session, "select:101", "Shot")
+        //             ]),
+        //         new builder.HeroCard(session)
+        //             .title("Match Details")
+        //             .text("Let me know details of the match. Who's Playing? What's the location? What time does it start? What's the weather?")
+        //             .images([
+        //                 builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Night_Exterior_EMP.jpg/320px-Night_Exterior_EMP.jpg")
+        //                     .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/Night_Exterior_EMP.jpg/800px-Night_Exterior_EMP.jpg"))
+        //             ])
+        //             .buttons([
+        //                 builder.CardAction.imBack(session, "select:102", "Teams"),
+        //                 builder.CardAction.imBack(session, "select:102", "Location"),
+        //                 builder.CardAction.imBack(session, "select:102", "Schedule"),
+        //                 builder.CardAction.imBack(session, "select:102", "Weather")
+
+        //             ])
+        //     ]);
         builder.Prompts.choice(session, msg, "select:100|select:101|select:102");
     },
     function (session, results) {
