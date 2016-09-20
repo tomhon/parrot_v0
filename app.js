@@ -152,7 +152,7 @@ bot.dialog('/help', [
 ]);
 
 
-bot.dialog('/Match Details', [
+bot.dialog('/matchDetails', [
     function (session) {
         session.send("Before the game gets underway, it would be great if you can give me some details of the game.");
         builder.Prompts.choice(session, "Who's playing? Which field? What's the schedule? What's the weather? Actions", ["Teams", "Location", "carousel", "Weather", "Actions"]);
