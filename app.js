@@ -35,14 +35,14 @@ bot.dialog('/', [
     function (session) {
         // Send a greeting and show help.
         var card = new builder.HeroCard(session)
-            .title("Microsoft Bot Framework")
-            .text("Your bots - wherever your users are talking.")
+            .title("Welcome to Parrot")
+            .text("Your commentator - wherever soccer is played.")
             .images([
                  builder.CardImage.create(session, "http://docs.botframework.com/images/demo_bot_image.png")
             ]);
         var msg = new builder.Message(session).attachments([card]);
         session.send(msg);
-        session.send("Hi... I'm the Microsoft Bot Framework demo bot for Skype. I can show you everything you can use our Bot Builder SDK to do on Skype.");
+        session.send("Hi... I'm Parrot. I can help you track your soccer game.");
         session.beginDialog('/help');
     },
     function (session, results) {
@@ -57,7 +57,8 @@ bot.dialog('/', [
 
 bot.dialog('/menu', [
     function (session) {
-        builder.Prompts.choice(session, "What demo would you like to run?", "prompts|picture|cards|list|carousel|receipt|actions|(quit)");
+        session.send("Before the game gets underway, it would be great if you can give me some details of the game.");
+        builder.Prompts.choice(session, "Who's playing? Which field? What's the schedule? What's the weather?", ["Teams", "Location", "Schedule", "Weather"]);
     },
     function (session, results) {
         if (results.response && results.response.entity != '(quit)') {
