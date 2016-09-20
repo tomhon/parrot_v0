@@ -83,25 +83,25 @@ bot.dialog('/help', [
 
 
 
-bot.dialog('/', [
-    function (session) {
-        session.send("Welcome to Parrot! Which game are you watching? Let me know when it kicks off.");
-        builder.Prompts.choice(session, "command?", ["Game Details", "Kick Off"]);
-    },
-    function (session, results) {
-        switch (results.response.entity) {
-            case "Game Details":
-                session.replaceDialog("/gameDetails");
-                break;
-            case "Kick Off":
-                session.replaceDialog("/kickedOff");
-                break;
-            default:
-                session.replaceDialog("/");
-                break;
-        }
-    }
-]);
+// bot.dialog('/', [
+//     function (session) {
+//         session.send("Welcome to Parrot! Which game are you watching? Let me know when it kicks off.");
+//         builder.Prompts.choice(session, "command?", ["Game Details", "Kick Off"]);
+//     },
+//     function (session, results) {
+//         switch (results.response.entity) {
+//             case "Game Details":
+//                 session.replaceDialog("/gameDetails");
+//                 break;
+//             case "Kick Off":
+//                 session.replaceDialog("/kickedOff");
+//                 break;
+//             default:
+//                 session.replaceDialog("/");
+//                 break;
+//         }
+//     }
+// ]);
 
 bot.dialog('/gameDetails', [
     function (session) {
