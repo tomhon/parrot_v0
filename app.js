@@ -151,14 +151,14 @@ bot.dialog('/matchProgress', [
                     .title("<Home> <score> : <score> <Away>")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Overview"),
-                        builder.CardAction.imBack(session, "select:100", "Live Ticker"),
-                        builder.CardAction.imBack(session, "select:100", "Lineup"),
-                        builder.CardAction.imBack(session, "select:100", "Stats")
+                        builder.CardAction.imBack(session, "overview", "Overview"),
+                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
+                        builder.CardAction.imBack(session, "lineup", "Lineup"),
+                        builder.CardAction.imBack(session, "stats", "Stats")
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "goal|whistle|shot|matchDetails");
+        builder.Prompts.choice(session, msg, "goal|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
 
     },
     function (session, results) {
@@ -197,7 +197,7 @@ bot.dialog('/matchDetails', [
                         builder.CardAction.imBack(session, "location", "Location"),
                         builder.CardAction.imBack(session, "schedule", "Schedule"),
                         builder.CardAction.imBack(session, "weather", "Weather"),
-                        builder.CardAction.imBack(session, "matchProgress", "Back")
+                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
                     .title("What's happening?")
@@ -211,14 +211,14 @@ bot.dialog('/matchDetails', [
                     .title("<Home> <score> : <score> <Away>")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Overview"),
-                        builder.CardAction.imBack(session, "select:100", "Live Ticker"),
-                        builder.CardAction.imBack(session, "select:100", "Lineup"),
-                        builder.CardAction.imBack(session, "select:100", "Stats")
+                        builder.CardAction.imBack(session, "overview", "Overview"),
+                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
+                        builder.CardAction.imBack(session, "lineup", "Lineup"),
+                        builder.CardAction.imBack(session, "stats", "Stats")
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "awayTeam|homeTeam|location|schedule|weather|matchProgress|goal|whistle|shot|matchDetails");
+        builder.Prompts.choice(session, msg, "homeTeam|awayTeam|location|schedule|weather|matchProgress|goal|whistle|shot|overview|liveTicker|lineup|stats");
 
     },
     function (session, results) {
@@ -256,7 +256,7 @@ bot.dialog('/goal', [
                         builder.CardAction.imBack(session, "homeAssist", "Home Team Assist"),
                         builder.CardAction.imBack(session, "awayScorer", "Away Team Scorer"),
                         builder.CardAction.imBack(session, "awayAssist", "Away Team Assist"),
-                        builder.CardAction.imBack(session, "matchProgress", "Back")
+                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
                     .title("What's happening?")
@@ -270,10 +270,10 @@ bot.dialog('/goal', [
                     .title("<Home> <score> : <score> <Away>")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Overview"),
-                        builder.CardAction.imBack(session, "select:100", "Live Ticker"),
-                        builder.CardAction.imBack(session, "select:100", "Lineup"),
-                        builder.CardAction.imBack(session, "select:100", "Stats")
+                        builder.CardAction.imBack(session, "overview", "Overview"),
+                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
+                        builder.CardAction.imBack(session, "lineup", "Lineup"),
+                        builder.CardAction.imBack(session, "stats", "Stats")
                     ])
      
             ]);
@@ -315,14 +315,13 @@ bot.dialog('/whistle', [
                         builder.CardAction.imBack(session, "location", "Location"),
                         builder.CardAction.imBack(session, "schedule", "Schedule"),
                         builder.CardAction.imBack(session, "weather", "Weather"),
-                        builder.CardAction.imBack(session, "matchProgress", "Back")
+                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
                     .title("What's happening?")
 
                     .buttons([
                         builder.CardAction.imBack(session, "goal", "Goal"),
-                        builder.CardAction.imBack(session, "whistle", "Whistle"),
                         builder.CardAction.imBack(session, "shot", "Shot"),
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
@@ -330,14 +329,14 @@ bot.dialog('/whistle', [
                     .title("<Home> <score> : <score> <Away>")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Overview"),
-                        builder.CardAction.imBack(session, "select:100", "Live Ticker"),
-                        builder.CardAction.imBack(session, "select:100", "Lineup"),
-                        builder.CardAction.imBack(session, "select:100", "Stats")
+                        builder.CardAction.imBack(session, "overview", "Overview"),
+                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
+                        builder.CardAction.imBack(session, "lineup", "Lineup"),
+                        builder.CardAction.imBack(session, "stats", "Stats")
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress");
+        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress|goal|shot|matchDetails|overview|liveTicker|lineup|stats");
 
     },
     function (session, results) {
@@ -375,7 +374,7 @@ bot.dialog('/shot', [
                         builder.CardAction.imBack(session, "location", "Location"),
                         builder.CardAction.imBack(session, "schedule", "Schedule"),
                         builder.CardAction.imBack(session, "weather", "Weather"),
-                        builder.CardAction.imBack(session, "matchProgress", "Back")
+                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
                     .title("What's happening?")
@@ -383,21 +382,20 @@ bot.dialog('/shot', [
                     .buttons([
                         builder.CardAction.imBack(session, "goal", "Goal"),
                         builder.CardAction.imBack(session, "whistle", "Whistle"),
-                        builder.CardAction.imBack(session, "shot", "Shot"),
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
                     .title("<Home> <score> : <score> <Away>")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Overview"),
-                        builder.CardAction.imBack(session, "select:100", "Live Ticker"),
-                        builder.CardAction.imBack(session, "select:100", "Lineup"),
-                        builder.CardAction.imBack(session, "select:100", "Stats")
+                        builder.CardAction.imBack(session, "overview", "Overview"),
+                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
+                        builder.CardAction.imBack(session, "lineup", "Lineup"),
+                        builder.CardAction.imBack(session, "stats", "Stats")
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress");
+        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress|goal|whistle|matchDetails|overview|liveTicker|lineup|stats");
 
     },
     function (session, results) {
@@ -440,13 +438,13 @@ bot.dialog('/homeTeam', [
                         builder.CardAction.imBack(session, "homeName", "Name / Club"),
                         builder.CardAction.imBack(session, "homeGender", "Gender"),
                         builder.CardAction.imBack(session, "homeAge", "Age"),
-                        builder.CardAction.imBack(session, "matchProgress", "Back")
+                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
                     .title("Tell me about the match")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "homeTeam", "Home Team"),
+                        // builder.CardAction.imBack(session, "homeTeam", "Home Team"),
                         builder.CardAction.imBack(session, "awayTeam", "Away Team"),
                         builder.CardAction.imBack(session, "location", "Location"),
                         builder.CardAction.imBack(session, "schedule", "Schedule"),
@@ -465,14 +463,14 @@ bot.dialog('/homeTeam', [
                     .title("<Home> <score> : <score> <Away>")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Overview"),
-                        builder.CardAction.imBack(session, "select:100", "Live Ticker"),
-                        builder.CardAction.imBack(session, "select:100", "Lineup"),
-                        builder.CardAction.imBack(session, "select:100", "Stats")
+                        builder.CardAction.imBack(session, "overview", "Overview"),
+                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
+                        builder.CardAction.imBack(session, "lineup", "Lineup"),
+                        builder.CardAction.imBack(session, "stats", "Stats")
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress");
+        builder.Prompts.choice(session, msg, "awayTeam|location|schedule|weather|goal|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
 
     },
     function (session, results) {
@@ -510,7 +508,7 @@ bot.dialog('/awayTeam', [
                         builder.CardAction.imBack(session, "awayName", "Name / Club"),
                         builder.CardAction.imBack(session, "awayGender", "Gender"),
                         builder.CardAction.imBack(session, "awayAge", "Age"),
-                        builder.CardAction.imBack(session, "matchProgress", "Back")
+                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
                     .title("Tell me about the match")
@@ -581,7 +579,7 @@ bot.dialog('/location', [
                         builder.CardAction.imBack(session, "city", "City"),
                         builder.CardAction.imBack(session, "state", "State"),
                         builder.CardAction.imBack(session, "country", "Country"),
-                        builder.CardAction.imBack(session, "matchProgress", "Back")
+                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
                     .title("Tell me about the match")
@@ -649,7 +647,7 @@ bot.dialog('/schedule', [
                     .buttons([
                         builder.CardAction.imBack(session, "startTime", "Kick Off Time"),
                         builder.CardAction.imBack(session, "timeZone", "Time Zone"),
-                        builder.CardAction.imBack(session, "matchProgress", "Back")
+                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
                     .title("Tell me about the match")
@@ -719,7 +717,7 @@ bot.dialog('/weather', [
                         builder.CardAction.imBack(session, "visibility", "Visibility"),
                         builder.CardAction.imBack(session, "wind", "Wind"),
                         builder.CardAction.imBack(session, "temperature", "Temperature"),
-                        builder.CardAction.imBack(session, "matchProgress", "Back")
+                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
                     .title("Tell me about the match")
@@ -794,17 +792,17 @@ bot.dialog('/homeScorer', [
                         builder.CardAction.imBack(session, "homeAssist", "Home Team Assist"),
                         builder.CardAction.imBack(session, "awayScorer", "Away Team Scorer"),
                         builder.CardAction.imBack(session, "awayAssist", "Away Team Assist"),
-                        builder.CardAction.imBack(session, "matchProgress", "Back")
+                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                  new builder.HeroCard(session)
                     .title("Tell me about the goal")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "homeScorer", "Home Team Scorer"),
+                        // builder.CardAction.imBack(session, "homeScorer", "Home Team Scorer"),
                         builder.CardAction.imBack(session, "homeAssist", "Home Team Assist"),
                         builder.CardAction.imBack(session, "awayScorer", "Away Team Scorer"),
                         builder.CardAction.imBack(session, "awayAssist", "Away Team Assist"),
-                        builder.CardAction.imBack(session, "matchProgress", "Back")
+                        // builder.CardAction.imBack(session, "matchProgress", "Back")
                     ]),
                 new builder.HeroCard(session)
                     .title("What's happening?")
@@ -844,43 +842,28 @@ bot.dialog('/homeScorer', [
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
-// bot.dialog('/actions', [
-//     function (session) { 
-//         session.send("Bots can register global actions, like the 'help' & 'goodbye' actions, that can respond to user input at any time. You can even bind actions to buttons on a card.");
+//=========================================================
+// 2nd Level Dialogs - Goal
+//=========================================================
 
-//         var msg = new builder.Message(session)
-//             .textFormat(builder.TextFormat.xml)
-//             .attachments([
-//                 new builder.HeroCard(session)
-//                     .title("Hero Card")
-//                     .subtitle("Space Needle")
-//                     .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
-//                     .images([
-//                         builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
-//                     ])
-//                     .buttons([
-//                         builder.CardAction.dialogAction(session, "weather", "Seattle, WA", "Current Weather")
-//                     ])
-//             ]);
-//         session.send(msg);
 
-//         session.endDialog("The 'Current Weather' button on the card above can be pressed at any time regardless of where the user is in the conversation with the bot. The bot can even show the weather after the conversation has ended.");
-//     }
-// ]);
 
-// Create a dialog and bind it to a global action
+//=========================================================
+// 2nd Level Dialogs - Shot
+//=========================================================
 
-bot.dialog('/weatherTemplate', [
 
-    function (session, args) {
 
-        session.endDialog("The weather in %s is 71 degrees and raining.", args.data);
 
-    }
+//=========================================================
+// 2nd Level Dialogs - Whistle
+//=========================================================
 
-]);
 
-// bot.beginDialogAction('weather', '/weather');   // <-- no 'matches' option means this can only be triggered by a button.
+
+//=========================================================
+// SignIn
+//=========================================================
 
 
 bot.dialog('/signin', [ 
