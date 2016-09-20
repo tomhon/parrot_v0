@@ -139,25 +139,14 @@ bot.beginDialogAction('weather', '/weather');   // <-- no 'matches' option means
 
 
 bot.dialog('/signin', [ 
-
     function (session) { 
-
         // Send a signin 
-
         var msg = new builder.Message(session) 
-
             .attachments([ 
-
                 new builder.SigninCard(session) 
-
                     .text("You must first signin to your account.") 
-
                     .button("signin", "http://example.com/") 
-
             ]); 
-
         session.endDialog(msg); 
-
     } 
-
 ]); 
