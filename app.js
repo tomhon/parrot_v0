@@ -55,79 +55,79 @@ bot.dialog('/', [
     }
 ]);
 
-bot.dialog('/menu', [
-    function (session) {
-        session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
-        
-        // Ask the user to select an item from a carousel.
-        var msg = new builder.Message(session)
-            .textFormat(builder.TextFormat.xml)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                 new builder.HeroCard(session)
-                    .title("Welcome to Parrot")
-                    // .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
-                    // .images([
-                    //     builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
-                    //         .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
-                    // ])
-                    .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Login"),
-                        builder.CardAction.imBack(session, "select:100", "Match Details")
-                    ]),
-     
-            ]);
-        builder.Prompts.choice(session, msg, "select:100|select:101|select:102");
-    },
-    function (session, results) {
-        var action, item;
-        var kvPair = results.response.entity.split(':');
-        switch (kvPair[0]) {
-            case 'select':
-                action = 'selected';
-                break;
-        }
-        switch (kvPair[1]) {
-            case '100':
-                item = "the <b>Space Needle</b>";
-                break;
-            case '101':
-                item = "<b>Pikes Place Market</b>";
-                break;
-            case '102':
-                item = "the <b>EMP Museum</b>";
-                break;
-        }
-        session.endDialog('You %s "%s"', action, item);
-    }    
-]);
-
 // bot.dialog('/menu', [
 //     function (session) {
-//         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
-//         builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
-//         ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
+//         session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
+        
+//         // Ask the user to select an item from a carousel.
+//         var msg = new builder.Message(session)
+//             .textFormat(builder.TextFormat.xml)
+//             .attachmentLayout(builder.AttachmentLayout.carousel)
+//             .attachments([
+//                  new builder.HeroCard(session)
+//                     .title("Welcome to Parrot")
+//                     // .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
+//                     // .images([
+//                     //     builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
+//                     //         .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
+//                     // ])
+//                     .buttons([
+//                         builder.CardAction.imBack(session, "select:100", "Login"),
+//                         builder.CardAction.imBack(session, "select:100", "Match Details")
+//                     ]),
+     
+//             ]);
+//         builder.Prompts.choice(session, msg, "select:100|select:101|select:102");
 //     },
 //     function (session, results) {
-//         if (results.response && results.response.entity != '(quit)') {
-//             // Launch demo dialog
-//             session.beginDialog('/' + results.response.entity);
-//         } else {
-//             // Exit the menu
-//             session.endDialog();
+//         var action, item;
+//         var kvPair = results.response.entity.split(':');
+//         switch (kvPair[0]) {
+//             case 'select':
+//                 action = 'selected';
+//                 break;
 //         }
-//     },
-//     function (session, results) {
-//         // The menu runs a loop until the user chooses to (quit).
-//         session.replaceDialog('/menu');
-//     }
-// ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
-
-// bot.dialog('/help', [
-//     function (session) {
-//         session.endDialog("Global commands that are available anytime:\n\n* menu - Exits current function and returns to the menu.\n* goodbye - End this conversation.\n* help - Displays these commands.");
-//     }
+//         switch (kvPair[1]) {
+//             case '100':
+//                 item = "the <b>Space Needle</b>";
+//                 break;
+//             case '101':
+//                 item = "<b>Pikes Place Market</b>";
+//                 break;
+//             case '102':
+//                 item = "the <b>EMP Museum</b>";
+//                 break;
+//         }
+//         session.endDialog('You %s "%s"', action, item);
+//     }    
 // ]);
+
+bot.dialog('/menu', [
+    function (session) {
+        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
+        builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
+        ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
+    },
+    function (session, results) {
+        if (results.response && results.response.entity != '(quit)') {
+            // Launch demo dialog
+            session.beginDialog('/' + results.response.entity);
+        } else {
+            // Exit the menu
+            session.endDialog();
+        }
+    },
+    function (session, results) {
+        // The menu runs a loop until the user chooses to (quit).
+        session.replaceDialog('/menu');
+    }
+]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+
+bot.dialog('/help', [
+    function (session) {
+        session.endDialog("Global commands that are available anytime:\n\n* menu - Exits current function and returns to the menu.\n* goodbye - End this conversation.\n* help - Displays these commands.");
+    }
+]);
 
 
 bot.dialog('/Match Details', [
