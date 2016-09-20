@@ -705,7 +705,6 @@ bot.dialog('/schedule', [
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
-
 bot.dialog('/weather', [
     function (session) {
         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
@@ -877,7 +876,7 @@ bot.dialog('/homeScorer', [
 
 // Create a dialog and bind it to a global action
 
-bot.dialog('/weather', [
+bot.dialog('/weatherTemplate', [
 
     function (session, args) {
 
