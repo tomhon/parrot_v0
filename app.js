@@ -92,15 +92,11 @@ bot.dialog('/menu', [
                     // ])
                     .buttons([
                         builder.CardAction.imBack(session, "login", "Login"),
-                        builder.CardAction.imBack(session, "matchDetails", "Match Details"),
-                        builder.CardAction.imBack(session, "matchProgress", "Test Match Progress"),
-                        builder.CardAction.imBack(session, "whistle", "Test Whistle Details"),
-                        builder.CardAction.imBack(session, "goal", "Test Goal Details"),
-                        builder.CardAction.imBack(session, "shot", "Test Shot Details")
-                    ]),
+                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
+                        ]),
      
             ]);
-        builder.Prompts.choice(session, msg, "login|matchDetails|matchProgress|whistle|goal|shot");
+        builder.Prompts.choice(session, msg, "login|matchDetails");
 
     },
     function (session, results) {
