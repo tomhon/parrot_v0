@@ -57,8 +57,9 @@ bot.dialog('/', [
 
 bot.dialog('/menu', [
     function (session) {
-        session.send("Let me know what's going on in the game amd I can give you a summary anytime you need it.");
-        builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", ["Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details"]);
+        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
+        builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
+        ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details"]);
     },
     function (session, results) {
         if (results.response && results.response.entity != '(quit)') {
@@ -82,7 +83,25 @@ bot.dialog('/help', [
 ]);
 
 
-
+bot.dialog('/Match Details', [
+    function (session) {
+        session.send("Before the game gets underway, it would be great if you can give me some details of the game.");
+        builder.Prompts.choice(session, "Who's playing? Which field? What's the schedule? What's the weather?", ["Teams", "Location", "Schedule", "Weather"]);
+    },
+    function (session, results) {
+        if (results.response && results.response.entity != '(quit)') {
+            // Launch demo dialog
+            session.beginDialog('/' + results.response.entity);
+        } else {
+            // Exit the menu
+            session.endDialog();
+        }
+    },
+    function (session, results) {
+        // The menu runs a loop until the user chooses to (quit).
+        session.replaceDialog('/menu');
+    }
+]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
 // bot.dialog('/', [
 //     function (session) {
@@ -104,31 +123,7 @@ bot.dialog('/help', [
 //     }
 // ]);
 
-bot.dialog('/gameDetails', [
-    function (session) {
-        session.send("Before the game gets underway, it would be great if you can give me some details of the game.");
-        builder.Prompts.choice(session, "Who's playing? Which field? What's the schedule? What's the weather?", ["Teams", "Location", "Schedule", "Weather"]);
-    },
-    function (session, results) {
-        switch (results.response.entity) {
-            case "Teams":
-                session.replaceDialog("/actions");
-                break;
-            case "Location":
-                session.replaceDialog("/signin");
-                break;
-            case "Schedule":
-                session.replaceDialog("/schedule");
-                break;
-            case "Weather":
-                session.replaceDialog("/weather");
-                break;
-            default:
-                session.replaceDialog("/gameDetails");
-                break;
-        }
-    }
-]);
+
 
 // bot.dialog('/cards', [
 //     function (session) {
