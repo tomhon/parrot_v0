@@ -122,8 +122,8 @@ bot.dialog('/menu', [
                     //         .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
                     // ])
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Login"),
-                        builder.CardAction.imBack(session, "select:100", "Match Details")
+                        builder.CardAction.dialogAction(session, "login", "Login"),
+                        builder.CardAction.dialogAction(session, "matchDetails", "Match Details")
                     ]),
      
             ]);
