@@ -166,8 +166,8 @@ bot.dialog('/actions', [
                         builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
                     ])
                     .buttons([
-                        builder.CardAction.dialogAction(session, "SEA weather", "Seattle, WA", "Current Weather"),
-                        builder.CardAction.dialogAction(session, "PDC weather", "Portland, OR", "Current Weather")
+                        builder.CardAction.dialogAction(session, "SEA weather", "Seattle, WA", "Current Weather")
+                        // ,builder.CardAction.dialogAction(session, "PDC weather", "Portland, OR", "Current Weather")
                     ])
             ]);
         session.send(msg);
