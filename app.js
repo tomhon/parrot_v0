@@ -122,14 +122,16 @@ bot.dialog('/menu', [
                     //         .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
                     // ])
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Login"),
-                        builder.CardAction.imBack(session, "select:100", "Match Details")
-                        ,
+                        // builder.CardAction.imBack(session, "select:100", "Login"),
+                        // builder.CardAction.imBack(session, "select:100", "Match Details")
+                        // ,
+                        builder.CardAction.dialogAction(session, "menu", "Seattle", "Login"),
                         builder.CardAction.dialogAction(session, "menu", "Seattle", "Match Details")
                     ]),
      
             ]);
-        builder.Prompts.choice(session, msg, "select:100|select:101|select:102");
+        // builder.Prompts.choice(session, msg, "select:100|select:101|select:102");
+        session.send(msg);
     },
     function (session, results) {
         if (results.response && results.response.entity != '(quit)') {
