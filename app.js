@@ -55,12 +55,12 @@ bot.dialog('/', [
     }
 ]);
 
-bot.dialog('/menu', [
+bot.dialog('/menuCarousel', [
     function (session) {
         session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
         
         // Ask the user to select an item from a carousel.
-                var msg = new builder.Message(session)
+            var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.xml)
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
@@ -181,32 +181,32 @@ bot.dialog('/menu', [
 
 
 
-// bot.dialog('/menu', [
-//     function (session) {
-//         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
-//         builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
-//         ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
-//     },
-//     function (session, results) {
-//         if (results.response && results.response.entity != '(quit)') {
-//             // Launch demo dialog
-//             session.beginDialog('/' + results.response.entity);
-//         } else {
-//             // Exit the menu
-//             session.endDialog();
-//         }
-//     },
-//     function (session, results) {
-//         // The menu runs a loop until the user chooses to (quit).
-//         session.replaceDialog('/menu');
-//     }
-// ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+bot.dialog('/menu', [
+    function (session) {
+        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
+        builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
+        ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
+    },
+    function (session, results) {
+        if (results.response && results.response.entity != '(quit)') {
+            // Launch demo dialog
+            session.beginDialog('/' + results.response.entity);
+        } else {
+            // Exit the menu
+            session.endDialog();
+        }
+    },
+    function (session, results) {
+        // The menu runs a loop until the user chooses to (quit).
+        session.replaceDialog('/menu');
+    }
+]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
-// bot.dialog('/help', [
-//     function (session) {
-//         session.endDialog("Global commands that are available anytime:\n\n* menu - Exits a demo and returns to the menu.\n* goodbye - End this conversation.\n* help - Displays these commands.");
-//     }
-// ]);
+bot.dialog('/help', [
+    function (session) {
+        session.endDialog("Global commands that are available anytime:\n\n* menu - Exits a demo and returns to the menu.\n* goodbye - End this conversation.\n* help - Displays these commands.");
+    }
+]);
 
 
 bot.dialog('/Match Details', [
