@@ -57,8 +57,8 @@ bot.dialog('/', [
 
 bot.dialog('/menu', [
     function (session) {
-        session.send("Before the game gets underway, it would be great if you can give me some details of the game.");
-        builder.Prompts.choice(session, "Who's playing? Which field? What's the schedule? What's the weather?", ["Teams", "Location", "Schedule", "Weather"]);
+        session.send("Let me know what's going on in the game amd I can give you a summary anytime you need it.");
+        builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", ["Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details"]);
     },
     function (session, results) {
         if (results.response && results.response.entity != '(quit)') {
