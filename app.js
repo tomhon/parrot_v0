@@ -59,7 +59,7 @@ bot.dialog('/menu', [
     function (session) {
         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
         builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
-        ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details"]);
+        ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
     },
     function (session, results) {
         if (results.response && results.response.entity != '(quit)') {
@@ -91,6 +91,7 @@ bot.dialog('/Match Details', [
     function (session, results) {
         if (results.response && results.response.entity != '(quit)') {
             // Launch demo dialog
+            session.send('Calling' + results.response.entity);
             session.beginDialog('/' + results.response.entity);
         } else {
             // Exit the menu
