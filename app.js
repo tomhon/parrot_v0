@@ -339,8 +339,21 @@ bot.dialog('/carousel', [
             .textFormat(builder.TextFormat.xml)
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
-                new builder.HeroCard(session)
-                    .title("Club Home <score> : <score> Club Away")
+                 new builder.HeroCard(session)
+                    .title("What's happening?")
+                    // .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
+                    // .images([
+                    //     builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
+                    //         .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
+                    // ])
+                    .buttons([
+                        builder.CardAction.imBack(session, "select:100", "Whistle"),
+                        builder.CardAction.imBack(session, "select:100", "Goal"),
+                        builder.CardAction.imBack(session, "select:100", "Shot"),
+                        builder.CardAction.imBack(session, "select:100", "Match Details")
+                    ]),
+               new builder.HeroCard(session)
+                    .title("<Home> <score> : <score> <Away>")
                     // .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
                     // .images([
                     //     builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
@@ -353,15 +366,17 @@ bot.dialog('/carousel', [
                         builder.CardAction.imBack(session, "select:100", "Stats")
                     ]),
                 new builder.HeroCard(session)
-                    .title("Pikes Place Market")
-                    // .text("<b>Pike Place Market</b> is a public market overlooking the Elliott Bay waterfront in Seattle, Washington, United States.")
+                    .title("What's happening?")
+                    // .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
                     // .images([
-                    //     builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/en/thumb/2/2a/PikePlaceMarket.jpg/320px-PikePlaceMarket.jpg")
-                    //         .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/en/thumb/2/2a/PikePlaceMarket.jpg/800px-PikePlaceMarket.jpg")),
+                    //     builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
+                    //         .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
                     // ])
                     .buttons([
-                        builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/Pike_Place_Market", "Wikipedia"),
-                        builder.CardAction.imBack(session, "select:101", "Select")
+                        builder.CardAction.imBack(session, "select:100", "Whistle"),
+                        builder.CardAction.imBack(session, "select:100", "Goal"),
+                        builder.CardAction.imBack(session, "select:100", "Shot"),
+                        builder.CardAction.imBack(session, "select:100", "Match Details")
                     ]),
                 new builder.HeroCard(session)
                     .title("EMP Museum")
