@@ -138,10 +138,10 @@ bot.dialog('/matchProgress', [
                     .title("What's happening?")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Whistle"),
-                        builder.CardAction.imBack(session, "select:100", "Goal"),
-                        builder.CardAction.imBack(session, "select:100", "Shot"),
-                        builder.CardAction.imBack(session, "select:100", "Match Details")
+                        builder.CardAction.imBack(session, "goal", "Goal"),
+                        builder.CardAction.imBack(session, "whistle", "Whistle"),
+                        builder.CardAction.imBack(session, "shot", "Shot"),
+                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
                     .title("<Home> <score> : <score> <Away>")
@@ -200,10 +200,10 @@ bot.dialog('/matchDetails', [
                     .title("What's happening?")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Whistle"),
-                        builder.CardAction.imBack(session, "select:100", "Goal"),
-                        builder.CardAction.imBack(session, "select:100", "Shot"),
-                        builder.CardAction.imBack(session, "select:100", "Match Details")
+                        builder.CardAction.imBack(session, "goal", "Goal"),
+                        builder.CardAction.imBack(session, "whistle", "Whistle"),
+                        builder.CardAction.imBack(session, "shot", "Shot"),
+                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
                     .title("<Home> <score> : <score> <Away>")
@@ -261,10 +261,10 @@ bot.dialog('/whistle', [
                     .title("What's happening?")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Whistle"),
-                        builder.CardAction.imBack(session, "select:100", "Goal"),
-                        builder.CardAction.imBack(session, "select:100", "Shot"),
-                        builder.CardAction.imBack(session, "select:100", "Match Details")
+                        builder.CardAction.imBack(session, "goal", "Goal"),
+                        builder.CardAction.imBack(session, "whistle", "Whistle"),
+                        builder.CardAction.imBack(session, "shot", "Shot"),
+                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
                     .title("<Home> <score> : <score> <Away>")
@@ -322,10 +322,10 @@ bot.dialog('/goal', [
                     .title("What's happening?")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Whistle"),
-                        builder.CardAction.imBack(session, "select:100", "Goal"),
-                        builder.CardAction.imBack(session, "select:100", "Shot"),
-                        builder.CardAction.imBack(session, "select:100", "Match Details")
+                        builder.CardAction.imBack(session, "goal", "Goal"),
+                        builder.CardAction.imBack(session, "whistle", "Whistle"),
+                        builder.CardAction.imBack(session, "shot", "Shot"),
+                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
                     .title("<Home> <score> : <score> <Away>")
@@ -383,10 +383,10 @@ bot.dialog('/shot', [
                     .title("What's happening?")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Whistle"),
-                        builder.CardAction.imBack(session, "select:100", "Goal"),
-                        builder.CardAction.imBack(session, "select:100", "Shot"),
-                        builder.CardAction.imBack(session, "select:100", "Match Details")
+                        builder.CardAction.imBack(session, "goal", "Goal"),
+                        builder.CardAction.imBack(session, "whistle", "Whistle"),
+                        builder.CardAction.imBack(session, "shot", "Shot"),
+                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
                     .title("<Home> <score> : <score> <Away>")
