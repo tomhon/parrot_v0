@@ -1,8 +1,10 @@
 var restify = require('restify');
 var builder = require('botbuilder');
 
+
+
 //=========================================================
-// Bot Setup
+// Web Server Setup
 //=========================================================
 
 // Setup Restify Server
@@ -10,7 +12,16 @@ var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function () {
    console.log('%s listening to %s', server.name, server.url); 
 });
+
+server.get('/', function (req, res) { 
+    res.send('Parrot Bot is online'); 
+    }); 
+
   
+//=========================================================
+// Bot Setup
+//=========================================================
+
 // Create chat bot
 var connector = new builder.ChatConnector({
     appId: process.env.MICROSOFT_APP_ID,
@@ -55,52 +66,7 @@ bot.dialog('/', [
     }
 ]);
 
-// bot.dialog('/menu', [
-//     function (session) {
-//         session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
-        
-//         // Ask the user to select an item from a carousel.
-//         var msg = new builder.Message(session)
-//             .textFormat(builder.TextFormat.xml)
-//             .attachmentLayout(builder.AttachmentLayout.carousel)
-//             .attachments([
-//                  new builder.HeroCard(session)
-//                     .title("Welcome to Parrot")
-//                     // .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
-//                     // .images([
-//                     //     builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
-//                     //         .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
-//                     // ])
-//                     .buttons([
-//                         builder.CardAction.imBack(session, "select:100", "Login"),
-//                         builder.CardAction.imBack(session, "select:100", "Match Details")
-//                     ]),
-     
-//             ]);
-//         builder.Prompts.choice(session, msg, "select:100|select:101|select:102");
-//     },
-//     function (session, results) {
-//         var action, item;
-//         var kvPair = results.response.entity.split(':');
-//         switch (kvPair[0]) {
-//             case 'select':
-//                 action = 'selected';
-//                 break;
-//         }
-//         switch (kvPair[1]) {
-//             case '100':
-//                 item = "the <b>Space Needle</b>";
-//                 break;
-//             case '101':
-//                 item = "<b>Pikes Place Market</b>";
-//                 break;
-//             case '102':
-//                 item = "the <b>EMP Museum</b>";
-//                 break;
-//         }
-//         session.endDialog('You %s "%s"', action, item);
-//     }    
-// ]);
+
 
 bot.dialog('/menu', [
     function (session) {
@@ -154,13 +120,52 @@ bot.dialog('/help', [
 
 bot.dialog('/matchDetails', [
     function (session) {
-        session.send("Before the game gets underway, it would be great if you can give me some details of the game.");
-        builder.Prompts.choice(session, "Who's playing? Which field? What's the schedule? What's the weather? Actions", ["Teams", "Location", "carousel", "Weather", "Actions"]);
+        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
+        // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
+        // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
+                session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
+        
+        // Ask the user to select an item from a carousel.
+        var msg = new builder.Message(session)
+            .textFormat(builder.TextFormat.xml)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                 new builder.HeroCard(session)
+                    .title("Tell me about the match")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "teams", "Teams"),
+                        builder.CardAction.imBack(session, "location", "Location"),
+                        builder.CardAction.imBack(session, "wchedule", "Schedule"),
+                        builder.CardAction.imBack(session, "weather", "Weather"),
+                        builder.CardAction.imBack(session, "back", "Back")
+                    ]),
+                new builder.HeroCard(session)
+                    .title("What's happening?")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "select:100", "Whistle"),
+                        builder.CardAction.imBack(session, "select:100", "Goal"),
+                        builder.CardAction.imBack(session, "select:100", "Shot"),
+                        builder.CardAction.imBack(session, "select:100", "Match Details")
+                    ]),
+               new builder.HeroCard(session)
+                    .title("<Home> <score> : <score> <Away>")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "select:100", "Overview"),
+                        builder.CardAction.imBack(session, "select:100", "Live Ticker"),
+                        builder.CardAction.imBack(session, "select:100", "Lineup"),
+                        builder.CardAction.imBack(session, "select:100", "Stats")
+                    ])
+     
+            ]);
+        builder.Prompts.choice(session, msg, "login|matchDetails");
+
     },
     function (session, results) {
         if (results.response && results.response.entity != '(quit)') {
             // Launch demo dialog
-            session.send('Calling' + results.response.entity);
             session.beginDialog('/' + results.response.entity);
         } else {
             // Exit the menu
@@ -173,51 +178,7 @@ bot.dialog('/matchDetails', [
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
-// bot.dialog('/', [
-//     function (session) {
-//         session.send("Welcome to Parrot! Which game are you watching? Let me know when it kicks off.");
-//         builder.Prompts.choice(session, "command?", ["Game Details", "Kick Off"]);
-//     },
-//     function (session, results) {
-//         switch (results.response.entity) {
-//             case "Game Details":
-//                 session.replaceDialog("/gameDetails");
-//                 break;
-//             case "Kick Off":
-//                 session.replaceDialog("/kickedOff");
-//                 break;
-//             default:
-//                 session.replaceDialog("/");
-//                 break;
-//         }
-//     }
-// ]);
 
-
-
-// bot.dialog('/cards', [
-//     function (session) {
-//         var msg = new builder.Message(session)
-//             .textFormat(builder.TextFormat.xml)
-//             .attachments([
-//                 new builder.HeroCard(session)
-//                     // .title("Hero Card")
-//                     // .subtitle("Space Needle")
-//                     .buttons([builder.CardAction.dialogAction(session, "weather", "Seattle, WA", "Current Weather")])
-                    
-//                     .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
-//                     .images([
-//                         builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
-//                     ])
-//                     .tap(builder.CardAction.openUrl(session, "https://en.wikipedia.org/wiki/Space_Needle"))
-//             ]);
-//         session.endDialog(msg);
-//     }
-// ]);
-
-server.get('/', function (req, res) { 
-    res.send('Parrot Bot is online'); 
-    }); 
 
 
 
