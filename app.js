@@ -105,8 +105,29 @@ bot.dialog('/', [
 bot.dialog('/menu', [
     function (session) {
         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
-        builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
-        ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
+        // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
+        // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
+                session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
+        
+        // Ask the user to select an item from a carousel.
+        var msg = new builder.Message(session)
+            .textFormat(builder.TextFormat.xml)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                 new builder.HeroCard(session)
+                    .title("Welcome to Parrot")
+                    // .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
+                    // .images([
+                    //     builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
+                    //         .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
+                    // ])
+                    .buttons([
+                        builder.CardAction.imBack(session, "select:100", "Login"),
+                        builder.CardAction.imBack(session, "select:100", "Match Details")
+                    ]),
+     
+            ]);
+        builder.Prompts.choice(session, msg, "select:100|select:101|select:102");
     },
     function (session, results) {
         if (results.response && results.response.entity != '(quit)') {
