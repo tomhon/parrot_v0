@@ -1,7 +1,37 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function (req, res) {
+//=========================================================
+// Ticker Setup
+//=========================================================
+
+function tickerEvent () {
+    this.timestamp = "";
+    this.event = "";
+    this.player = "";
+    this.details = "";
+    this.user = "";
+}
+
+var ticker = new Array();
+
+var oTickerEvent = new tickerEvent();
+oTickerEvent.timestamp = "08:00";
+oTickerEvent.user = "Tom";
+ticker.push(oTickerEvent);
+
+var oTickerEvent = new tickerEvent();
+oTickerEvent.timestamp = "09:00";
+oTickerEvent.user = "Fiona";
+ticker.push(oTickerEvent);
+
+var oTickerEvent = new tickerEvent();
+oTickerEvent.timestamp = "10:00";
+oTickerEvent.user = "Max";
+ticker.push(oTickerEvent);
+
+
+router.get('/status', function (req, res) {
     // res.render('status' , {
     //     mappingList: cache.get("TEBEMappingList", arrayIsvTE)
     // });
