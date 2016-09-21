@@ -15,24 +15,23 @@ function tickerEvent () {
 
 var ticker = new Array();
 
-var oTickerEvent = new tickerEvent();
-oTickerEvent.timestamp = new Date();
-oTickerEvent.user = "Tom";
-ticker.push(oTickerEvent);
+var addToRawTicker = function (event, player, details) {
+    var oTickerEvent = new tickerEvent();
+    oTickerEvent.timestamp = new Date();
+    oTickerEvent.event = event;
+    oTickerEvent.player = player;
+    oTickerEvent.details = details;
+    oTickerEvent.user = "Tom";
+    ticker.push(oTickerEvent);
+};
 
-var oTickerEvent = new tickerEvent();
-oTickerEvent.timestamp = new Date();
-oTickerEvent.user = "Fiona";
-ticker.push(oTickerEvent);
-
-var oTickerEvent = new tickerEvent();
-oTickerEvent.timestamp = new Date();
-oTickerEvent.user = "Max";
-ticker.push(oTickerEvent);
+addToRawTicker("Goal", "unknown", "unknown");
+addToRawTicker("Shot", "unknown", "unknown");
+addToRawTicker("Whistle", "unknown", "unknown");
+addToRawTicker("Goal");
 
     ticker.forEach(function(tick) {
-        console.log(tick.timestamp.toString().slice(16,28));
-        console.log(tick.user);
+        console.log(tick.event + " " + tick.timestamp.toString().slice(16,28));
     });
 
 //=========================================================

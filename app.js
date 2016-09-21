@@ -44,6 +44,16 @@ function tickerEvent () {
 
 var ticker = new Array();
 
+var addToRawTicker = function (event, player, details) {
+    var oTickerEvent = new tickerEvent();
+    oTickerEvent.timestamp = new Date();
+    oTickerEvent.event = event;
+    oTickerEvent.player = player;
+    oTickerEvent.details = details;
+    oTickerEvent.user = "Tom";
+    ticker.push(oTickerEvent);
+};
+
 // var oTickerEvent = new tickerEvent();
 // oTickerEvent.timestamp = new Date();
 // oTickerEvent.event = "Goal";
@@ -297,13 +307,7 @@ bot.dialog('/matchDetails', [
 bot.dialog('/goal', [
     function (session) {
         //log time of goal
-        var oTickerEvent = new tickerEvent();
-        oTickerEvent.timestamp = new Date();
-        oTickerEvent.event = "Goal";
-        oTickerEvent.player = "unknown";
-        oTickerEvent.details = "unknown";
-        oTickerEvent.user = "botUser";
-        ticker.push(oTickerEvent);
+        addToRawTicker("Goal");
 
         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
         // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
@@ -365,13 +369,8 @@ bot.dialog('/goal', [
 bot.dialog('/whistle', [
     function (session) {
         //log time of whistle
-        var oTickerEvent = new tickerEvent();
-        oTickerEvent.timestamp = new Date();
-        oTickerEvent.event = "Whistle";
-        oTickerEvent.player = "unknown";
-        oTickerEvent.details = "unknown";
-        oTickerEvent.user = "botUser";
-        ticker.push(oTickerEvent);
+        addToRawTicker("Whistle");
+
         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
         // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
         // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
@@ -432,13 +431,7 @@ bot.dialog('/whistle', [
 bot.dialog('/shot', [
     function (session) {
         //log time of shot
-        var oTickerEvent = new tickerEvent();
-        oTickerEvent.timestamp = new Date();
-        oTickerEvent.event = "Shot";
-        oTickerEvent.player = "unknown";
-        oTickerEvent.details = "unknown";
-        oTickerEvent.user = "botUser";
-        ticker.push(oTickerEvent);
+        addToRawTicker("Shot");
         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
         // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
         // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
