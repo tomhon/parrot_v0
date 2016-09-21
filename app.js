@@ -14,7 +14,7 @@ var server = express();
 
 
 // server.use(bodyParser.urlencoded({ extended: true}));
-// server.set('views', __dirname + '/views');
+server.set('views', __dirname + '/views');
 // server.set('view engine', 'ejs');
 server.use('/status', require('./status'));
 
