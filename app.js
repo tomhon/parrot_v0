@@ -1,6 +1,7 @@
 var express = require('express');
 // var restify = require('restify');
 var builder = require('botbuilder');
+var bodyParser = require('body-parser');
 
 //=========================================================
 // Ticker Setup
@@ -34,6 +35,7 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
    console.log('%s listening to %s', server.name, server.url); 
 });
 
+server.use(bodyParser.urlencoded({ extended: true}));
 server.set('views', __dirname + '/views');
 server.use(require('./status'));
 // server.set('view engine', 'ejs');
