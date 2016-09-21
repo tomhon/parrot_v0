@@ -48,6 +48,16 @@ var oTickerEvent = new tickerEvent();
 oTickerEvent.timestamp = "08:00";
 oTickerEvent.user = "Tom";
 ticker.push(oTickerEvent);
+
+var oTickerEvent = new tickerEvent();
+oTickerEvent.timestamp = "09:00";
+oTickerEvent.user = "Fiona";
+ticker.push(oTickerEvent);
+
+var oTickerEvent = new tickerEvent();
+oTickerEvent.timestamp = "10:00";
+oTickerEvent.user = "Max";
+ticker.push(oTickerEvent);
   
 //=========================================================
 // Bot Setup
@@ -457,8 +467,8 @@ bot.dialog('/liveTicker', [
     function (session) {
         session.send("Current Ticker");
         ticker.forEach(function(tick) {
-            session.send(tick.timestamp);
-            session.send(tick.user);
+            session.send(tick.timestamp + " " + tick.event + " " + tick.player + " " + tick.details + " " + tick.user);
+            // session.send(tick.user);
         });
         var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.xml)
