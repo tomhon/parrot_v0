@@ -46,6 +46,9 @@ var ticker = new Array();
 
 var oTickerEvent = new tickerEvent();
 oTickerEvent.timestamp = new Date();
+oTickerEvent.event = "Goal";
+oTickerEvent.player = "player";
+oTickerEvent.details = "details";
 oTickerEvent.user = "Tom";
 ticker.push(oTickerEvent);
 
@@ -57,6 +60,16 @@ ticker.push(oTickerEvent);
 var oTickerEvent = new tickerEvent();
 oTickerEvent.timestamp = new Date();
 oTickerEvent.user = "Max";
+ticker.push(oTickerEvent);
+
+var oTickerEvent = new tickerEvent();
+oTickerEvent.timestamp = new Date();
+oTickerEvent.user = "Georgie";
+ticker.push(oTickerEvent);
+
+var oTickerEvent = new tickerEvent();
+oTickerEvent.timestamp = new Date();
+oTickerEvent.user = "Poppy";
 ticker.push(oTickerEvent);
   
 //=========================================================
@@ -283,6 +296,15 @@ bot.dialog('/matchDetails', [
 
 bot.dialog('/goal', [
     function (session) {
+        //log time of goal
+        var oTickerEvent = new tickerEvent();
+        oTickerEvent.timestamp = new Date();
+        oTickerEvent.event = "Goal";
+        oTickerEvent.player = "unknown";
+        oTickerEvent.details = "unknown";
+        oTickerEvent.user = "botUser";
+        ticker.push(oTickerEvent);
+
         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
         // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
         // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
