@@ -364,6 +364,14 @@ bot.dialog('/goal', [
 
 bot.dialog('/whistle', [
     function (session) {
+        //log time of whistle
+        var oTickerEvent = new tickerEvent();
+        oTickerEvent.timestamp = new Date();
+        oTickerEvent.event = "Whistle";
+        oTickerEvent.player = "unknown";
+        oTickerEvent.details = "unknown";
+        oTickerEvent.user = "botUser";
+        ticker.push(oTickerEvent);
         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
         // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
         // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
@@ -423,6 +431,14 @@ bot.dialog('/whistle', [
 
 bot.dialog('/shot', [
     function (session) {
+        //log time of shot
+        var oTickerEvent = new tickerEvent();
+        oTickerEvent.timestamp = new Date();
+        oTickerEvent.event = "Shot";
+        oTickerEvent.player = "unknown";
+        oTickerEvent.details = "unknown";
+        oTickerEvent.user = "botUser";
+        ticker.push(oTickerEvent);
         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
         // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
         // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
@@ -489,7 +505,7 @@ bot.dialog('/liveTicker', [
     function (session) {
         session.send("Current Ticker");
         ticker.forEach(function(tick) {
-            session.send( tick.event + " " + tick.player + " " + tick.details + " " + tick.user + " " + tick.timestamp.toUTCString().slice(16,28) );
+            session.send( tick.event + " " + tick.player + " " + tick.details + " " + tick.user + " " + tick.timestamp.toUTCString().slice(16,29) );
             // session.send(tick.user);
         });
         var msg = new builder.Message(session)
