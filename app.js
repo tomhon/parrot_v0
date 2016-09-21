@@ -467,7 +467,7 @@ bot.dialog('/liveTicker', [
     function (session) {
         session.send("Current Ticker");
         ticker.forEach(function(tick) {
-            session.send(tick.timestamp + " " + tick.event + " " + tick.player + " " + tick.details + " " + tick.user);
+            session.send(tick.timestamp.toUTCString() + " " + tick.event + " " + tick.player + " " + tick.details + " " + tick.user);
             // session.send(tick.user);
         });
         var msg = new builder.Message(session)
