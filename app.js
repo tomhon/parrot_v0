@@ -37,7 +37,7 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
 
 server.use(bodyParser.urlencoded({ extended: true}));
 server.set('views', __dirname + '/views');
-server.use(require('./status'));
+// server.use(require('./status'));
 // server.set('view engine', 'ejs');
 
 
