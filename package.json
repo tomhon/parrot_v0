@@ -18,6 +18,7 @@
   "homepage": "https://github.com/tomhon/parrot_v0#readme",
   "dependencies": {
     "botbuilder": "^3.2.3",
+    "express": "^4.14.0",
     "restify": "^4.1.1"
   }
 }

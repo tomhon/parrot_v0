@@ -1,4 +1,5 @@
-var restify = require('restify');
+var express = require('express');
+// var restify = require('restify');
 var builder = require('botbuilder');
 
 //=========================================================
@@ -27,12 +28,14 @@ ticker.push(oTickerEvent);
 //=========================================================
 
 // Setup Restify Server
-var server = restify.createServer();
+var server = express();
+// var server = restify.createServer();
 server.listen(process.env.port || process.env.PORT || 3978, function () {
    console.log('%s listening to %s', server.name, server.url); 
 });
 
 server.get('/', function (req, res) { 
+
     res.send('Parrot Bot is online'); 
     }); 
 
