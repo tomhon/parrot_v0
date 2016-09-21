@@ -31,7 +31,7 @@ oTickerEvent.user = "Max";
 ticker.push(oTickerEvent);
 
     ticker.forEach(function(tick) {
-        console.log(tick.timestamp.toString());
+        console.log(tick.timestamp.toString().slice(16,28));
         console.log(tick.user);
     });
 
