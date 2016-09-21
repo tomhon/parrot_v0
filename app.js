@@ -33,9 +33,6 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
 });
 
 server.get('/', function (req, res) { 
-    ticker.forEach(function() {
-        res.send(tickerEvent.timestamp);
-    });
     res.send('Parrot Bot is online'); 
     }); 
 
