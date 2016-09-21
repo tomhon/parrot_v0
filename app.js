@@ -35,7 +35,7 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
 });
 
 server.set('views', __dirname + '/views');
-// server.use(require('./status'));
+server.use(require('./status'));
 // server.set('view engine', 'ejs');
 
 
