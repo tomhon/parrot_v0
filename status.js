@@ -32,16 +32,11 @@ ticker.push(oTickerEvent);
 
 
 router.get('/', function (req, res) {
-    // res.render('status' , {
+    res.render('status' , {
     //     mappingList: cache.get("TEBEMappingList", arrayIsvTE)
-    // });
-    res.send('Parrot Bot Status is online'); 
-    // res.send('Status Home Page')
+    });
+    // res.send('Parrot Bot Status is online'); 
     });
 
-// router.get('/status', function (req, res) { 
-
-//     res.send('Parrot Bot Status is online'); 
-//     }); 
 
 module.exports = router;
