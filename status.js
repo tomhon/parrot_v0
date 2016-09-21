@@ -31,7 +31,7 @@ oTickerEvent.user = "Max";
 ticker.push(oTickerEvent);
 
 
-router.get('/status', function (req, res) {
+router.get('/', function (req, res) {
     // res.render('status' , {
     //     mappingList: cache.get("TEBEMappingList", arrayIsvTE)
     // });
