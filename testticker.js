@@ -1,5 +1,5 @@
-var restify = require('restify');
-var builder = require('botbuilder');
+// var restify = require('restify');
+// var builder = require('botbuilder');
 
 //=========================================================
 // Ticker Setup
@@ -16,22 +16,22 @@ function tickerEvent () {
 var ticker = new Array();
 
 var oTickerEvent = new tickerEvent();
-oTickerEvent.timestamp = "08:00";
+oTickerEvent.timestamp = new Date();
 oTickerEvent.user = "Tom";
 ticker.push(oTickerEvent);
 
 var oTickerEvent = new tickerEvent();
-oTickerEvent.timestamp = "09:00";
+oTickerEvent.timestamp = new Date();
 oTickerEvent.user = "Fiona";
 ticker.push(oTickerEvent);
 
 var oTickerEvent = new tickerEvent();
-oTickerEvent.timestamp = "10:00";
+oTickerEvent.timestamp = new Date();
 oTickerEvent.user = "Max";
 ticker.push(oTickerEvent);
 
     ticker.forEach(function(tick) {
-        console.log(tick.timestamp);
+        console.log(tick.timestamp.toString());
         console.log(tick.user);
     });
 
@@ -40,17 +40,17 @@ ticker.push(oTickerEvent);
 //=========================================================
 
 // Setup Restify Server
-var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-   console.log('%s listening to %s', server.name, server.url); 
-});
+// var server = restify.createServer();
+// server.listen(process.env.port || process.env.PORT || 3978, function () {
+//    console.log('%s listening to %s', server.name, server.url); 
+// });
 
-server.get('/', function (req, res) { 
-    ticker.forEach(function(tick) {
-        console.log(tick.timestamp);
-        console.log(tick.user);
-        res.send(tick.timestamp);
-        res.send(tick.user);
-    });
-    console.log('Parrot Bot is online'); 
-    }); 
+// server.get('/', function (req, res) { 
+//     ticker.forEach(function(tick) {
+//         console.log(tick.timestamp);
+//         console.log(tick.user);
+//         res.send(tick.timestamp);
+//         res.send(tick.user);
+//     });
+//     console.log('Parrot Bot is online'); 
+//     }); 

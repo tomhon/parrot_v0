@@ -45,17 +45,17 @@ function tickerEvent () {
 var ticker = new Array();
 
 var oTickerEvent = new tickerEvent();
-oTickerEvent.timestamp = "08:00";
+oTickerEvent.timestamp = new Date();
 oTickerEvent.user = "Tom";
 ticker.push(oTickerEvent);
 
 var oTickerEvent = new tickerEvent();
-oTickerEvent.timestamp = "09:00";
+oTickerEvent.timestamp = new Date();
 oTickerEvent.user = "Fiona";
 ticker.push(oTickerEvent);
 
 var oTickerEvent = new tickerEvent();
-oTickerEvent.timestamp = "10:00";
+oTickerEvent.timestamp = new Date();
 oTickerEvent.user = "Max";
 ticker.push(oTickerEvent);
   
