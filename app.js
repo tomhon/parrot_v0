@@ -108,8 +108,11 @@ bot.dialog('/menu', [
         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
         // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
         // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
-                session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
-        
+        session.send("Current Ticker");
+        ticker.forEach(function(tick) {
+            session.send(tick.timestamp);
+            session.send(tick.user);
+        });
         // Ask the user to select an item from a carousel.
         var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.xml)
