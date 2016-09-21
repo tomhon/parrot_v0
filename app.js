@@ -120,7 +120,7 @@ bot.dialog('/menu', [
         // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
         session.send("Current Ticker");
         ticker.forEach(function(tick) {
-            session.send(tick.timestamp);
+            session.send(tick.timestamp.toString());
             session.send(tick.user);
         });
         // Ask the user to select an item from a carousel.
