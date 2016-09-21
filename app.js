@@ -34,6 +34,10 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
    console.log('%s listening to %s', server.name, server.url); 
 });
 
+server.use(require('./status'));
+server.set('view engine', 'ejs');
+server.set('views', __dirname + '/views');
+
 server.get('/', function (req, res) { 
 
     res.send('Parrot Bot is online'); 
