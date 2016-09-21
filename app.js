@@ -2,9 +2,33 @@ var express = require('express');
 var bodyParser = require('body-parser');
 // var cache = require('memory-cache');
 var router = express.Router();
-var builder = require('botbuilder');
+
 var server = express();
 
+
+//=========================================================
+// Web Server Setup
+//=========================================================
+
+// Setup Express Server
+
+
+server.use(bodyParser.urlencoded({ extended: true}));
+server.set('views', __dirname + '/views');
+server.set('view engine', 'ejs');
+server.use('/status', require('./status'));
+
+
+server.listen(process.env.port || process.env.PORT || 3978, function () {
+   console.log('%s listening to %s', server.name, server.url); 
+});
+
+
+
+
+server.get('/', function (req, res) { 
+    res.send('Parrot Bot is online'); 
+    }); 
 
 //=========================================================
 // Ticker Setup
@@ -24,38 +48,12 @@ var oTickerEvent = new tickerEvent();
 oTickerEvent.timestamp = "08:00";
 oTickerEvent.user = "Tom";
 ticker.push(oTickerEvent);
-
-
-
-//=========================================================
-// Web Server Setup
-//=========================================================
-
-// Setup Express Server
-
-
-server.use(bodyParser.urlencoded({ extended: true}));
-server.set('views', __dirname + '/views');
-server.set('view engine', 'ejs');
-// server.use('/status', require('./status'));
-
-
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-   console.log('%s listening to %s', server.name, server.url); 
-});
-
-
-
-
-server.get('/', function (req, res) { 
-    res.send('Parrot Bot is online'); 
-    }); 
-
   
 //=========================================================
 // Bot Setup
 //=========================================================
 
+var builder = require('botbuilder');
 // Create chat bot
 var connector = new builder.ChatConnector({
     appId: process.env.MICROSOFT_APP_ID,
