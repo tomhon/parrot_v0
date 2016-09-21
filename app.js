@@ -13,7 +13,7 @@ var server = express();
 // Setup Express Server
 
 
-// server.use(bodyParser.urlencoded({ extended: true}));
+// server.use(bodyParser.urlencoded({ extended: true})); seems to be required to make status root work, but stops bot working
 server.set('views', __dirname + '/views');
 server.set('view engine', 'ejs');
 server.use('/status', require('./status'));
@@ -452,6 +452,57 @@ bot.dialog('/shot', [
 //=========================================================
 // 2nd Level Dialogs - Match Details
 //=========================================================
+
+bot.dialog('/liveTicker', [
+    function (session) {
+        session.send("Current Ticker");
+        ticker.forEach(function(tick) {
+            session.send(tick.timestamp);
+            session.send(tick.user);
+        });
+        var msg = new builder.Message(session)
+            .textFormat(builder.TextFormat.xml)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+
+                new builder.HeroCard(session)
+                    .title("What's happening?")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "goal", "Goal"),
+                        builder.CardAction.imBack(session, "whistle", "Whistle"),
+                        builder.CardAction.imBack(session, "shot", "Shot"),
+                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
+                    ]),
+               new builder.HeroCard(session)
+                    .title("<Home> <score> : <score> <Away>")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "overview", "Overview"),
+                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
+                        builder.CardAction.imBack(session, "lineup", "Lineup"),
+                        builder.CardAction.imBack(session, "stats", "Stats")
+                    ])
+     
+            ]);
+        builder.Prompts.choice(session, msg, "goal|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
+
+    },
+    function (session, results) {
+        if (results.response && results.response.entity != '(quit)') {
+            // Launch demo dialog
+            session.beginDialog('/' + results.response.entity);
+        } else {
+            // Exit the menu
+            session.endDialog();
+        }
+    },
+    function (session, results) {
+        // The menu runs a loop until the user chooses to (quit).
+        session.replaceDialog('/menu');
+    }
+]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+
 
 bot.dialog('/homeTeam', [
     function (session) {
