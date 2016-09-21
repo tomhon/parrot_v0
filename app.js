@@ -13,10 +13,10 @@ var server = express();
 // Setup Express Server
 
 
-server.use(bodyParser.urlencoded({ extended: true}));
-server.set('views', __dirname + '/views');
-server.set('view engine', 'ejs');
-// server.use('/status', require('./status'));
+// server.use(bodyParser.urlencoded({ extended: true}));
+// server.set('views', __dirname + '/views');
+// server.set('view engine', 'ejs');
+// // server.use('/status', require('./status'));
 
 
 server.listen(process.env.port || process.env.PORT || 3978, function () {
