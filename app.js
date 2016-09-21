@@ -10,9 +10,16 @@ function tickerEvent () {
     this.event = "";
     this.player = "";
     this.details = "";
+    this.user = "";
 }
 
 var ticker = new Array();
+
+var oTickerEvent = new tickerEvent();
+oTickerEvent.timestamp = "08:00";
+oTickerEvent.user = "Tom";
+ticker.push(oTickerEvent);
+
 
 
 //=========================================================
@@ -26,6 +33,9 @@ server.listen(process.env.port || process.env.PORT || 3978, function () {
 });
 
 server.get('/', function (req, res) { 
+    ticker.forEach(function() {
+        res.send(tickerEvent.timestamp);
+    });
     res.send('Parrot Bot is online'); 
     }); 
 
