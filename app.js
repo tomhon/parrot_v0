@@ -1,6 +1,18 @@
 var restify = require('restify');
 var builder = require('botbuilder');
 
+//=========================================================
+// Ticker Setup
+//=========================================================
+
+function tickerEvent () {
+    this.timestamp = "";
+    this.event = "";
+    this.player = "";
+    this.details = "";
+}
+
+var ticker = new Array();
 
 
 //=========================================================
