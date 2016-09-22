@@ -1066,6 +1066,7 @@ bot.dialog('/homeScorer', [
     },
     function (session, results) {
         session.send("You entered '%s'", results.response);
+        addToRawTicker("Goal", "Player7");
         session.send("Bot Builder includes a rich choice() prompt that lets you offer a user a list choices to pick from. On Skype these choices by default surface using buttons if there are 3 or less choices. If there are more than 3 choices a numbered list will be used but you can specify the exact type of list to show using the ListStyle property.");
         builder.Prompts.choice(session, "Prompts.choice()\n\nChoose a list style (the default is auto.)", "auto|inline|list|button|none");
     }
