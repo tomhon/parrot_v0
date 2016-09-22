@@ -316,7 +316,7 @@ bot.dialog('/goal', [
         // The menu runs a loop until the user chooses to (quit).
         session.replaceDialog('goal');
     }
-]).reloadAction('goal', null, { matches: /^menu|show menu/i });
+]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
 bot.dialog('/whistle', [
     function (session) {
