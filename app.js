@@ -189,7 +189,7 @@ bot.dialog('/help', [
 ]);
 
 //=========================================================
-// Top Level Dialogs
+// Top Level Dialogs - Overview
 //=========================================================
 
 
@@ -303,6 +303,10 @@ bot.dialog('/matchDetails', [
         session.replaceDialog('/menu');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+
+//=========================================================
+// Top Level Dialogs - What's Happening
+//=========================================================
 
 bot.dialog('/goal', [
     function (session) {
@@ -491,8 +495,58 @@ bot.dialog('/shot', [
 
 
 //=========================================================
-// 2nd Level Dialogs - Match Details
+// 2nd Level Dialogs - Overview
 //=========================================================
+
+bot.dialog('/overview', [
+    function (session) {
+        session.send("Current Ticker");
+        ticker.forEach(function(tick) {
+            session.send( tick.event + " " + tick.player + " " + tick.details + " " + tick.user + " " + tick.timestamp.toUTCString().slice(16,29) );
+            // session.send(tick.user);
+        });
+        var msg = new builder.Message(session)
+            .textFormat(builder.TextFormat.xml)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+
+                new builder.HeroCard(session)
+                    .title("What's happening?")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "goal", "Goal"),
+                        builder.CardAction.imBack(session, "whistle", "Whistle"),
+                        builder.CardAction.imBack(session, "shot", "Shot"),
+                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
+                    ]),
+               new builder.HeroCard(session)
+                    .title("<Home> <score> : <score> <Away>")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "overview", "Overview"),
+                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
+                        builder.CardAction.imBack(session, "lineup", "Lineup"),
+                        builder.CardAction.imBack(session, "stats", "Stats")
+                    ])
+     
+            ]);
+        builder.Prompts.choice(session, msg, "goal|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
+
+    },
+    function (session, results) {
+        if (results.response && results.response.entity != '(quit)') {
+            // Launch demo dialog
+            session.beginDialog('/' + results.response.entity);
+        } else {
+            // Exit the menu
+            session.endDialog();
+        }
+    },
+    function (session, results) {
+        // The menu runs a loop until the user chooses to (quit).
+        session.replaceDialog('/menu');
+    }
+]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
 bot.dialog('/liveTicker', [
     function (session) {
@@ -544,6 +598,110 @@ bot.dialog('/liveTicker', [
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
+bot.dialog('/lineup', [
+    function (session) {
+        session.send("Current Ticker");
+        ticker.forEach(function(tick) {
+            session.send( tick.event + " " + tick.player + " " + tick.details + " " + tick.user + " " + tick.timestamp.toUTCString().slice(16,29) );
+            // session.send(tick.user);
+        });
+        var msg = new builder.Message(session)
+            .textFormat(builder.TextFormat.xml)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+
+                new builder.HeroCard(session)
+                    .title("What's happening?")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "goal", "Goal"),
+                        builder.CardAction.imBack(session, "whistle", "Whistle"),
+                        builder.CardAction.imBack(session, "shot", "Shot"),
+                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
+                    ]),
+               new builder.HeroCard(session)
+                    .title("<Home> <score> : <score> <Away>")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "overview", "Overview"),
+                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
+                        builder.CardAction.imBack(session, "lineup", "Lineup"),
+                        builder.CardAction.imBack(session, "stats", "Stats")
+                    ])
+     
+            ]);
+        builder.Prompts.choice(session, msg, "goal|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
+
+    },
+    function (session, results) {
+        if (results.response && results.response.entity != '(quit)') {
+            // Launch demo dialog
+            session.beginDialog('/' + results.response.entity);
+        } else {
+            // Exit the menu
+            session.endDialog();
+        }
+    },
+    function (session, results) {
+        // The menu runs a loop until the user chooses to (quit).
+        session.replaceDialog('/menu');
+    }
+]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+
+bot.dialog('/stats', [
+    function (session) {
+        session.send("Current Ticker");
+        ticker.forEach(function(tick) {
+            session.send( tick.event + " " + tick.player + " " + tick.details + " " + tick.user + " " + tick.timestamp.toUTCString().slice(16,29) );
+            // session.send(tick.user);
+        });
+        var msg = new builder.Message(session)
+            .textFormat(builder.TextFormat.xml)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+
+                new builder.HeroCard(session)
+                    .title("What's happening?")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "goal", "Goal"),
+                        builder.CardAction.imBack(session, "whistle", "Whistle"),
+                        builder.CardAction.imBack(session, "shot", "Shot"),
+                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
+                    ]),
+               new builder.HeroCard(session)
+                    .title("<Home> <score> : <score> <Away>")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "overview", "Overview"),
+                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
+                        builder.CardAction.imBack(session, "lineup", "Lineup"),
+                        builder.CardAction.imBack(session, "stats", "Stats")
+                    ])
+     
+            ]);
+        builder.Prompts.choice(session, msg, "goal|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
+
+    },
+    function (session, results) {
+        if (results.response && results.response.entity != '(quit)') {
+            // Launch demo dialog
+            session.beginDialog('/' + results.response.entity);
+        } else {
+            // Exit the menu
+            session.endDialog();
+        }
+    },
+    function (session, results) {
+        // The menu runs a loop until the user chooses to (quit).
+        session.replaceDialog('/menu');
+    }
+]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+
+
+//=========================================================
+// 2nd Level Dialogs - Match Details
+//=========================================================
 
 bot.dialog('/homeTeam', [
     function (session) {
@@ -944,14 +1102,14 @@ bot.dialog('/homeScorer', [
                     .title("<Home> <score> : <score> <Away>")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "select:100", "Overview"),
-                        builder.CardAction.imBack(session, "select:100", "Live Ticker"),
-                        builder.CardAction.imBack(session, "select:100", "Lineup"),
-                        builder.CardAction.imBack(session, "select:100", "Stats")
+                        builder.CardAction.imBack(session, "overview", "Overview"),
+                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
+                        builder.CardAction.imBack(session, "lineup", "Lineup"),
+                        builder.CardAction.imBack(session, "stats", "Stats")
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress");
+        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress|goal|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
 
     },
     function (session, results) {
