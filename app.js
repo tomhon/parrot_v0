@@ -1057,11 +1057,7 @@ bot.dialog('/weather', [
 
 bot.dialog('/homeScorer', [
     function (session) {
-        session.send("Our Bot Builder SDK has a rich set of built-in prompts that simplify asking the user a series of questions. This demo will walk you through using each prompt. Just follow the prompts and you can quit at any time by saying 'cancel'.");
-        builder.Prompts.text(session, "Prompts.text()\n\nEnter some text and I'll say it back.");
-    },
-    function (session, results) {
-        session.send("You entered '%s'", results.response);
+        session.send("Which Home Player Scored?");
         builder.Prompts.number(session, "Prompts.number()\n\nNow enter a number.");
     },
     function (session, results) {
