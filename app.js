@@ -34,6 +34,15 @@ server.get('/', function (req, res) {
 // Ticker Setup
 //=========================================================
 
+function player () {
+    this.team = "";
+    this.number = Null;
+    this.firstName = "";
+    this.lastName = "";
+    this.position = "";
+    this.photo = null;
+}
+
 function tickerEvent () {
     this.timestamp = "";
     this.event = "";
@@ -54,33 +63,7 @@ var addToRawTicker = function (event, player, details) {
     ticker.push(oTickerEvent);
 };
 
-// var oTickerEvent = new tickerEvent();
-// oTickerEvent.timestamp = new Date();
-// oTickerEvent.event = "Goal";
-// oTickerEvent.player = "player";
-// oTickerEvent.details = "details";
-// oTickerEvent.user = "Tom";
-// ticker.push(oTickerEvent);
 
-// var oTickerEvent = new tickerEvent();
-// oTickerEvent.timestamp = new Date();
-// oTickerEvent.user = "Fiona";
-// ticker.push(oTickerEvent);
-
-// var oTickerEvent = new tickerEvent();
-// oTickerEvent.timestamp = new Date();
-// oTickerEvent.user = "Max";
-// ticker.push(oTickerEvent);
-
-// var oTickerEvent = new tickerEvent();
-// oTickerEvent.timestamp = new Date();
-// oTickerEvent.user = "Georgie";
-// ticker.push(oTickerEvent);
-
-// var oTickerEvent = new tickerEvent();
-// oTickerEvent.timestamp = new Date();
-// oTickerEvent.user = "Poppy";
-// ticker.push(oTickerEvent);
   
 //=========================================================
 // Bot Setup
@@ -1067,7 +1050,7 @@ bot.dialog('/weather', [
 bot.dialog('/homeScorer', [
     function (session) {
         session.send("Which Home Player Scored?");
-        builder.Prompts.number(session, "Prompts.number()\n\nNow enter a number.");
+        builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
         session.send("Home Player '%s' scored!", results.response);
@@ -1079,7 +1062,7 @@ bot.dialog('/homeScorer', [
 bot.dialog('/homeAssist', [
     function (session) {
         session.send("Which Home Player Assisted?");
-        builder.Prompts.number(session, "Prompts.number()\n\nNow enter a number.");
+        builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
         session.send("Home Player '%s' assisted!", results.response);
@@ -1091,7 +1074,7 @@ bot.dialog('/homeAssist', [
 bot.dialog('/awayScorer', [
     function (session) {
         session.send("Which Away Player Scored?");
-        builder.Prompts.number(session, "Prompts.number()\n\nNow enter a number.");
+        builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
         session.send("Away Player '%s' scored!", results.response);
@@ -1103,7 +1086,7 @@ bot.dialog('/awayScorer', [
 bot.dialog('/awayAssist', [
     function (session) {
         session.send("Which Away Player Assisted?");
-        builder.Prompts.number(session, "Prompts.number()\n\nNow enter a number.");
+        builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
         session.send("Away Player '%s' assisted!", results.response);
