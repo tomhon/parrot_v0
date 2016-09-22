@@ -314,9 +314,9 @@ bot.dialog('/goal', [
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
-        session.replaceDialog('/goal');
+        session.replaceDialog('goal');
     }
-]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+]).reloadAction('goal', null, { matches: /^menu|show menu/i });
 
 bot.dialog('/whistle', [
     function (session) {
@@ -1071,7 +1071,7 @@ bot.dialog('/homeScorer', [
     function (session, results) {
         session.send("You entered '%s'", results.response);
         addToRawTicker("Goal", results.response.toString());
-        session.replaceDialog('/goal');
+        session.replaceDialog('goal');
     }
 ]);
 
