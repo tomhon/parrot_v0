@@ -1063,7 +1063,7 @@ bot.dialog('/homescorer', [
     function (session, results) {
         session.send("You entered '%s'", results.response);
                 //log player number
-        addToRawTicker("Goal", results.response);
+        addToRawTicker("Goal", "Player7");
      }
 
 ]);
