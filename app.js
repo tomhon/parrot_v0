@@ -1063,8 +1063,9 @@ bot.dialog('/homeScorer', [
     function (session, results) {
         session.send("You entered '%s'", results.response);
         addToRawTicker("Goal", results.response.toString());
+        session.endDialog();
     }
-]);
+])
 
 // bot.dialog('/homescorer', [
 //     function (session) {
