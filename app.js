@@ -96,6 +96,14 @@ var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
 //=========================================================
+// Bots Middleware
+//=========================================================
+
+// Anytime the major version is incremented any existing conversations will be restarted.
+bot.use(builder.Middleware.dialogVersion({ version: 1.0, resetCommand: /^reset/i }));
+
+
+//=========================================================
 // Bots Global Actions
 //=========================================================
 
@@ -306,7 +314,7 @@ bot.dialog('/goal', [
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
-        session.replaceDialog('/menu');
+        session.replaceDialog('/goal');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
@@ -1063,9 +1071,9 @@ bot.dialog('/homeScorer', [
     function (session, results) {
         session.send("You entered '%s'", results.response);
         addToRawTicker("Goal", results.response.toString());
-        session.endDialog();
+        session.replaceDialog('/goal');
     }
-])
+]);
 
 // bot.dialog('/homescorer', [
 //     function (session) {
