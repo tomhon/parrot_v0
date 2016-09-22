@@ -1070,8 +1070,44 @@ bot.dialog('/homeScorer', [
         builder.Prompts.number(session, "Prompts.number()\n\nNow enter a number.");
     },
     function (session, results) {
-        session.send("You entered '%s'", results.response);
+        session.send("Home Player '%s' scored!", results.response);
         addToRawTicker("Goal", results.response.toString());
+        session.endDialog();
+    }
+]);
+
+bot.dialog('/homeAssist', [
+    function (session) {
+        session.send("Which Home Player Assisted?");
+        builder.Prompts.number(session, "Prompts.number()\n\nNow enter a number.");
+    },
+    function (session, results) {
+        session.send("Home Player '%s' assisted!", results.response);
+        addToRawTicker("Assist", results.response.toString());
+        session.endDialog();
+    }
+]);
+
+bot.dialog('/awayScorer', [
+    function (session) {
+        session.send("Which Away Player Scored?");
+        builder.Prompts.number(session, "Prompts.number()\n\nNow enter a number.");
+    },
+    function (session, results) {
+        session.send("Away Player '%s' scored!", results.response);
+        addToRawTicker("Goal", results.response.toString());
+        session.endDialog();
+    }
+]);
+
+bot.dialog('/awayAssist', [
+    function (session) {
+        session.send("Which Away Player Assisted?");
+        builder.Prompts.number(session, "Prompts.number()\n\nNow enter a number.");
+    },
+    function (session, results) {
+        session.send("Away Player '%s' assisted!", results.response);
+        addToRawTicker("Assist", results.response.toString());
         session.endDialog();
     }
 ]);
