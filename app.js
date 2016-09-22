@@ -314,7 +314,8 @@ bot.dialog('/goal', [
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
-        session.replaceDialog('goal');
+        session.send("returned to goal dialog");
+        session.replaceDialog('/goal');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
