@@ -244,68 +244,8 @@ bot.dialog('/matchProgress', [
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
-bot.dialog('/matchDetails', [
-    function (session) {
-        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
-        // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
-        // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
-                // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
-        
-        // Ask the user to select an item from a carousel.
-        var msg = new builder.Message(session)
-            .textFormat(builder.TextFormat.xml)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                 new builder.HeroCard(session)
-                    .title("Tell me about the match")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "homeTeam", "Home Team"),
-                        builder.CardAction.imBack(session, "awayTeam", "Away Team"),
-                        builder.CardAction.imBack(session, "location", "Location"),
-                        builder.CardAction.imBack(session, "schedule", "Schedule"),
-                        builder.CardAction.imBack(session, "weather", "Weather"),
-                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("What's happening?")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "goal", "Goal"),
-                        builder.CardAction.imBack(session, "whistle", "Whistle"),
-                        builder.CardAction.imBack(session, "shot", "Shot"),
-                    ]),
-               new builder.HeroCard(session)
-                    .title("<Home> <score> : <score> <Away>")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "overview", "Overview"),
-                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
-                        builder.CardAction.imBack(session, "lineup", "Lineup"),
-                        builder.CardAction.imBack(session, "stats", "Stats")
-                    ])
-     
-            ]);
-        builder.Prompts.choice(session, msg, "homeTeam|awayTeam|location|schedule|weather|matchProgress|goal|whistle|shot|overview|liveTicker|lineup|stats");
-
-    },
-    function (session, results) {
-        if (results.response && results.response.entity != '(quit)') {
-            // Launch demo dialog
-            session.beginDialog('/' + results.response.entity);
-        } else {
-            // Exit the menu
-            session.endDialog();
-        }
-    },
-    function (session, results) {
-        // The menu runs a loop until the user chooses to (quit).
-        session.replaceDialog('/menu');
-    }
-]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
-
 //=========================================================
-// Top Level Dialogs - What's Happening
+// 2nd Level Dialogs - What's Happening
 //=========================================================
 
 bot.dialog('/goal', [
@@ -352,7 +292,7 @@ bot.dialog('/goal', [
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "homeTeam|awayTeam|location|schedule|weather|matchProgress|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
+        builder.Prompts.choice(session, msg, "homeScorer|homeAssist|awayScorer}awayAssist|matchProgress|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
 
     },
     function (session, results) {
@@ -493,6 +433,65 @@ bot.dialog('/shot', [
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
+bot.dialog('/matchDetails', [
+    function (session) {
+        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
+        // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
+        // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
+                // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
+        
+        // Ask the user to select an item from a carousel.
+        var msg = new builder.Message(session)
+            .textFormat(builder.TextFormat.xml)
+            .attachmentLayout(builder.AttachmentLayout.carousel)
+            .attachments([
+                 new builder.HeroCard(session)
+                    .title("Tell me about the match")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "homeTeam", "Home Team"),
+                        builder.CardAction.imBack(session, "awayTeam", "Away Team"),
+                        builder.CardAction.imBack(session, "location", "Location"),
+                        builder.CardAction.imBack(session, "schedule", "Schedule"),
+                        builder.CardAction.imBack(session, "weather", "Weather"),
+                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
+                    ]),
+                new builder.HeroCard(session)
+                    .title("What's happening?")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "goal", "Goal"),
+                        builder.CardAction.imBack(session, "whistle", "Whistle"),
+                        builder.CardAction.imBack(session, "shot", "Shot"),
+                    ]),
+               new builder.HeroCard(session)
+                    .title("<Home> <score> : <score> <Away>")
+
+                    .buttons([
+                        builder.CardAction.imBack(session, "overview", "Overview"),
+                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
+                        builder.CardAction.imBack(session, "lineup", "Lineup"),
+                        builder.CardAction.imBack(session, "stats", "Stats")
+                    ])
+     
+            ]);
+        builder.Prompts.choice(session, msg, "homeTeam|awayTeam|location|schedule|weather|matchProgress|goal|whistle|shot|overview|liveTicker|lineup|stats");
+
+    },
+    function (session, results) {
+        if (results.response && results.response.entity != '(quit)') {
+            // Launch demo dialog
+            session.beginDialog('/' + results.response.entity);
+        } else {
+            // Exit the menu
+            session.endDialog();
+        }
+    },
+    function (session, results) {
+        // The menu runs a loop until the user chooses to (quit).
+        session.replaceDialog('/menu');
+    }
+]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
 //=========================================================
 // 2nd Level Dialogs - Overview
@@ -700,7 +699,7 @@ bot.dialog('/stats', [
 
 
 //=========================================================
-// 2nd Level Dialogs - Match Details
+// 3rd Level Dialogs - Match Details
 //=========================================================
 
 bot.dialog('/homeTeam', [
@@ -1056,76 +1055,88 @@ bot.dialog('/weather', [
 // 2nd Level Dialogs - Goal
 //=========================================================
 
-
-bot.dialog('/homeScorer', [
+bot.dialog('/homescorer', [
     function (session) {
-        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
-        // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
-        // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
-                // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
+        session.send("Please let me have the number of the scorer.");
+        builder.Prompts.number(session, "Prompts.number()\n\nNow enter a number.");
+    },
+    function (session, results) {
+        session.send("You entered '%s'", results.response);
+                //log player number
+        addToRawTicker("Goal", results.response);
+     }
+
+]);
+
+// bot.dialog('/homeScorer', [
+//     function (session) {
+//         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
+//         // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
+//         // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
+//                 // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
         
-        // Ask the user to select an item from a carousel.
-        var msg = new builder.Message(session)
-            .textFormat(builder.TextFormat.xml)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                new builder.HeroCard(session)
-                    .title("Which Home Team Player Scored?")
+//         // Ask the user to select an item from a carousel.
+//         var msg = new builder.Message(session)
+//             .textFormat(builder.TextFormat.xml)
+//             .attachmentLayout(builder.AttachmentLayout.carousel)
+//             .attachments([
+//                 new builder.HeroCard(session)
+//                     .title("Which Home Team Player Scored?")
 
-                    .buttons([
-                        builder.CardAction.imBack(session, "homeScorer", "Home Team Scorer"),
-                        builder.CardAction.imBack(session, "homeAssist", "Home Team Assist"),
-                        builder.CardAction.imBack(session, "awayScorer", "Away Team Scorer"),
-                        builder.CardAction.imBack(session, "awayAssist", "Away Team Assist"),
-                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
-                    ]),
-                 new builder.HeroCard(session)
-                    .title("Tell me about the goal")
+//                     .buttons([
+//                         builder.CardAction.imBack(session, "1", "Home Team Scorer"),
+//                         builder.CardAction.imBack(session, "homeAssist", "Home Team Assist"),
+//                         builder.CardAction.imBack(session, "awayScorer", "Away Team Scorer"),
+//                         builder.CardAction.imBack(session, "awayAssist", "Away Team Assist"),
+//                         builder.CardAction.imBack(session, "matchProgress", "What's happening?")
+//                     ]),
+//                  new builder.HeroCard(session)
+//                     .title("Tell me about the goal")
 
-                    .buttons([
-                        // builder.CardAction.imBack(session, "homeScorer", "Home Team Scorer"),
-                        builder.CardAction.imBack(session, "homeAssist", "Home Team Assist"),
-                        builder.CardAction.imBack(session, "awayScorer", "Away Team Scorer"),
-                        builder.CardAction.imBack(session, "awayAssist", "Away Team Assist"),
-                        // builder.CardAction.imBack(session, "matchProgress", "Back")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("What's happening?")
+//                     .buttons([
+//                         // builder.CardAction.imBack(session, "homeScorer", "Home Team Scorer"),
+//                         builder.CardAction.imBack(session, "homeAssist", "Home Team Assist"),
+//                         builder.CardAction.imBack(session, "awayScorer", "Away Team Scorer"),
+//                         builder.CardAction.imBack(session, "awayAssist", "Away Team Assist"),
+//                         // builder.CardAction.imBack(session, "matchProgress", "Back")
+//                     ]),
+//                 new builder.HeroCard(session)
+//                     .title("What's happening?")
 
-                    .buttons([
-                        builder.CardAction.imBack(session, "goal", "Goal"),
-                        builder.CardAction.imBack(session, "whistle", "Whistle"),
-                        builder.CardAction.imBack(session, "shot", "Shot"),
-                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
-                    ]),
-               new builder.HeroCard(session)
-                    .title("<Home> <score> : <score> <Away>")
+//                     .buttons([
+//                         builder.CardAction.imBack(session, "goal", "Goal"),
+//                         builder.CardAction.imBack(session, "whistle", "Whistle"),
+//                         builder.CardAction.imBack(session, "shot", "Shot"),
+//                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
+//                     ]),
+//                new builder.HeroCard(session)
+//                     .title("<Home> <score> : <score> <Away>")
 
-                    .buttons([
-                        builder.CardAction.imBack(session, "overview", "Overview"),
-                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
-                        builder.CardAction.imBack(session, "lineup", "Lineup"),
-                        builder.CardAction.imBack(session, "stats", "Stats")
-                    ])
+//                     .buttons([
+//                         builder.CardAction.imBack(session, "overview", "Overview"),
+//                         builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
+//                         builder.CardAction.imBack(session, "lineup", "Lineup"),
+//                         builder.CardAction.imBack(session, "stats", "Stats")
+//                     ])
      
-            ]);
-        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress|goal|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
+//             ]);
+//         builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress|goal|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
 
-    },
-    function (session, results) {
-        if (results.response && results.response.entity != '(quit)') {
-            // Launch demo dialog
-            session.beginDialog('/' + results.response.entity);
-        } else {
-            // Exit the menu
-            session.endDialog();
-        }
-    },
-    function (session, results) {
-        // The menu runs a loop until the user chooses to (quit).
-        session.replaceDialog('/menu');
-    }
-]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+//     },
+//     function (session, results) {
+//         if (results.response && results.response.entity != '(quit)') {
+//             // Launch demo dialog
+//             session.beginDialog('/' + results.response.entity);
+//         } else {
+//             // Exit the menu
+//             session.endDialog();
+//         }
+//     },
+//     function (session, results) {
+//         // The menu runs a loop until the user chooses to (quit).
+//         session.replaceDialog('/menu');
+//     }
+// ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
 //=========================================================
 // 2nd Level Dialogs - Goal
