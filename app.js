@@ -34,8 +34,16 @@ server.get('/', function (req, res) {
 // Ticker Setup
 //=========================================================
 
+function team() {
+    this.teamName = "";
+    this.club = "";
+    this.ageGroup = "";
+    this.gender = "";
+    this.uniform = "";
+}
+
 function player () {
-    this.team = "";
+    this.team = team;
     this.number = Null;
     this.firstName = "";
     this.lastName = "";
@@ -63,7 +71,24 @@ var addToRawTicker = function (event, player, details) {
     ticker.push(oTickerEvent);
 };
 
+//=========================================================
+// Set up match data
+//=========================================================
 
+var homeTeam = new team;
+hometeam.teamName ="Home";
+var awayTeam = new team;
+awayTeam.teamName = "Away";
+
+//=========================================================
+// Set up dummy data
+//=========================================================
+
+homeTeam.teamName = "G04 Schmetzer";
+homeTeam.club = 'Crossfire';
+
+awayTeam.teamName = "G04 Copa";
+awayTeam.club = 'Seattle United';
   
 //=========================================================
 // Bot Setup
@@ -208,7 +233,7 @@ bot.dialog('/matchProgress', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title("<Home> <score> : <score> <Away>")
+                    .title( hometeam.teamName + " <score> : <score> " + awayTeam.teamName)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
