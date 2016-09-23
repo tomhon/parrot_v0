@@ -1058,6 +1058,15 @@ bot.dialog('/homeScorer', [
     function (session, results) {
         session.send("Home Player '%s' scored!", results.response);
         addToRawTicker("Goal", results.response.toString());
+        // session.endDialog();
+    },
+    function (session) {
+        session.send("Which Home Player Assisted?");
+        builder.Prompts.number(session, "Now enter a number.");
+    },
+    function (session, results) {
+        session.send("Home Player '%s' assisted!", results.response);
+        addToRawTicker("Assist", results.response.toString());
         session.endDialog();
     }
 ]);
