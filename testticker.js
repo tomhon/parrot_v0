@@ -56,11 +56,14 @@ awayTeam.teamName = "Away";
 //=========================================================
 
 homeTeam.teamName = "G04 Schmetzer";
+addToRawTicker("homeTeamEntered",'',homeTeam.teamName);
 homeTeam.club = 'Crossfire';
+addToRawTicker("homeClubEntered",'',awayTeam.club);
 
 awayTeam.teamName = "G04 Copa";
+addToRawTicker("awayTeamEntered",'',awayTeam.teamName);
 awayTeam.club = 'Seattle United';
-  
+addToRawTicker("awayClubEntered",'',awayTeam.club);
 
 addToRawTicker("Goal", "unknown", "unknown");
 addToRawTicker("Shot", "unknown", "unknown");
@@ -68,7 +71,7 @@ addToRawTicker("Whistle", "unknown", "unknown");
 addToRawTicker("Goal");
 
     ticker.forEach(function(tick) {
-        console.log(tick.event + " " + tick.timestamp.toString().slice(16,28));
+        console.log(tick.event + " " + tick.player + " " + tick.details + " " + tick.timestamp.toString().slice(16,28));
     });
 
 //=========================================================

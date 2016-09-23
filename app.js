@@ -84,14 +84,14 @@ awayTeam.teamName = "Away";
 //=========================================================
 
 homeTeam.teamName = "G04 Schmetzer";
-addToRawTicker("homeTeamEntered",,homeTeam.teamName);
+addToRawTicker("homeTeamEntered",'',homeTeam.teamName);
 homeTeam.club = 'Crossfire';
-addToRawTicker("homeClubEntered",,awayTeam.club);
+addToRawTicker("homeClubEntered",'',awayTeam.club);
 
 awayTeam.teamName = "G04 Copa";
-addToRawTicker("awayTeamEntered",,awayTeam.teamName);
+addToRawTicker("awayTeamEntered",'',awayTeam.teamName);
 awayTeam.club = 'Seattle United';
-addToRawTicker("awayClubEntered",,awayTeam.club);
+addToRawTicker("awayClubEntered",'',awayTeam.club);
   
 //=========================================================
 // Bot Setup
