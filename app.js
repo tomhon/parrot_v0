@@ -233,7 +233,7 @@ bot.dialog('/matchProgress', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( hometeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
