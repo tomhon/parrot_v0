@@ -86,7 +86,7 @@ awayTeam.teamName = "Away";
 homeTeam.teamName = "G04 Schmetzer";
 addToRawTicker("homeTeamEntered",'',homeTeam.teamName);
 homeTeam.club = 'Crossfire';
-addToRawTicker("homeClubEntered",'',awayTeam.club);
+addToRawTicker("homeClubEntered",'',homeTeam.club);
 
 awayTeam.teamName = "G04 Copa";
 addToRawTicker("awayTeamEntered",'',awayTeam.teamName);
@@ -236,7 +236,7 @@ bot.dialog('/matchProgress', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -303,7 +303,7 @@ bot.dialog('/goal', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -366,7 +366,7 @@ bot.dialog('/whistle', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -427,7 +427,7 @@ bot.dialog('/shot', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -487,7 +487,7 @@ bot.dialog('/matchDetails', [
                         builder.CardAction.imBack(session, "shot", "Shot"),
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -541,7 +541,7 @@ bot.dialog('/overview', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -591,7 +591,7 @@ bot.dialog('/liveTicker', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -641,7 +641,7 @@ bot.dialog('/lineup', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -691,7 +691,7 @@ bot.dialog('/stats', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -766,7 +766,7 @@ bot.dialog('/homeTeam', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -837,7 +837,7 @@ bot.dialog('/awayTeam', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club))
 
                     .buttons([
                         builder.CardAction.imBack(session, "select:100", "Overview"),
@@ -908,7 +908,7 @@ bot.dialog('/location', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "select:100", "Overview"),
@@ -976,7 +976,7 @@ bot.dialog('/schedule', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "select:100", "Overview"),
@@ -1046,7 +1046,7 @@ bot.dialog('/weather', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.teamName + " <score> : <score> " + awayTeam.teamName)
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "select:100", "Overview"),
