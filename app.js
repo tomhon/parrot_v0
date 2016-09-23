@@ -169,6 +169,7 @@ bot.dialog('/menu', [
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
+        session.send('returned to menu dialog');
         session.replaceDialog('/menu');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
@@ -231,6 +232,7 @@ bot.dialog('/matchProgress', [
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
+        session.send('returned to matchProgress dialog');
         session.replaceDialog('/menu');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
@@ -760,6 +762,7 @@ bot.dialog('/homeTeam', [
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
+        session.send('returned to homeTeam dialog');
         session.replaceDialog('/menu');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
