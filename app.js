@@ -76,7 +76,7 @@ var addToRawTicker = function (event, player, details) {
 //=========================================================
 
 var homeTeam = new team;
-hometeam.teamName ="Home";
+homeTeam.teamName ="Home";
 var awayTeam = new team;
 awayTeam.teamName = "Away";
 

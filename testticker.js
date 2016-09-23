@@ -5,6 +5,23 @@
 // Ticker Setup
 //=========================================================
 
+function team() {
+    this.teamName = "";
+    this.club = "";
+    this.ageGroup = "";
+    this.gender = "";
+    this.uniform = "";
+}
+
+function player () {
+    this.team = team;
+    this.number = Null;
+    this.firstName = "";
+    this.lastName = "";
+    this.position = "";
+    this.photo = null;
+}
+
 function tickerEvent () {
     this.timestamp = "";
     this.event = "";
@@ -24,6 +41,26 @@ var addToRawTicker = function (event, player, details) {
     oTickerEvent.user = "Tom";
     ticker.push(oTickerEvent);
 };
+
+//=========================================================
+// Set up match data
+//=========================================================
+
+var homeTeam = new team;
+homeTeam.teamName ="Home";
+var awayTeam = new team;
+awayTeam.teamName = "Away";
+
+//=========================================================
+// Set up dummy data
+//=========================================================
+
+homeTeam.teamName = "G04 Schmetzer";
+homeTeam.club = 'Crossfire';
+
+awayTeam.teamName = "G04 Copa";
+awayTeam.club = 'Seattle United';
+  
 
 addToRawTicker("Goal", "unknown", "unknown");
 addToRawTicker("Shot", "unknown", "unknown");
