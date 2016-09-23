@@ -837,7 +837,7 @@ bot.dialog('/awayTeam', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club))
+                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "select:100", "Overview"),
