@@ -1128,17 +1128,17 @@ bot.dialog('/homeShot', [
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
-
-        session.send("Was "+ homeTeam.club + " Player '%s' shot on target?!", results.response);
-        builder.Prompts.choice(session, "Yes or No?", "Yes|No", 'button');
+        playerNumber = results.response;
+        session.send("Was "+ homeTeam.club + " Player '%s' shot on target?!", playerNumber);
+        builder.Prompts.choice(session, "Yes or No?", "Yes|No");
     },
     function (session, results) {
-        if (results.response == 'Yes') {
-                session.send(homeTeam.club + " Player '%s' shot on target!");
-                addToRawTicker("shotOnTarget", "", "");
+        if (results.response == '1') {
+                session.send(homeTeam.club + " Player '%s' shot on target!", playerNumber);
+                addToRawTicker("shotOnTarget", homeTeam.roster[playerNumber], "");
         } else {
-                session.send(homeTeam.club + " Player '%s' shot off target!");
-                addToRawTicker("shotOffTarget", "", "");
+                session.send(homeTeam.club + " Player '%s' shot off target!", playerNumber);
+                addToRawTicker("shotOffTarget", homeTeam.roster[playerNumber], "");
         }
         session.endDialog();
     }
