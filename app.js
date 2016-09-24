@@ -1131,7 +1131,7 @@ bot.dialog('/homeShot', [
         playerNumber = results.response;
         session.send("Was "+ homeTeam.club + " Player " + playerNumber + " " + " shot on target?!");
         // session.send("Was "+ homeTeam.club + " Player " + playerNumber + " " + homeTeam.roster[playerNumber].lastName + " shot on target?!");
-        builder.Prompts.choice(session, "Yes or No?", "Yes|No");
+        builder.Prompts.confirm(session, "Yes or No?");
     },
     function (session, results) {
         session.send(results.response);
