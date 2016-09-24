@@ -414,7 +414,7 @@ bot.dialog('/shot', [
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                  new builder.HeroCard(session)
-                    .title("Tell me about the goal")
+                    .title("Tell me about the shot")
 
                     .buttons([
                         builder.CardAction.imBack(session, "homeShot", homeTeam.club + " Shot"),
@@ -454,7 +454,7 @@ bot.dialog('/shot', [
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
-        session.send("returned to goal dialog");
+        session.send("returned to shot dialog");
         session.replaceDialog('/goal');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
@@ -1135,10 +1135,10 @@ bot.dialog('/homeShot', [
     function (session, results) {
         if (results.response == '1') {
                 session.send(homeTeam.club + " Player '%s' shot on target!", playerNumber);
-                addToRawTicker("shotOnTarget", homeTeam.roster[playerNumber], "");
+                addToRawTicker("shotOnTarget", homeTeam.roster[playerNumber].lastName, "");
         } else {
                 session.send(homeTeam.club + " Player '%s' shot off target!", playerNumber);
-                addToRawTicker("shotOffTarget", homeTeam.roster[playerNumber], "");
+                addToRawTicker("shotOffTarget", homeTeam.roster[playerNumber].lastName, "");
         }
         session.endDialog();
     }
