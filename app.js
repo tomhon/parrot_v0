@@ -1086,9 +1086,6 @@ bot.dialog('/homeScorer', [
     function (session, results) {
         session.send("Home Player '%s' scored!", results.response);
         addToRawTicker("Goal", results.response.toString());
-        // session.endDialog();
-    },
-    function (session, results) {
         session.send("Which Home Player Assisted?");
         builder.Prompts.number(session, "Now enter a number.");
     },
