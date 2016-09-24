@@ -1133,6 +1133,7 @@ bot.dialog('/homeShot', [
         builder.Prompts.choice(session, "Yes or No?", "Yes|No");
     },
     function (session, results) {
+        session.send(results.response);
         if (results.response == '1') {
                 session.send(homeTeam.club + " Player '%s' shot on target!", playerNumber);
                 addToRawTicker("shotOnTarget", homeTeam.roster[playerNumber].lastName, "");
