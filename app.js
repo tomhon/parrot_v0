@@ -288,10 +288,8 @@ bot.dialog('/goal', [
                     .title("Tell me about the goal")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "homeScorer", "Home Team Scorer"),
-                        builder.CardAction.imBack(session, "homeAssist", "Home Team Assist"),
-                        builder.CardAction.imBack(session, "awayScorer", "Away Team Scorer"),
-                        builder.CardAction.imBack(session, "awayAssist", "Away Team Assist"),
+                        builder.CardAction.imBack(session, "homeScored", "Home Team Goal"),
+                        builder.CardAction.imBack(session, "awayScored", "Away Team Goal"),
                         builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
@@ -1078,55 +1076,37 @@ bot.dialog('/weather', [
 // 2nd Level Dialogs - Goal
 //=========================================================
 
-bot.dialog('/homeScorer', [
+bot.dialog('/homeScored', [
     function (session) {
-        session.send("Which Home Player Scored?");
+        session.send("Which " + homeTeam.club + " Player Scored?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
-        session.send("Home Player '%s' scored!", results.response);
+        session.send(homeTeam.club + " Player '%s' scored!", results.response);
         addToRawTicker("Goal", results.response.toString());
-        session.send("Which Home Player Assisted?");
+        session.send("Which " + homeTeam.club + " Player Player Assisted?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
-        session.send("Home Player '%s' assisted!", results.response);
+        session.send(homeTeam.club + " Player '%s' assisted!", results.response);
         addToRawTicker("Assist", results.response.toString());
         session.endDialog();
     }
 ]);
 
-bot.dialog('/homeAssist', [
+bot.dialog('/awayScored', [
     function (session) {
-        session.send("Which Home Player Assisted?");
+        session.send("Which " + homeTeam.club + " Player Scored?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
-        session.send("Home Player '%s' assisted!", results.response);
-        addToRawTicker("Assist", results.response.toString());
-        session.endDialog();
-    }
-]);
-
-bot.dialog('/awayScorer', [
-    function (session) {
-        session.send("Which Away Player Scored?");
-        builder.Prompts.number(session, "Now enter a number.");
-    },
-    function (session, results) {
-        session.send("Away Player '%s' scored!", results.response);
+        session.send(awayTeam.club + " Player '%s' scored!", results.response);
         addToRawTicker("Goal", results.response.toString());
-        session.endDialog();
-    }
-]);
-
-bot.dialog('/awayAssist', [
-    function (session) {
-        session.send("Which Away Player Assisted?");
+        session.send("Which " + homeTeam.club + " Player Player Assisted?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
-        session.send("Away Player '%s' assisted!", results.response);
+        session.send(awayTeam.club + " Player '%s' assisted!", results.response);
         addToRawTicker("Assist", results.response.toString());
         session.endDialog();
     }
