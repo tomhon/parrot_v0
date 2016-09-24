@@ -76,6 +76,7 @@ addToRawTicker("Goal", "unknown", "unknown");
 addToRawTicker("Shot", "unknown", "unknown");
 addToRawTicker("Whistle", "unknown", "unknown");
 addToRawTicker("Goal");
+addToRawTicker("Assist", homeTeam.roster[7]);
 
     ticker.forEach(function(tick) {
         console.log(tick.event + " " + tick.player + " " + tick.details + " " + tick.timestamp.toString().slice(16,28));

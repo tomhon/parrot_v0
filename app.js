@@ -52,7 +52,7 @@ function team() {
 function tickerEvent () {
     this.timestamp = "";
     this.event = "";
-    this.player = "";
+    this.player = new player;
     this.details = "";
     this.user = "";
 }
@@ -1089,13 +1089,13 @@ bot.dialog('/homeScored', [
     },
     function (session, results) {
         session.send(homeTeam.club + " Player '%s' scored!", results.response);
-        addToRawTicker("Goal", results.response.toString());
-        session.send("Which " + homeTeam.club + " Player Player Assisted?");
+        addToRawTicker("Goal", homeTeam.roster[results.response]);
+        session.send("Which " + homeTeam.club + " Player Assisted?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
         session.send(homeTeam.club + " Player '%s' assisted!", results.response);
-        addToRawTicker("Assist", results.response.toString());
+        addToRawTicker("Assist", homeTeam.roster[results.response]);
         session.endDialog();
     }
 ]);
@@ -1131,17 +1131,17 @@ bot.dialog('/homeShot', [
         playerNumber = results.response;
         session.send("Was "+ homeTeam.club + " Player " + playerNumber + " " + " shot on target?!");
         // session.send("Was "+ homeTeam.club + " Player " + playerNumber + " " + homeTeam.roster[playerNumber].lastName + " shot on target?!");
-        builder.Prompts.confirm(session, "Yes or No?");
+        builder.Prompts.confirm(session);
     },
     function (session, results) {
         session.send("You chose '%s'", results.response ? 'yes' : 'no');
         if (results.response == '1') {
                 // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
                 session.send(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("shotOnTarget", homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName : '', "");
+                addToRawTicker("shotOnTarget", homeTeam.roster[playerNumber], "");
         } else {
                 session.send(homeTeam.club + " Player '%s' shot off target!", playerNumber);
-                addToRawTicker("shotOffTarget", homeTeam.roster[playerNumber].lastName, "");
+                addToRawTicker("shotOffTarget", homeTeam.roster[playerNumber], "");
         }
         session.endDialog();
     }
