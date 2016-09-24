@@ -455,7 +455,7 @@ bot.dialog('/shot', [
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
         session.send("returned to shot dialog");
-        session.replaceDialog('/goal');
+        session.replaceDialog('/shot');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
@@ -1136,8 +1136,9 @@ bot.dialog('/homeShot', [
     function (session, results) {
         session.send("You chose '%s'", results.response ? 'yes' : 'no');
         if (results.response == '1') {
-                session.send(homeTeam.club + " Player '%s' shot on target!", playerNumber);
-                addToRawTicker("shotOnTarget", homeTeam.roster[playerNumber].lastName, "");
+                // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
+                session.send(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
+                addToRawTicker("shotOnTarget", homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName : '', "");
         } else {
                 session.send(homeTeam.club + " Player '%s' shot off target!", playerNumber);
                 addToRawTicker("shotOffTarget", homeTeam.roster[playerNumber].lastName, "");
