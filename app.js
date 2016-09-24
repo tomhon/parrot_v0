@@ -1088,7 +1088,7 @@ bot.dialog('/homeScorer', [
         addToRawTicker("Goal", results.response.toString());
         // session.endDialog();
     },
-    function (session) {
+    function (session, results) {
         session.send("Which Home Player Assisted?");
         builder.Prompts.number(session, "Now enter a number.");
     },
