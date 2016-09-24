@@ -85,7 +85,7 @@ addToRawTicker("Goal");
         console.log(number.firstName + number.lastName + number.position);
     });
     playerNumber = 7;
-    console.log("Was "+ homeTeam.club + " Player " + playerNumber + " " + hometeam.roster[playerNumber].lastName + " shot on target?!");
+    console.log("Was "+ homeTeam.club + " Player " + playerNumber + " " + homeTeam.roster[playerNumber].lastName + " shot on target?!");
 
 //=========================================================
 // Web Server Setup
