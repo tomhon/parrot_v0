@@ -75,9 +75,9 @@ var addToRawTicker = function (event, player, details) {
 //=========================================================
 
 var homeTeam = new team;
-homeTeam.teamName ="Home";
+homeTeam.club ="Home Team";
 var awayTeam = new team;
-awayTeam.teamName = "Away";
+awayTeam.club = "Away Team";
 
 //=========================================================
 // Set up dummy data
@@ -311,7 +311,7 @@ bot.dialog('/goal', [
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "homeScorer|homeAssist|awayScorer}awayAssist|matchProgress|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
+        builder.Prompts.choice(session, msg, "homeScored|awayScored|matchProgress|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
 
     },
     function (session, results) {
