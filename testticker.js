@@ -5,21 +5,22 @@
 // Ticker Setup
 //=========================================================
 
+
+
+function player () {
+    this.firstName = "";
+    this.lastName = "";
+    this.position = "";
+    this.photo = null;
+}
+
 function team() {
     this.teamName = "";
     this.club = "";
     this.ageGroup = "";
     this.gender = "";
     this.uniform = "";
-}
-
-function player () {
-    this.team = team;
-    this.number = Null;
-    this.firstName = "";
-    this.lastName = "";
-    this.position = "";
-    this.photo = null;
+    this.roster = new Array();
 }
 
 function tickerEvent () {
@@ -58,7 +59,13 @@ awayTeam.teamName = "Away";
 homeTeam.teamName = "G04 Schmetzer";
 addToRawTicker("homeTeamEntered",'',homeTeam.teamName);
 homeTeam.club = 'Crossfire';
-addToRawTicker("homeClubEntered",'',awayTeam.club);
+addToRawTicker("homeClubEntered",'',homeTeam.club);
+homeTeam.roster[7] = new player;
+homeTeam.roster[7].firstName ="Poppy";
+homeTeam.roster[7].lastName ="Honeybone";
+homeTeam.roster[2] = new player;
+homeTeam.roster[2].firstName ="Riley";
+homeTeam.roster[2].lastName ="McQuade";
 
 awayTeam.teamName = "G04 Copa";
 addToRawTicker("awayTeamEntered",'',awayTeam.teamName);
@@ -72,6 +79,10 @@ addToRawTicker("Goal");
 
     ticker.forEach(function(tick) {
         console.log(tick.event + " " + tick.player + " " + tick.details + " " + tick.timestamp.toString().slice(16,28));
+    });
+
+    homeTeam.roster.forEach(function(number) {
+        console.log(number.firstName + number.lastName + number.position);
     });
 
 //=========================================================

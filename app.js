@@ -33,21 +33,20 @@ server.get('/', function (req, res) {
 // Ticker Setup
 //=========================================================
 
+function player () {
+    this.firstName = "";
+    this.lastName = "";
+    this.position = "";
+    this.photo = null;
+}
+
 function team() {
     this.teamName = "";
     this.club = "";
     this.ageGroup = "";
     this.gender = "";
     this.uniform = "";
-}
-
-function player () {
-    this.team = team;
-    this.number = Null;
-    this.firstName = "";
-    this.lastName = "";
-    this.position = "";
-    this.photo = null;
+    this.roster = new Array();
 }
 
 function tickerEvent () {
@@ -87,6 +86,13 @@ homeTeam.teamName = "G04 Schmetzer";
 addToRawTicker("homeTeamEntered",'',homeTeam.teamName);
 homeTeam.club = 'Crossfire';
 addToRawTicker("homeClubEntered",'',homeTeam.club);
+homeTeam.roster[7] = new player;
+homeTeam.roster[7].firstName ="Poppy";
+homeTeam.roster[7].lastName ="Honeybone";
+homeTeam.roster[2] = new player;
+homeTeam.roster[2].firstName ="Riley";
+homeTeam.roster[2].lastName ="McQuade";
+
 
 awayTeam.teamName = "G04 Copa";
 addToRawTicker("awayTeamEntered",'',awayTeam.teamName);
@@ -274,7 +280,7 @@ bot.dialog('/goal', [
         //log time of goal
         addToRawTicker("Goal");
 
-        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
+        // session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
         // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
         // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
                 // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
@@ -394,9 +400,10 @@ bot.dialog('/whistle', [
 
 bot.dialog('/shot', [
     function (session) {
-        //log time of shot
+        //log time of goal
         addToRawTicker("Shot");
-        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
+
+        // session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
         // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
         // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
                 // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
@@ -407,13 +414,11 @@ bot.dialog('/shot', [
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                  new builder.HeroCard(session)
-                    .title("Tell me about the shot")
+                    .title("Tell me about the goal")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "teams", "Teams"),
-                        builder.CardAction.imBack(session, "location", "Location"),
-                        builder.CardAction.imBack(session, "schedule", "Schedule"),
-                        builder.CardAction.imBack(session, "weather", "Weather"),
+                        builder.CardAction.imBack(session, "homeShot", homeTeam.club + " Shot"),
+                        builder.CardAction.imBack(session, "awayShot", awayTeam.club + " Shot"),
                         builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
@@ -435,7 +440,7 @@ bot.dialog('/shot', [
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress|goal|whistle|matchDetails|overview|liveTicker|lineup|stats");
+        builder.Prompts.choice(session, msg, "homeShot|awayShot|matchProgress|goal|whistle|matchDetails|overview|liveTicker|lineup|stats");
 
     },
     function (session, results) {
@@ -449,7 +454,8 @@ bot.dialog('/shot', [
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
-        session.replaceDialog('/menu');
+        session.send("returned to goal dialog");
+        session.replaceDialog('/goal');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
@@ -1097,6 +1103,50 @@ bot.dialog('/homeScored', [
 bot.dialog('/awayScored', [
     function (session) {
         session.send("Which " + awayTeam.club + " Player Scored?");
+        builder.Prompts.number(session, "Now enter a number.");
+    },
+    function (session, results) {
+        session.send(awayTeam.club + " Player '%s' scored!", results.response);
+        addToRawTicker("Goal", results.response.toString());
+        session.send("Which " + awayTeam.club + " Player Player Assisted?");
+        builder.Prompts.number(session, "Now enter a number.");
+    },
+    function (session, results) {
+        session.send(awayTeam.club + " Player '%s' assisted!", results.response);
+        addToRawTicker("Assist", results.response.toString());
+        session.endDialog();
+    }
+]);
+
+//=========================================================
+// 2nd Level Dialogs - Shot
+//=========================================================
+
+bot.dialog('/homeShot', [
+    function (session) {
+        session.send("Which " + homeTeam.club + " Player Shot?");
+        builder.Prompts.number(session, "Now enter a number.");
+    },
+    function (session, results) {
+
+        session.send("Was "+ homeTeam.club + " Player '%s' shot on target?!", results.response);
+        builder.Prompts.choice(session, "Yes or No?", "Yes|No");
+    },
+    function (session, results) {
+        if (results.response == 'Yes') {
+                session.send(homeTeam.club + " Player '%s' shot on target!");
+                addToRawTicker("shotOnTarget", "", "");
+        } else {
+                session.send(homeTeam.club + " Player '%s' shot off target!");
+                addToRawTicker("shotOffTarget", "", "");
+        }
+        session.endDialog();
+    }
+]);
+
+bot.dialog('/awayShot', [
+    function (session) {
+        session.send("Which " + awayTeam.club + " Player Shot?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
