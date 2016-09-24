@@ -288,8 +288,8 @@ bot.dialog('/goal', [
                     .title("Tell me about the goal")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "homeScored", "Home Team Goal"),
-                        builder.CardAction.imBack(session, "awayScored", "Away Team Goal"),
+                        builder.CardAction.imBack(session, "homeScored", homeTeam.club + " Goal"),
+                        builder.CardAction.imBack(session, "awayScored", awayTeam.club + " Goal"),
                         builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
@@ -1096,13 +1096,13 @@ bot.dialog('/homeScored', [
 
 bot.dialog('/awayScored', [
     function (session) {
-        session.send("Which " + homeTeam.club + " Player Scored?");
+        session.send("Which " + awayTeam.club + " Player Scored?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
         session.send(awayTeam.club + " Player '%s' scored!", results.response);
         addToRawTicker("Goal", results.response.toString());
-        session.send("Which " + homeTeam.club + " Player Player Assisted?");
+        session.send("Which " + awayTeam.club + " Player Player Assisted?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
