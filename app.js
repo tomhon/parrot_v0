@@ -341,7 +341,7 @@ bot.dialog('/whistle', [
         //log time of whistle
         addToRawTicker("Whistle");
 
-        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
+        // session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
         // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
         // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
                 // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
@@ -1130,7 +1130,7 @@ bot.dialog('/homeShot', [
     function (session, results) {
 
         session.send("Was "+ homeTeam.club + " Player '%s' shot on target?!", results.response);
-        builder.Prompts.choice(session, "Yes or No?", "Yes|No");
+        builder.Prompts.choice(session, "Yes or No?", "Yes|No", button);
     },
     function (session, results) {
         if (results.response == 'Yes') {
