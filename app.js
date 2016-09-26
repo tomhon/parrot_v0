@@ -1095,13 +1095,14 @@ bot.dialog('/homeScored', [
     },
     function (session, results) {
         session.send(homeTeam.club + " Player '%s' scored!", results.response);
-        addToRawTicker("Goal", homeTeam.roster[results.response]);
+        addToRawTicker("homeTeamGoal", homeTeam.roster[results.response]);
+               //TO DO - make assist optional
         session.send("Which " + homeTeam.club + " Player Assisted?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
         session.send(homeTeam.club + " Player '%s' assisted!", results.response);
-        addToRawTicker("Assist", homeTeam.roster[results.response]);
+        addToRawTicker("homeTeamAssist", homeTeam.roster[results.response]);
         session.endDialog();
     }
 ]);
@@ -1113,13 +1114,14 @@ bot.dialog('/awayScored', [
     },
     function (session, results) {
         session.send(awayTeam.club + " Player '%s' scored!", results.response);
-        addToRawTicker("Goal", results.response.toString());
+        addToRawTicker("awayTeamGoal", results.response.toString());
+        //TO DO - make assist optional
         session.send("Which " + awayTeam.club + " Player Player Assisted?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
         session.send(awayTeam.club + " Player '%s' assisted!", results.response);
-        addToRawTicker("Assist", results.response.toString());
+        addToRawTicker("awayTeamAssist", results.response.toString());
         session.endDialog();
     }
 ]);
