@@ -21,7 +21,10 @@ function team() {
     this.gender = "";
     this.uniform = "";
     this.roster = new Array();
-    this.latestScore = 0;
+    this.latestScore = function() {
+        latestScore = 0;
+        return latestScore;
+    } ;
 }
 
 function tickerEvent () {
@@ -45,7 +48,17 @@ var addToRawTicker = function (event, player, details) {
 };
 
 function latestScores (team) {
-    team.latestScore = team.latestScore + 1;
+    homeTeam.latestScore = 0;
+    awayTeam.latestScore = 0;   
+    ticker.forEach(function(tick) {
+        console.log(tick.event + " " + tick.player + " " + tick.details + " " + tick.timestamp.toString().slice(16,28));
+        if (tick.event == 'homeTeamGoal') {
+            homeTeam.latestScore +=1;
+        }   else {
+        if (tick.event == 'awayTeamGoal') {
+            awayTeam.latestScore +=1;
+        }  }
+    });
     return team.latestScore;
 }
 
@@ -79,6 +92,9 @@ awayTeam.club = 'Seattle United';
 addToRawTicker("awayClubEntered",'',awayTeam.club);
 
 addToRawTicker("Goal", "unknown", "unknown");
+addToRawTicker("homeTeamGoal", "unknown", "unknown");
+addToRawTicker("awayTeamGoal", "unknown", "unknown");
+addToRawTicker("homeTeamGoal", "unknown", "unknown");
 addToRawTicker("Shot", "unknown", "unknown");
 addToRawTicker("Whistle", "unknown", "unknown");
 addToRawTicker("Goal");
@@ -91,21 +107,23 @@ addToRawTicker("Assist", homeTeam.roster[7]);
     homeTeam.roster.forEach(function(number) {
         console.log(number.firstName + number.lastName + number.position);
     });
-    playerNumber = 7;
-    console.log(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
+    
+    
+playerNumber = 7;
+console.log(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
 
-console.log('Home Team latestScore ' + homeTeam.latestScore);
-console.log('Away Team latestScore ' + awayTeam.latestScore);
+console.log('Home Team latestScore ' + homeTeam.latestScore());
+console.log('Away Team latestScore ' + awayTeam.latestScore());
 
-// updateScores(homeTeam);
-
-console.log('Home Team latestScore ' + latestScores(homeTeam));
-console.log('Away Team latestScore ' + latestScores(awayTeam));
-
-// updateScores(awayTeam);
+// // updateScores(homeTeam);
 
 console.log('Home Team latestScore ' + latestScores(homeTeam));
 console.log('Away Team latestScore ' + latestScores(awayTeam));
+
+// // updateScores(awayTeam);
+
+// console.log('Home Team latestScore ' + latestScores(homeTeam));
+// console.log('Away Team latestScore ' + latestScores(awayTeam));
 
 //=========================================================
 // Web Server Setup
