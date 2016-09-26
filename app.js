@@ -98,6 +98,12 @@ awayTeam.teamName = "G04 Copa";
 addToRawTicker("awayTeamEntered",'',awayTeam.teamName);
 awayTeam.club = 'Seattle United';
 addToRawTicker("awayClubEntered",'',awayTeam.club);
+awayTeam.roster[3] = new player;
+awayTeam.roster[3].firstName ="Andi";
+awayTeam.roster[3].lastName ="Miller";
+awayTeam.roster[2] = new player;
+awayTeam.roster[2].firstName ="Anna";
+awayTeam.roster[2].lastName ="Menti";
   
 //=========================================================
 // Bot Setup
@@ -1129,8 +1135,6 @@ bot.dialog('/homeShot', [
     },
     function (session, results) {
         playerNumber = results.response;
-        // session.send("Was "+ homeTeam.club + " Player " + playerNumber + " " + " shot on target?!");
-        // session.send("Was "+ homeTeam.club + " Player " + playerNumber + " " + homeTeam.roster[playerNumber].lastName + " shot on target?!");
         builder.Prompts.confirm(session, "Was "+ homeTeam.club + " Player " + playerNumber + " shot on target?!");
     },
     function (session, results) {
@@ -1140,7 +1144,7 @@ bot.dialog('/homeShot', [
                 session.send(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
                 addToRawTicker("shotOnTarget", homeTeam.roster[playerNumber], "");
         } else {
-                session.send(homeTeam.club + " Player '%s' shot off target!", playerNumber);
+                session.send(homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
                 addToRawTicker("shotOffTarget", homeTeam.roster[playerNumber], "");
         }
         session.endDialog();
@@ -1153,14 +1157,19 @@ bot.dialog('/awayShot', [
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
-        session.send(awayTeam.club + " Player '%s' scored!", results.response);
-        addToRawTicker("Goal", results.response.toString());
-        session.send("Which " + awayTeam.club + " Player Player Assisted?");
-        builder.Prompts.number(session, "Now enter a number.");
+        playerNumber = results.response;
+        builder.Prompts.confirm(session, "Was "+ awayTeam.club + " Player " + playerNumber + " shot on target?!");
     },
     function (session, results) {
-        session.send(awayTeam.club + " Player '%s' assisted!", results.response);
-        addToRawTicker("Assist", results.response.toString());
+        session.send("You chose '%s'", results.response ? 'yes' : 'no');
+        if (results.response == '1') {
+                // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
+                session.send(awayTeam.club + " Player '%s' %s%sshot on target!", playerNumber, awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].firstName + ' ' : '',awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].lastName + ' ': '' );
+                addToRawTicker("shotOnTarget", homeTeam.roster[playerNumber], "");
+        } else {
+                session.send(awayTeam.club + " Player '%s' %s%sshot off target!", playerNumber, awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].firstName + ' ' : '',awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].lastName + ' ': '' );
+                addToRawTicker("shotOffTarget", awayTeam.roster[playerNumber], "");
+        }
         session.endDialog();
     }
 ]);
