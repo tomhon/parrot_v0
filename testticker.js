@@ -21,6 +21,7 @@ function team() {
     this.gender = "";
     this.uniform = "";
     this.roster = new Array();
+    this.latestScore = 0;
 }
 
 function tickerEvent () {
@@ -42,6 +43,11 @@ var addToRawTicker = function (event, player, details) {
     oTickerEvent.user = "Tom";
     ticker.push(oTickerEvent);
 };
+
+function latestScores (team) {
+    team.latestScore = team.latestScore + 1;
+    return team.latestScore;
+}
 
 //=========================================================
 // Set up match data
@@ -87,6 +93,19 @@ addToRawTicker("Assist", homeTeam.roster[7]);
     });
     playerNumber = 7;
     console.log(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
+
+console.log('Home Team latestScore ' + homeTeam.latestScore);
+console.log('Away Team latestScore ' + awayTeam.latestScore);
+
+// updateScores(homeTeam);
+
+console.log('Home Team latestScore ' + latestScores(homeTeam));
+console.log('Away Team latestScore ' + latestScores(awayTeam));
+
+// updateScores(awayTeam);
+
+console.log('Home Team latestScore ' + latestScores(homeTeam));
+console.log('Away Team latestScore ' + latestScores(awayTeam));
 
 //=========================================================
 // Web Server Setup

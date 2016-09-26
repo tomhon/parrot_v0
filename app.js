@@ -47,6 +47,7 @@ function team() {
     this.gender = "";
     this.uniform = "";
     this.roster = new Array();
+    this.latestScore = 0;
 }
 
 function tickerEvent () {
@@ -68,6 +69,11 @@ var addToRawTicker = function (event, player, details) {
     oTickerEvent.user = "Tom";
     ticker.push(oTickerEvent);
 };
+
+function latestScores (team) {
+    team.latestScore = team.latestScore + 1;
+    return team.latestScore;
+}
 
 //=========================================================
 // Set up match data
@@ -248,7 +254,7 @@ bot.dialog('/matchProgress', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( homeTeam.club + " <score> : <score> " + awayTeam.club)
+                    .title( homeTeam.club + latestScores(homeTeam) + " : " + latestScores(awayTeam) + awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -1094,6 +1100,7 @@ bot.dialog('/homeScored', [
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
+               //TO DO - add player names
         session.send(homeTeam.club + " Player '%s' scored!", results.response);
         addToRawTicker("homeTeamGoal", homeTeam.roster[results.response]);
                //TO DO - make assist optional
@@ -1113,6 +1120,7 @@ bot.dialog('/awayScored', [
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
+                       //TO DO - add player names
         session.send(awayTeam.club + " Player '%s' scored!", results.response);
         addToRawTicker("awayTeamGoal", results.response.toString());
         //TO DO - make assist optional
@@ -1176,101 +1184,7 @@ bot.dialog('/awayShot', [
     }
 ]);
 
-// bot.dialog('/homescorer', [
-//     function (session) {
-//         session.send("Please let me have the number of the scorer.");
-//         builder.Prompts.number(session, "Prompts.number()\n\nNow enter a number.");
-//     },
-//     function (session, results) {
-//         session.send("You entered '%s'", results.response);
-//                 //log player number
-//         addToRawTicker("Goal", "Player7");
-//      }
-
-// ]);
-
-// bot.dialog('/homeScorer', [
-//     function (session) {
-//         session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
-//         // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
-//         // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
-//                 // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
-        
-//         // Ask the user to select an item from a carousel.
-//         var msg = new builder.Message(session)
-//             .textFormat(builder.TextFormat.xml)
-//             .attachmentLayout(builder.AttachmentLayout.carousel)
-//             .attachments([
-//                 new builder.HeroCard(session)
-//                     .title("Which Home Team Player Scored?")
-
-//                     .buttons([
-//                         builder.CardAction.imBack(session, "1", "Home Team Scorer"),
-//                         builder.CardAction.imBack(session, "homeAssist", "Home Team Assist"),
-//                         builder.CardAction.imBack(session, "awayScorer", "Away Team Scorer"),
-//                         builder.CardAction.imBack(session, "awayAssist", "Away Team Assist"),
-//                         builder.CardAction.imBack(session, "matchProgress", "What's happening?")
-//                     ]),
-//                  new builder.HeroCard(session)
-//                     .title("Tell me about the goal")
-
-//                     .buttons([
-//                         // builder.CardAction.imBack(session, "homeScorer", "Home Team Scorer"),
-//                         builder.CardAction.imBack(session, "homeAssist", "Home Team Assist"),
-//                         builder.CardAction.imBack(session, "awayScorer", "Away Team Scorer"),
-//                         builder.CardAction.imBack(session, "awayAssist", "Away Team Assist"),
-//                         // builder.CardAction.imBack(session, "matchProgress", "Back")
-//                     ]),
-//                 new builder.HeroCard(session)
-//                     .title("What's happening?")
-
-//                     .buttons([
-//                         builder.CardAction.imBack(session, "goal", "Goal"),
-//                         builder.CardAction.imBack(session, "whistle", "Whistle"),
-//                         builder.CardAction.imBack(session, "shot", "Shot"),
-//                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
-//                     ]),
-//                new builder.HeroCard(session)
-//                     .title("<Home> <score> : <score> <Away>")
-
-//                     .buttons([
-//                         builder.CardAction.imBack(session, "overview", "Overview"),
-//                         builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
-//                         builder.CardAction.imBack(session, "lineup", "Lineup"),
-//                         builder.CardAction.imBack(session, "stats", "Stats")
-//                     ])
-     
-//             ]);
-//         builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress|goal|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
-
-//     },
-//     function (session, results) {
-//         if (results.response && results.response.entity != '(quit)') {
-//             // Launch demo dialog
-//             session.beginDialog('/' + results.response.entity);
-//         } else {
-//             // Exit the menu
-//             session.endDialog();
-//         }
-//     },
-//     function (session, results) {
-//         // The menu runs a loop until the user chooses to (quit).
-//         session.replaceDialog('/menu');
-//     }
-// ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
-
-//=========================================================
-// 2nd Level Dialogs - Goal
-//=========================================================
-
-
-
-//=========================================================
-// 2nd Level Dialogs - Shot
-//=========================================================
-
-
-
+// 
 
 //=========================================================
 // 2nd Level Dialogs - Whistle
