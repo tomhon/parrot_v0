@@ -750,21 +750,35 @@ bot.dialog('/stats', [
 
 bot.dialog('/homeTeam', [
     function (session) {
-        session.send("Which " + homeTeam.club + " Player Scored?");
-        builder.Prompts.number(session, "Now enter a number.");
+        session.send("Home team name is currently set to " + homeTeam.teamName);
+        builder.Prompts.text(session, "If you want to change it, please enter a new team name");
     },
     function (session, results) {
                //TO DO - add player names
-        session.send(homeTeam.club + " Player '%s' scored!", results.response);
-        addToRawTicker("homeTeamGoal", homeTeam.roster[results.response]);
-               //TO DO - make assist optional
-        session.send("Which " + homeTeam.club + " Player Assisted?");
-        builder.Prompts.number(session, "Now enter a number.");
+        if (results.response) {
+                homeTeam.teamName = results.response;
+                addToRawTicker("homeNameEntered", "", homeTeam.teamName);
+                session.send("Home team is now %s", homeTeam.teamName);    
+        } else {
+            next();
+
+        }
+        session.send("Home club name is currently set to " + homeTeam.club);
+        builder.Prompts.text(session, "If you want to change it, please enter a new club name");
+
     },
     function (session, results) {
-        session.send(homeTeam.club + " Player '%s' assisted!", results.response);
-        addToRawTicker("homeTeamAssist", homeTeam.roster[results.response]);
-        session.endDialog();
+        if (results.response) {
+                homeTeam.club = results.response;
+                addToRawTicker("homeClubEntered", "", homeTeam.club);
+                session.send("Home club is now %s", homeTeam.club);    
+        } else {
+            next();
+
+        }
+        session.send("Home club name is currently set to " + homeTeam.club);
+        session.endDialog;
+        // builder.Prompts.text(session, "If you want to change it, please enter a new club name");
     }
 ]);
 
