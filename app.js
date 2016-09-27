@@ -530,12 +530,14 @@ bot.dialog('/matchDetails', [
             session.beginDialog('/' + results.response.entity);
         } else {
             // Exit the menu
+
             session.endDialog();
         }
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
-        session.replaceDialog('/menu');
+        session.send("returned to matchDetails dialog");
+        session.replaceDialog('/matchDetails');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
