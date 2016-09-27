@@ -32,6 +32,15 @@ function team() {
     } ;
 }
 
+
+function location() {
+    fieldName = "";
+    fieldNumber = null;
+    fieldCity = "";
+    fieldState = "";
+    fieldCountry = "";
+}
+
 function tickerEvent () {
     this.timestamp = "";
     this.event = "";

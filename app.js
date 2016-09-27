@@ -930,46 +930,46 @@ bot.dialog('/location', [
             next();
 
         }
-        session.send("Field number is currently set to " + fieldNumber);
-        builder.Prompts.number(session, "If you want to change it, please enter a new field number");
+    //     session.send("Field number is currently set to " + fieldNumber);
+    //     builder.Prompts.number(session, "If you want to change it, please enter a new field number");
 
-    },
-    function (session, results) {
-        if (results.response) {
-                fieldNumber = results.response;
-                addToRawTicker("cityEntered", "", fieldCity);
-                session.send("City is now %s", fieldCity);    
+    // },
+    // function (session, results) {
+    //     if (results.response) {
+    //             fieldNumber = results.response;
+    //             addToRawTicker("cityEntered", "", fieldCity);
+    //             session.send("City is now %s", fieldCity);    
   
-        } else {
-            next();
+    //     } else {
+    //         next();
 
-        }
-        session.send("State is currently set to " + fieldState);
-        builder.Prompts.text(session, "If you want to change it, please enter a new State");
+    //     }
+    //     session.send("State is currently set to " + fieldState);
+    //     builder.Prompts.text(session, "If you want to change it, please enter a new State");
 
-    },
-    function (session, results) {
+    // },
+    // function (session, results) {
 
-        if (results.response) {
-                awayTeam.ageGroup = results.response;
-                addToRawTicker("stateEntered", "", fieldCity);
-                session.send("State is now %s", fieldCity);  
-        } else {
-            next();
+    //     if (results.response) {
+    //             awayTeam.ageGroup = results.response;
+    //             addToRawTicker("stateEntered", "", fieldCity);
+    //             session.send("State is now %s", fieldCity);  
+    //     } else {
+    //         next();
 
-        }
-        session.send("Country is currently set to " + fieldCountry);
-        builder.Prompts.text(session, "If you want to change it, please enter ");
+    //     }
+    //     session.send("Country is currently set to " + fieldCountry);
+    //     builder.Prompts.text(session, "If you want to change it, please enter ");
 
-    },
-    function (session, results) {
-        if (results.response) {
-                fieldState = results.response.entity;
-                addToRawTicker("stateEntered", "", fieldState);
-                session.send("State is now %s", fieldState);    
-        } else {
-            next();
-        }
+    // },
+    // function (session, results) {
+    //     if (results.response) {
+    //             fieldState = results.response.entity;
+    //             addToRawTicker("stateEntered", "", fieldState);
+    //             session.send("State is now %s", fieldState);    
+    //     } else {
+    //         next();
+    //     }
         session.endDialog();
     }
 ]);
