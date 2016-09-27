@@ -967,14 +967,10 @@ bot.dialog('/location', [
                 fieldState = results.response.entity;
                 addToRawTicker("stateEntered", "", fieldState);
                 session.send("State is now %s", fieldState);    
-  
         } else {
             next();
-
         }
-       
         session.endDialog();
-
     }
 ]);
 
