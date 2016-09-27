@@ -780,6 +780,49 @@ bot.dialog('/homeTeam', [
             next();
 
         }
+        session.send("Home age group name is currently set to " + homeTeam.ageGroup);
+        builder.Prompts.text(session, "If you want to change it, please enter a new age group");
+
+    },
+    function (session, results) {
+
+        if (results.response) {
+                homeTeam.ageGroup = results.response;
+                addToRawTicker("homeAgeEntered", "", homeTeam.ageGroup);
+                session.send("Home age group is now %s", homeTeam.ageGroup);  
+        } else {
+            next();
+
+        }
+        session.send("Home gender is currently set to " + homeTeam.gender);
+        builder.Prompts.choice(session, "If you want to change it, please enter ", "Girls|Boys");
+
+    },
+    function (session, results) {
+        if (results.response) {
+                homeTeam.gender = results.response;
+                addToRawTicker("homeGenerEntered", "", homeTeam.gender);
+                session.send("Home gender is now %s", homeTeam.gender);    
+  
+        } else {
+            next();
+
+        }
+        session.send("Home uniform is currently set to " + homeTeam.uniform);
+        builder.Prompts.text(session, "If you want to change it, please enter a new uniform color");
+
+    },
+    function (session, results) {
+
+        if (results.response) {
+                homeTeam.uniform = results.response;
+                addToRawTicker("homeUniformEntered", "", homeTeam.uniform);
+                session.send("Home Uniform is now %s", homeTeam.uniform);  
+        } else {
+            next();
+
+        }
+        
         session.endDialog();
 
     }
