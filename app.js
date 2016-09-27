@@ -919,17 +919,17 @@ bot.dialog('/location', [
         session.send("Field Name is currently set to " + fieldName);
         builder.Prompts.text(session, "If you want to change it, please enter a new field name");
 
-    },
-    function (session, results) {
+    // },
+    // function (session, results) {
 
-        if (results.response) {
-                fieldName = results.response;
-                addToRawTicker("fieldNameEntered", "", fieldName);
-                session.send("Field name is now %s", fieldName);  
-        } else {
-            next();
+    //     if (results.response) {
+    //             fieldName = results.response;
+    //             addToRawTicker("fieldNameEntered", "", fieldName);
+    //             session.send("Field name is now %s", fieldName);  
+    //     } else {
+    //         next();
 
-        }
+    //     }
     //     session.send("Field number is currently set to " + fieldNumber);
     //     builder.Prompts.number(session, "If you want to change it, please enter a new field number");
 
