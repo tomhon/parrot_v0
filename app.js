@@ -58,6 +58,14 @@ function team() {
     } ;
 }
 
+function location() {
+    fieldName = "";
+    fieldNumber = null;
+    fieldCity = "";
+    fieldState = "";
+    fieldCountry = "";
+}
+
 function tickerEvent () {
     this.timestamp = "";
     this.event = "";
@@ -908,212 +916,225 @@ bot.dialog('/awayTeam', [
 
 bot.dialog('/location', [
     function (session) {
-        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
-        // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
-        // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
-                // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
-        
-        // Ask the user to select an item from a carousel.
-        var msg = new builder.Message(session)
-            .textFormat(builder.TextFormat.xml)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                 new builder.HeroCard(session)
-                    .title("Tell me about the Away Team")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "fieldName", "Field Name"),
-                        builder.CardAction.imBack(session, "fieldNumber", "Field Number"),
-                        builder.CardAction.imBack(session, "city", "City"),
-                        builder.CardAction.imBack(session, "state", "State"),
-                        builder.CardAction.imBack(session, "country", "Country"),
-                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("Tell me about the match")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "homeTeam", "Home Team"),
-                        builder.CardAction.imBack(session, "awayTeam", "Away Team"),
-                        builder.CardAction.imBack(session, "location", "Location"),
-                        builder.CardAction.imBack(session, "schedule", "Schedule"),
-                        builder.CardAction.imBack(session, "weather", "Weather")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("What's happening?")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "goal", "Goal"),
-                        builder.CardAction.imBack(session, "whistle", "Whistle"),
-                        builder.CardAction.imBack(session, "shot", "Shot"),
-                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
-                    ]),
-               new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "overview", "Overview"),
-                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
-                        builder.CardAction.imBack(session, "lineup", "Lineup"),
-                        builder.CardAction.imBack(session, "stats", "Stats")
-                    ])
-     
-            ]);
-        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress");
+        session.send("Field Name is currently set to " + fieldName);
+        builder.Prompts.text(session, "If you want to change it, please enter a new field name");
 
     },
     function (session, results) {
-        if (results.response && results.response.entity != '(quit)') {
-            // Launch demo dialog
-            session.beginDialog('/' + results.response.entity);
+
+        if (results.response) {
+                fieldName = results.response;
+                addToRawTicker("fieldNameEntered", "", fieldName);
+                session.send("Field name is now %s", fieldName);  
         } else {
-            // Exit the menu
-            session.endDialog();
+            next();
+
         }
+        session.send("Field number is currently set to " + fieldNumber);
+        builder.Prompts.number(session, "If you want to change it, please enter a new field number");
+
     },
     function (session, results) {
-        // The menu runs a loop until the user chooses to (quit).
-        session.replaceDialog('/menu');
+        if (results.response) {
+                fieldNumber = results.response;
+                addToRawTicker("cityEntered", "", fieldCity);
+                session.send("City is now %s", fieldCity);    
+  
+        } else {
+            next();
+
+        }
+        session.send("State is currently set to " + fieldState);
+        builder.Prompts.text(session, "If you want to change it, please enter a new State");
+
+    },
+    function (session, results) {
+
+        if (results.response) {
+                awayTeam.ageGroup = results.response;
+                addToRawTicker("stateEntered", "", fieldCity);
+                session.send("State is now %s", fieldCity);  
+        } else {
+            next();
+
+        }
+        session.send("Country is currently set to " + fieldCountry);
+        builder.Prompts.text(session, "If you want to change it, please enter ");
+
+    },
+    function (session, results) {
+        if (results.response) {
+                fieldState = results.response.entity;
+                addToRawTicker("stateEntered", "", fieldState);
+                session.send("State is now %s", fieldState);    
+  
+        } else {
+            next();
+
+        }
+       
+        session.endDialog();
+
     }
-]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+]);
 
 bot.dialog('/schedule', [
     function (session) {
-        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
-        // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
-        // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
-                // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
-        
-        // Ask the user to select an item from a carousel.
-        var msg = new builder.Message(session)
-            .textFormat(builder.TextFormat.xml)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                 new builder.HeroCard(session)
-                    .title("What time does the game start?")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "startTime", "Kick Off Time"),
-                        builder.CardAction.imBack(session, "timeZone", "Time Zone"),
-                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("Tell me about the match")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "homeTeam", "Home Team"),
-                        builder.CardAction.imBack(session, "awayTeam", "Away Team"),
-                        builder.CardAction.imBack(session, "location", "Location"),
-                        builder.CardAction.imBack(session, "schedule", "Schedule"),
-                        builder.CardAction.imBack(session, "weather", "Weather")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("What's happening?")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "goal", "Goal"),
-                        builder.CardAction.imBack(session, "whistle", "Whistle"),
-                        builder.CardAction.imBack(session, "shot", "Shot"),
-                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
-                    ]),
-               new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "overview", "Overview"),
-                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
-                        builder.CardAction.imBack(session, "lineup", "Lineup"),
-                        builder.CardAction.imBack(session, "stats", "Stats")
-                    ])
-     
-            ]);
-        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress");
+        session.send("Away club name is currently set to " + awayTeam.club);
+        builder.Prompts.text(session, "If you want to change it, please enter a new club name");
 
     },
     function (session, results) {
-        if (results.response && results.response.entity != '(quit)') {
-            // Launch demo dialog
-            session.beginDialog('/' + results.response.entity);
+
+        if (results.response) {
+                awayTeam.club = results.response;
+                addToRawTicker("awayClubEntered", "", awayTeam.club);
+                session.send("Away club is now %s", awayTeam.club);  
         } else {
-            // Exit the menu
-            session.endDialog();
+            next();
+
         }
+        session.send("Away team name is currently set to " + awayTeam.teamName);
+        builder.Prompts.text(session, "If you want to change it, please enter a new team name");
+
     },
     function (session, results) {
-        // The menu runs a loop until the user chooses to (quit).
-        session.replaceDialog('/menu');
+        if (results.response) {
+                awayTeam.teamName = results.response;
+                addToRawTicker("awayNameEntered", "", awayTeam.teamName);
+                session.send("Away team is now %s", awayTeam.teamName);    
+  
+        } else {
+            next();
+
+        }
+        session.send("Away age group name is currently set to " + awayTeam.ageGroup);
+        builder.Prompts.text(session, "If you want to change it, please enter a new age group");
+
+    },
+    function (session, results) {
+
+        if (results.response) {
+                awayTeam.ageGroup = results.response;
+                addToRawTicker("awayAgeEntered", "", awayTeam.ageGroup);
+                session.send("Away age group is now %s", awayTeam.ageGroup);  
+        } else {
+            next();
+
+        }
+        session.send("Away gender is currently set to " + awayTeam.gender);
+        builder.Prompts.choice(session, "If you want to change it, please enter ", "Girls|Boys");
+
+    },
+    function (session, results) {
+        if (results.response) {
+                awayTeam.gender = results.response.entity;
+                addToRawTicker("awayGenerEntered", "", awayTeam.gender);
+                session.send("Away gender is now %s", awayTeam.gender);    
+  
+        } else {
+            next();
+
+        }
+        session.send("Away uniform is currently set to " + awayTeam.uniform);
+        builder.Prompts.text(session, "If you want to change it, please enter a new uniform color");
+
+    },
+    function (session, results) {
+
+        if (results.response) {
+                awayTeam.uniform = results.response;
+                addToRawTicker("awayUniformEntered", "", awayTeam.uniform);
+                session.send("Away Uniform is now %s", awayTeam.uniform);  
+        } else {
+            next();
+
+        }
+        
+        session.endDialog();
+
     }
-]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+]);
 
 bot.dialog('/weather', [
     function (session) {
-        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
-        // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
-        // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
-                // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
-        
-        // Ask the user to select an item from a carousel.
-        var msg = new builder.Message(session)
-            .textFormat(builder.TextFormat.xml)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                 new builder.HeroCard(session)
-                    .title("What is the weather like?")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "weatherGeneral", "Sunny? Raining? Cloudy?"),
-                        builder.CardAction.imBack(session, "visibility", "Visibility"),
-                        builder.CardAction.imBack(session, "wind", "Wind"),
-                        builder.CardAction.imBack(session, "temperature", "Temperature"),
-                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("Tell me about the match")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "homeTeam", "Home Team"),
-                        builder.CardAction.imBack(session, "awayTeam", "Away Team"),
-                        builder.CardAction.imBack(session, "location", "Location"),
-                        builder.CardAction.imBack(session, "schedule", "Schedule"),
-                        builder.CardAction.imBack(session, "weather", "Weather")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("What's happening?")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "goal", "Goal"),
-                        builder.CardAction.imBack(session, "whistle", "Whistle"),
-                        builder.CardAction.imBack(session, "shot", "Shot"),
-                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
-                    ]),
-               new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "overview", "Overview"),
-                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
-                        builder.CardAction.imBack(session, "lineup", "Lineup"),
-                        builder.CardAction.imBack(session, "stats", "Stats")
-                    ])
-     
-            ]);
-        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress");
+        session.send("Away club name is currently set to " + awayTeam.club);
+        builder.Prompts.text(session, "If you want to change it, please enter a new club name");
 
     },
     function (session, results) {
-        if (results.response && results.response.entity != '(quit)') {
-            // Launch demo dialog
-            session.beginDialog('/' + results.response.entity);
+
+        if (results.response) {
+                awayTeam.club = results.response;
+                addToRawTicker("awayClubEntered", "", awayTeam.club);
+                session.send("Away club is now %s", awayTeam.club);  
         } else {
-            // Exit the menu
-            session.endDialog();
+            next();
+
         }
+        session.send("Away team name is currently set to " + awayTeam.teamName);
+        builder.Prompts.text(session, "If you want to change it, please enter a new team name");
+
     },
     function (session, results) {
-        // The menu runs a loop until the user chooses to (quit).
-        session.replaceDialog('/menu');
+        if (results.response) {
+                awayTeam.teamName = results.response;
+                addToRawTicker("awayNameEntered", "", awayTeam.teamName);
+                session.send("Away team is now %s", awayTeam.teamName);    
+  
+        } else {
+            next();
+
+        }
+        session.send("Away age group name is currently set to " + awayTeam.ageGroup);
+        builder.Prompts.text(session, "If you want to change it, please enter a new age group");
+
+    },
+    function (session, results) {
+
+        if (results.response) {
+                awayTeam.ageGroup = results.response;
+                addToRawTicker("awayAgeEntered", "", awayTeam.ageGroup);
+                session.send("Away age group is now %s", awayTeam.ageGroup);  
+        } else {
+            next();
+
+        }
+        session.send("Away gender is currently set to " + awayTeam.gender);
+        builder.Prompts.choice(session, "If you want to change it, please enter ", "Girls|Boys");
+
+    },
+    function (session, results) {
+        if (results.response) {
+                awayTeam.gender = results.response.entity;
+                addToRawTicker("awayGenerEntered", "", awayTeam.gender);
+                session.send("Away gender is now %s", awayTeam.gender);    
+  
+        } else {
+            next();
+
+        }
+        session.send("Away uniform is currently set to " + awayTeam.uniform);
+        builder.Prompts.text(session, "If you want to change it, please enter a new uniform color");
+
+    },
+    function (session, results) {
+
+        if (results.response) {
+                awayTeam.uniform = results.response;
+                addToRawTicker("awayUniformEntered", "", awayTeam.uniform);
+                session.send("Away Uniform is now %s", awayTeam.uniform);  
+        } else {
+            next();
+
+        }
+        
+        session.endDialog();
+
     }
-]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+]);
+
+
 
 //=========================================================
 // 2nd Level Dialogs - Goal
