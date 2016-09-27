@@ -750,74 +750,23 @@ bot.dialog('/stats', [
 
 bot.dialog('/homeTeam', [
     function (session) {
-        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
-        // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
-        // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
-                // session.send("You can pass a custom message to Prompts.choice() that will present the user with a carousel of cards to select from. Each card can even support multiple actions.");
-        
-        // Ask the user to select an item from a carousel.
-        var msg = new builder.Message(session)
-            .textFormat(builder.TextFormat.xml)
-            .attachmentLayout(builder.AttachmentLayout.carousel)
-            .attachments([
-                 new builder.HeroCard(session)
-                    .title("Tell me about the Home Team")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "homeUniformColor", "Uniform Color"),
-                        builder.CardAction.imBack(session, "homeName", "Name / Club"),
-                        builder.CardAction.imBack(session, "homeGender", "Gender"),
-                        builder.CardAction.imBack(session, "homeAge", "Age"),
-                        builder.CardAction.imBack(session, "matchProgress", "What's happening?")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("Tell me about the match")
-
-                    .buttons([
-                        // builder.CardAction.imBack(session, "homeTeam", "Home Team"),
-                        builder.CardAction.imBack(session, "awayTeam", "Away Team"),
-                        builder.CardAction.imBack(session, "location", "Location"),
-                        builder.CardAction.imBack(session, "schedule", "Schedule"),
-                        builder.CardAction.imBack(session, "weather", "Weather")
-                    ]),
-                new builder.HeroCard(session)
-                    .title("What's happening?")
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "goal", "Goal"),
-                        builder.CardAction.imBack(session, "whistle", "Whistle"),
-                        builder.CardAction.imBack(session, "shot", "Shot"),
-                        builder.CardAction.imBack(session, "matchDetails", "Match Details")
-                    ]),
-               new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
-
-                    .buttons([
-                        builder.CardAction.imBack(session, "overview", "Overview"),
-                        builder.CardAction.imBack(session, "liveTicker", "Live Ticker"),
-                        builder.CardAction.imBack(session, "lineup", "Lineup"),
-                        builder.CardAction.imBack(session, "stats", "Stats")
-                    ])
-     
-            ]);
-        builder.Prompts.choice(session, msg, "awayTeam|location|schedule|weather|goal|whistle|shot|matchDetails|overview|liveTicker|lineup|stats");
-
+        session.send("Which " + homeTeam.club + " Player Scored?");
+        builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
-        if (results.response && results.response.entity != '(quit)') {
-            // Launch demo dialog
-            session.beginDialog('/' + results.response.entity);
-        } else {
-            // Exit the menu
-            session.endDialog();
-        }
+               //TO DO - add player names
+        session.send(homeTeam.club + " Player '%s' scored!", results.response);
+        addToRawTicker("homeTeamGoal", homeTeam.roster[results.response]);
+               //TO DO - make assist optional
+        session.send("Which " + homeTeam.club + " Player Assisted?");
+        builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
-        // The menu runs a loop until the user chooses to (quit).
-        session.send('returned to homeTeam dialog');
-        session.replaceDialog('/menu');
+        session.send(homeTeam.club + " Player '%s' assisted!", results.response);
+        addToRawTicker("homeTeamAssist", homeTeam.roster[results.response]);
+        session.endDialog();
     }
-]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
+]);
 
 bot.dialog('/awayTeam', [
     function (session) {
