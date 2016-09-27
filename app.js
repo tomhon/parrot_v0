@@ -47,7 +47,15 @@ function team() {
     this.gender = "";
     this.uniform = "";
     this.roster = new Array();
-    this.latestScore = 0;
+    this.latestScore = function(event) {
+        team.latestScore = 0; 
+        ticker.forEach(function(tick) {
+            if (tick.event == event) {
+                team.latestScore +=1;
+            }   
+        });
+        return team.latestScore;
+    } ;
 }
 
 function tickerEvent () {
@@ -254,7 +262,7 @@ bot.dialog('/matchProgress', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, latestScores(homeTeam), latestScores(awayTeam), awayTeam.club)
+                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
