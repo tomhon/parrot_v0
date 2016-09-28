@@ -1207,6 +1207,8 @@ bot.dialog('/awayShot', [
 
 //=========================================================
 // 2nd Level Dialogs - Whistle
+// TO DO not all buttons shoiwng seems to be max 6
+// TO DO add details ot all dialogs goalKick & onwards
 //=========================================================
 
 bot.dialog('/kickOff', [
