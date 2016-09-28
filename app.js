@@ -310,7 +310,7 @@ bot.dialog('/matchProgress', [
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
-        session.send('returned to matchProgress dialog');
+        session.send('<returned to matchProgress dialog>');
         session.replaceDialog('/menu');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
@@ -375,7 +375,7 @@ bot.dialog('/goal', [
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
-        session.send("returned to goal dialog");
+        session.send("<returned to goal dialog>");
         session.replaceDialog('/goal');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
@@ -399,10 +399,13 @@ bot.dialog('/whistle', [
                     .title("Why was the whistle blown?")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "teams", "Teams"),
-                        builder.CardAction.imBack(session, "location", "Location"),
-                        builder.CardAction.imBack(session, "schedule", "Schedule"),
-                        builder.CardAction.imBack(session, "weather", "Weather"),
+                        builder.CardAction.imBack(session, "kickOff", "Kick Off"),
+                        builder.CardAction.imBack(session, "foul", "Foul"),
+                        builder.CardAction.imBack(session, "goalKick", "Goal Kick"),
+                        builder.CardAction.imBack(session, "corner", "Corner"),
+                        builder.CardAction.imBack(session, "offside", "Offside"),
+                        builder.CardAction.imBack(session, "penalty", "Penalty"),
+                        builder.CardAction.imBack(session, "substitution", "Substitution"),
                         builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
@@ -424,7 +427,7 @@ bot.dialog('/whistle', [
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "teams|location|schedule|weather|matchProgress|goal|shot|matchDetails|overview|liveTicker|lineup|stats");
+        builder.Prompts.choice(session, msg, "kickOff|foul|goalKick|corner|offside|penalty|substitution|matchProgress|goal|shot|matchDetails|overview|liveTicker|lineup|stats");
 
     },
     function (session, results) {
@@ -498,7 +501,7 @@ bot.dialog('/shot', [
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
-        session.send("returned to shot dialog");
+        session.send("<returned to shot dialog>");
         session.replaceDialog('/shot');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
@@ -561,7 +564,7 @@ bot.dialog('/matchDetails', [
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
-        session.send("returned to matchDetails dialog");
+        session.send("<returned to matchDetails dialog>");
         session.replaceDialog('/matchDetails');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
