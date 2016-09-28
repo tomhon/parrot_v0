@@ -1020,7 +1020,7 @@ bot.dialog('/schedule', [
 
         }
         session.send("Time Zone is set to " + kickoff.timeZone);
-        builder.Prompts.number(session, "If you want to change it, please enter a new timezone TTT");
+        builder.Prompts(session, "If you want to change it, please enter a new timezone TTT");
 
     },
     function (session, results) {
