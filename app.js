@@ -946,14 +946,14 @@ bot.dialog('/location', [
             next();
 
         }
-        session.send("State is currently set to " + fieldState);
+        session.send("State is currently set to " + location.fieldState);
         builder.Prompts.text(session, "If you want to change it, please enter a new State");
 
     },
     function (session, results) {
 
         if (results.response) {
-                location,fieldCity = results.response;
+                location.fieldCity = results.response;
                 addToRawTicker("cityEntered", "", location.fieldCity);
                 session.send("City is now %s", location.fieldCity);    
         } else {
