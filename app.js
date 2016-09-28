@@ -80,14 +80,15 @@ function venue() {
 }
 
 function whichHalf() {
-    this.half = "First";
+    whichHalf.half = "First";
     ticker.forEach(function(tick) {
-        if (tick.event == "kickoff_1stHalf" && tick.event == "finalWhistle_1stHalf") {
-                this.half = "Second";
-                break;
+        if (tick.event == "kickoff_1stHalf" || tick.event == "finalWhistle_1stHalf") {
+                console.log('2nd half');
+                whichHalf.half = "Second";
+                return whichHalf.half;
             }   
         });
-    return this.half;
+    return whichHalf.half;
 } 
 
 

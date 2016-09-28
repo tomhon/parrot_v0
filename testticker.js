@@ -61,6 +61,19 @@ var addToRawTicker = function (event, player, details) {
     ticker.push(oTickerEvent);
 };
 
+function whichHalf() {
+    whichHalf.half = "First";
+    ticker.forEach(function(tick) {
+        if (tick.event == "kickoff_1stHalf" || tick.event == "finalWhistle_1stHalf") {
+                console.log('2nd half');
+                whichHalf.half = "Second";
+                return whichHalf.half;
+            }   
+        });
+    return whichHalf.half;
+} 
+
+
 // function latestScores (team,event) {
 //     team.latestScore = 0; 
 //     ticker.forEach(function(tick) {
@@ -110,6 +123,7 @@ addToRawTicker("Shot", "unknown", "unknown");
 addToRawTicker("Whistle", "unknown", "unknown");
 addToRawTicker("Goal");
 addToRawTicker("Assist", homeTeam.roster[7]);
+addToRawTicker("kickoff_1stHalf");
 
     ticker.forEach(function(tick) {
         console.log(tick.event + " " + tick.player + " " + tick.details + " " + tick.timestamp.toString().slice(16,28));
