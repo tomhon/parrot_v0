@@ -1109,7 +1109,7 @@ bot.dialog('/weather', [
         if (results.response) {
                 weather.visibility = results.response.entity;
                 addToRawTicker("visibilityEntered", "", weather.visibility);
-                session.send("It's now %s", weather.visibility);    
+                session.send("Thanks, I've got the weather as %s, %s and %s", weather.temperature, weather.precipitation, weather.visibility);    
         } else {
             next();
 
