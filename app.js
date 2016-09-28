@@ -1243,6 +1243,7 @@ bot.dialog('/goalKick', [
     function (session) {
         session.send("Goal Kick");
         addToRawTicker("goalKick");
+        session.endDialog();
     }
 ]);
 
@@ -1250,6 +1251,7 @@ bot.dialog('/throwIn', [
     function (session) {
         session.send("Throw In");
         addToRawTicker("throwIn");
+        session.endDialog();
     }
 ]);
 
@@ -1257,6 +1259,7 @@ bot.dialog('/foul', [
     function (session) {
         session.send("Foul");
         addToRawTicker("foul");
+        session.endDialog();
     }
 ]);
 
@@ -1264,6 +1267,7 @@ bot.dialog('/corner', [
     function (session) {
         session.send("Corner");
         addToRawTicker("corner");
+        session.endDialog();
     }
 ]);
 
@@ -1271,21 +1275,24 @@ bot.dialog('/offside', [
     function (session) {
         session.send("Offside");
         addToRawTicker("offside");
-    }
+        session.endDialog();
+   }
 ]);
 
 bot.dialog('/penlty', [
     function (session) {
         session.send("Penalty Kick");
         addToRawTicker("penalty");
-    }
+        session.endDialog();
+   }
 ]);
 
 bot.dialog('/substitution', [
     function (session) {
         session.send("Substitution");
         addToRawTicker("substitution");
-    }
+        session.endDialog();
+   }
 ]);
 
 
