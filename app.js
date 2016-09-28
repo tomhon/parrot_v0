@@ -966,9 +966,9 @@ bot.dialog('/location', [
     },
     function (session, results) {
         if (results.response) {
-                location.fieldState = results.response.entity;
+                location.fieldState = results.response;
                 addToRawTicker("stateEntered", "", location.fieldState);
-                session.send("Country is now %s", location.fieldState);    
+                session.send("State is now %s", location.fieldState);    
         } else {
             next();
         }
@@ -978,7 +978,7 @@ bot.dialog('/location', [
     },
     function (session, results) {
         if (results.response) {
-                location.fieldCountry = results.response.entity;
+                location.fieldCountry = results.response;
                 addToRawTicker("countryEntered", "", location.fieldCountry);
                 session.send("Country is now %s", location.fieldCountry);    
         } else {
