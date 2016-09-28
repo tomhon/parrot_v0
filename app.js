@@ -65,6 +65,10 @@ function conditions() {
     this.visibility = "Clear";
 }
 
+function schedule() {
+    this.startTime = "09:00";
+    this.timeZone = "PST";
+}
 
 function venue() {
     this.fieldName = "";
@@ -108,6 +112,7 @@ homeTeam.club ="Home Team";
 var awayTeam = new team;
 awayTeam.club = "Away Team";
 var location = new venue();
+var kickoff = new schedule();
 var weather = new conditions();
 
 
@@ -1000,77 +1005,40 @@ bot.dialog('/location', [
 
 bot.dialog('/schedule', [
     function (session) {
-        session.send("Field Name is currently set to " + location.fieldName);
-        builder.Prompts.text(session, "If you want to change it, please enter a new field name");
+        session.send("Kick off is currently set to " + kickoff.startTime);
+        builder.Prompts.text(session, "If you want to change it, please enter a new time hh:mm");
 
     },
     function (session, results) {
 
         if (results.response) {
-                location.fieldName = results.response;
-                addToRawTicker("fieldNameEntered", "", location.fieldName);
-                session.send("Field name is now %s", location.fieldName);  
+                kickoff.startTime = results.response;
+                addToRawTicker("startTimeEntered", "", kickoff.startTime);
+                session.send("Kick off time is now %s", kickoff.startTime);  
         } else {
             next();
 
         }
-        session.send("Field number is currently set to " + location.fieldNumber);
-        builder.Prompts.number(session, "If you want to change it, please enter a new field number");
+        session.send("Time Zone is set to " + kickoff.timeZone);
+        builder.Prompts.number(session, "If you want to change it, please enter a new timezone TTT");
 
     },
     function (session, results) {
         if (results.response) {
-                location.fieldNumber = results.response;
-                addToRawTicker("fiekdNumberEntered", "", location.fieldNumber);
-                session.send("Field Number is now %s", location.fieldNumber);    
+                kickoff.timeZoner = results.response;
+                addToRawTicker("timeZoneEntered", "", kickoff.timeZone);
+                session.send("Kick off is now %s %s", kickoff.startTime, kickoff.timeZone);    
   
         } else {
             next();
 
-        }
-        session.send("City is currently set to " + location.fieldCity);
-        builder.Prompts.text(session, "If you want to change it, please enter a new city");
-
-    },
-    function (session, results) {
-
-        if (results.response) {
-                location.fieldCity = results.response;
-                addToRawTicker("cityEntered", "", location.fieldCity);
-                session.send("City is now %s", location.fieldCity);    
-        } else {
-            next();
-
-        }
-        session.send("State is currently set to " + location.fieldState);
-        builder.Prompts.text(session, "If you want to change it, please enter a new state ");
-
-    },
-    function (session, results) {
-        if (results.response) {
-                location.fieldState = results.response;
-                addToRawTicker("stateEntered", "", location.fieldState);
-                session.send("State is now %s", location.fieldState);    
-        } else {
-            next();
-        }
-        session.send("Country is currently set to " + location.fieldCountryl);
-        builder.Prompts.text(session, "If you want to change it, please enter a new country");
-
-    },
-    function (session, results) {
-        if (results.response) {
-                location.fieldCountry = results.response;
-                addToRawTicker("countryEntered", "", location.fieldCountry);
-                session.send("Country is now %s", location.fieldCountry);    
-        } else {
-            next();
         }
         session.endDialog();
     }
 ]);
 
 bot.dialog('/weather', [
+    //TO DO reorder to include visibility before precipitation
     function (session) {
         session.send("Temperature is currently set to " + weather.temperature);
         builder.Prompts.number(session, "If you want to change it, please enter a new temperature");
