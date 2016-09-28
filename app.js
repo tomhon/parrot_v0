@@ -415,6 +415,7 @@ bot.dialog('/whistle', [
                     .buttons([
                         builder.CardAction.imBack(session, "kickOff", "Kick Off"),
                         builder.CardAction.imBack(session, "goalKick", "Goal Kick"),
+                        builder.CardAction.imBack(session, "throwIn", "Throw In"),
                         builder.CardAction.imBack(session, "foul", "Foul"),
                         builder.CardAction.imBack(session, "corner", "Corner"),
                         builder.CardAction.imBack(session, "offside", "Offside"),
@@ -442,7 +443,7 @@ bot.dialog('/whistle', [
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "kickOff|foul|goalKick|corner|offside|penalty|substitution|finalWhistle|matchProgress|goal|shot|matchDetails|overview|liveTicker|lineup|stats");
+        builder.Prompts.choice(session, msg, "kickOff|foul|goalKick|corner|offside|penalty|substitution|finalWhistle|throwIn|matchProgress|goal|shot|matchDetails|overview|liveTicker|lineup|stats");
 
     },
     function (session, results) {
@@ -1279,7 +1280,7 @@ bot.dialog('/offside', [
    }
 ]);
 
-bot.dialog('/penlty', [
+bot.dialog('/penalty', [
     function (session) {
         session.send("Penalty Kick");
         addToRawTicker("penalty");
