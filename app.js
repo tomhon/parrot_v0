@@ -1239,141 +1239,53 @@ bot.dialog('/finalWhistle', [
 
 bot.dialog('/goalKick', [
     function (session) {
-        session.send("Which " + homeTeam.club + " Player Shot?");
-        builder.Prompts.number(session, "Now enter a number.");
-    },
-    function (session, results) {
-        playerNumber = results.response;
-        builder.Prompts.confirm(session, "Was "+ homeTeam.club + " Player " + playerNumber + " shot on target?!");
-    },
-    function (session, results) {
-        session.send("You chose '%s'", results.response ? 'yes' : 'no');
-        if (results.response == '1') {
-                // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
-                session.send(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOnTarget", homeTeam.roster[playerNumber], "");
-        } else {
-                session.send(homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOffTarget", homeTeam.roster[playerNumber], "");
-        }
-        session.endDialog();
+        session.send("Goal Kick");
+        addToRawTicker("goalKick");
+    }
+]);
+
+bot.dialog('/throwIn', [
+    function (session) {
+        session.send("Throw In");
+        addToRawTicker("throwIn");
     }
 ]);
 
 bot.dialog('/foul', [
     function (session) {
-        session.send("Which " + homeTeam.club + " Player Shot?");
-        builder.Prompts.number(session, "Now enter a number.");
-    },
-    function (session, results) {
-        playerNumber = results.response;
-        builder.Prompts.confirm(session, "Was "+ homeTeam.club + " Player " + playerNumber + " shot on target?!");
-    },
-    function (session, results) {
-        session.send("You chose '%s'", results.response ? 'yes' : 'no');
-        if (results.response == '1') {
-                // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
-                session.send(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOnTarget", homeTeam.roster[playerNumber], "");
-        } else {
-                session.send(homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOffTarget", homeTeam.roster[playerNumber], "");
-        }
-        session.endDialog();
+        session.send("Foul");
+        addToRawTicker("foul");
     }
 ]);
 
 bot.dialog('/corner', [
     function (session) {
-        session.send("Which " + homeTeam.club + " Player Shot?");
-        builder.Prompts.number(session, "Now enter a number.");
-    },
-    function (session, results) {
-        playerNumber = results.response;
-        builder.Prompts.confirm(session, "Was "+ homeTeam.club + " Player " + playerNumber + " shot on target?!");
-    },
-    function (session, results) {
-        session.send("You chose '%s'", results.response ? 'yes' : 'no');
-        if (results.response == '1') {
-                // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
-                session.send(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOnTarget", homeTeam.roster[playerNumber], "");
-        } else {
-                session.send(homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOffTarget", homeTeam.roster[playerNumber], "");
-        }
-        session.endDialog();
+        session.send("Corner");
+        addToRawTicker("corner");
     }
 ]);
 
 bot.dialog('/offside', [
     function (session) {
-        session.send("Which " + homeTeam.club + " Player Shot?");
-        builder.Prompts.number(session, "Now enter a number.");
-    },
-    function (session, results) {
-        playerNumber = results.response;
-        builder.Prompts.confirm(session, "Was "+ homeTeam.club + " Player " + playerNumber + " shot on target?!");
-    },
-    function (session, results) {
-        session.send("You chose '%s'", results.response ? 'yes' : 'no');
-        if (results.response == '1') {
-                // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
-                session.send(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOnTarget", homeTeam.roster[playerNumber], "");
-        } else {
-                session.send(homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOffTarget", homeTeam.roster[playerNumber], "");
-        }
-        session.endDialog();
+        session.send("Offside");
+        addToRawTicker("offside");
     }
 ]);
 
-bot.dialog('/penalty', [
+bot.dialog('/penlty', [
     function (session) {
-        session.send("Which " + homeTeam.club + " Player Shot?");
-        builder.Prompts.number(session, "Now enter a number.");
-    },
-    function (session, results) {
-        playerNumber = results.response;
-        builder.Prompts.confirm(session, "Was "+ homeTeam.club + " Player " + playerNumber + " shot on target?!");
-    },
-    function (session, results) {
-        session.send("You chose '%s'", results.response ? 'yes' : 'no');
-        if (results.response == '1') {
-                // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
-                session.send(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOnTarget", homeTeam.roster[playerNumber], "");
-        } else {
-                session.send(homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOffTarget", homeTeam.roster[playerNumber], "");
-        }
-        session.endDialog();
+        session.send("Penalty Kick");
+        addToRawTicker("penalty");
     }
 ]);
 
 bot.dialog('/substitution', [
     function (session) {
-        session.send("Which " + homeTeam.club + " Player Shot?");
-        builder.Prompts.number(session, "Now enter a number.");
-    },
-    function (session, results) {
-        playerNumber = results.response;
-        builder.Prompts.confirm(session, "Was "+ homeTeam.club + " Player " + playerNumber + " shot on target?!");
-    },
-    function (session, results) {
-        session.send("You chose '%s'", results.response ? 'yes' : 'no');
-        if (results.response == '1') {
-                // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
-                session.send(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOnTarget", homeTeam.roster[playerNumber], "");
-        } else {
-                session.send(homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOffTarget", homeTeam.roster[playerNumber], "");
-        }
-        session.endDialog();
+        session.send("Substitution");
+        addToRawTicker("substitution");
     }
 ]);
+
 
 //=========================================================
 // SignIn
