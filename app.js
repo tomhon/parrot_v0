@@ -418,8 +418,8 @@ bot.dialog('/whistle', [
                         builder.CardAction.imBack(session, "foul", "Foul"),
                         builder.CardAction.imBack(session, "corner", "Corner"),
                         builder.CardAction.imBack(session, "offside", "Offside"),
-                        builder.CardAction.imBack(session, "penalty", "Penalty"),
                         builder.CardAction.imBack(session, "substitution", "Substitution"),
+                        builder.CardAction.imBack(session, "penalty", "Penalty"),
                         builder.CardAction.imBack(session, "finalWhistle", "Half Time / Full Time"),                        
                         builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
@@ -1212,11 +1212,11 @@ bot.dialog('/awayShot', [
 bot.dialog('/kickOff', [
     function (session) {
         if (whichHalf() == "First") {
-            session.send("1st Half Kick Off in the game %s vs %s", homeTeam.club, awayTeam.club);
+            session.send("1st Half Kick Off in the %s vs %s game", homeTeam.club, awayTeam.club);
             addToRawTicker("kickoff_1stHalf");
             session.endDialog();
         } else {
-            session.send("2nd Half Kick Off in the game %s vs %s", homeTeam.club, awayTeam.club);
+            session.send("2nd Half Kick Off in the %s vs %s game", homeTeam.club, awayTeam.club);
             addToRawTicker("kickoff_2ndHalf");
             session.endDialog();
         }
@@ -1225,24 +1225,15 @@ bot.dialog('/kickOff', [
 
 bot.dialog('/finalWhistle', [
     function (session) {
-        session.send("Kick Off in the game %s vs %s", homeTeam.club, awayTeam.club);
-        addToRawTicker("Kickoff_1stHalf", homeTeam.roster[playerNumber], "");
-    },
-    function (session, results) {
-        playerNumber = results.response;
-        builder.Prompts.confirm(session, "Was "+ homeTeam.club + " Player " + playerNumber + " shot on target?!");
-    },
-    function (session, results) {
-        session.send("You chose '%s'", results.response ? 'yes' : 'no');
-        if (results.response == '1') {
-                // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
-                session.send(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOnTarget", homeTeam.roster[playerNumber], "");
+        if (whichHalf() == "First") {
+            session.send("End of 1st Half in the %s vs %s game", homeTeam.club, awayTeam.club);
+            addToRawTicker("finalWhistle_1stHalf");
+            session.endDialog();
         } else {
-                session.send(homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOffTarget", homeTeam.roster[playerNumber], "");
+            session.send("End of 2nd Half in the %s vs %s game", homeTeam.club, awayTeam.club);
+            addToRawTicker("finalWhistle_2ndHalf");
+            session.endDialog();
         }
-        session.endDialog();
     }
 ]);
 
