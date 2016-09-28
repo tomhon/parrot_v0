@@ -196,8 +196,8 @@ bot.dialog('/', [
         var card = new builder.HeroCard(session)
             .title("Parrot - Your commentary - wherever soccer is played")
             .images([
-                 builder.CardImage.create(session, "http://img15.deviantart.net/ce34/i/2013/132/6/8/parrot_by_p0tluck-d650zzk.png")
-                //  builder.CardImage.create(session, "http://docs.botframework.com/images/demo_bot_image.png")            ]);
+                //  builder.CardImage.create(session, "")
+                 builder.CardImage.create(session, "http://docs.botframework.com/images/demo_bot_image.png") 
                  
             ]);
         var msg = new builder.Message(session).attachments([card]);
