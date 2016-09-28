@@ -33,12 +33,12 @@ function team() {
 }
 
 
-function location() {
-    fieldName = "";
-    fieldNumber = null;
-    fieldCity = "";
-    fieldState = "";
-    fieldCountry = "";
+function venue() {
+    this.fieldName = "";
+    this.fieldNumber = null;
+    this.fieldCity = "";
+    this.fieldState = "";
+    this.fieldCountry = "";
 }
 
 function tickerEvent () {
@@ -131,6 +131,7 @@ console.log(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, ho
 // console.log('Home Team latestScore ' + latestScores(homeTeam,'homeTeamGoal'));
 // console.log('Away Team latestScore ' + latestScores(awayTeam, 'awayTeamGoal'));
 
+var location = new venue();
 
 console.log('Home Team latestScore ' + homeTeam.latestScore('homeTeamGoal'));
 console.log('Away Team latestScore ' + awayTeam.latestScore('awayTeamGoal'));

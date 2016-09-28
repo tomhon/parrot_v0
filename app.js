@@ -58,12 +58,12 @@ function team() {
     } ;
 }
 
-function location() {
-    fieldName = "";
-    fieldNumber = null;
-    fieldCity = "";
-    fieldState = "";
-    fieldCountry = "";
+function venue() {
+    this.fieldName = "";
+    this.fieldNumber = null;
+    this.fieldCity = "";
+    this.fieldState = "";
+    this.fieldCountry = "";
 }
 
 function tickerEvent () {
@@ -99,6 +99,7 @@ var homeTeam = new team;
 homeTeam.club ="Home Team";
 var awayTeam = new team;
 awayTeam.club = "Away Team";
+var location = new venue();
 
 //=========================================================
 // Set up dummy data
@@ -917,141 +918,63 @@ bot.dialog('/awayTeam', [
 
 bot.dialog('/location', [
     function (session) {
-        session.send("Away club name is currently set to " + awayTeam.club);
-        builder.Prompts.text(session, "If you want to change it, please enter a new club name");
+        session.send("Field Name is currently set to " + location.fieldName);
+        builder.Prompts.text(session, "If you want to change it, please enter a new field name");
 
     },
     function (session, results) {
 
         if (results.response) {
-                awayTeam.club = results.response;
-                addToRawTicker("awayClubEntered", "", awayTeam.club);
-                session.send("Away club is now %s", awayTeam.club);  
+                location.fieldName = results.response;
+                addToRawTicker("fieldNameEntered", "", location.fieldName);
+                session.send("Field name is now %s", location.fieldName);  
         } else {
             next();
 
         }
-        session.send("Away team name is currently set to " + awayTeam.teamName);
-        builder.Prompts.text(session, "If you want to change it, please enter a new team name");
+        session.send("Field number is currently set to " + location.fieldNumber);
+        builder.Prompts.number(session, "If you want to change it, please enter a new field number");
 
     },
     function (session, results) {
         if (results.response) {
-                awayTeam.teamName = results.response;
-                addToRawTicker("awayNameEntered", "", awayTeam.teamName);
-                session.send("Away team is now %s", awayTeam.teamName);    
+                location.fieldNumber = results.response;
+                addToRawTicker("fiekdNumberEntered", "", location.fieldNumber);
+                session.send("Field Number is now %s", location.fieldNumber);    
   
         } else {
             next();
 
         }
-        session.send("Away age group name is currently set to " + awayTeam.ageGroup);
-        builder.Prompts.text(session, "If you want to change it, please enter a new age group");
+        session.send("State is currently set to " + fieldState);
+        builder.Prompts.text(session, "If you want to change it, please enter a new State");
 
     },
     function (session, results) {
 
         if (results.response) {
-                awayTeam.ageGroup = results.response;
-                addToRawTicker("awayAgeEntered", "", awayTeam.ageGroup);
-                session.send("Away age group is now %s", awayTeam.ageGroup);  
+                location,fieldCity = results.response;
+                addToRawTicker("cityEntered", "", location.fieldCity);
+                session.send("City is now %s", location.fieldCity);    
         } else {
             next();
 
         }
-        session.send("Away gender is currently set to " + awayTeam.gender);
-        builder.Prompts.choice(session, "If you want to change it, please enter ", "Girls|Boys");
+        session.send("Country is currently set to " + location.fieldCountry);
+        builder.Prompts.text(session, "If you want to change it, please enter ");
 
     },
     function (session, results) {
         if (results.response) {
-                awayTeam.gender = results.response.entity;
-                addToRawTicker("awayGenerEntered", "", awayTeam.gender);
-                session.send("Away gender is now %s", awayTeam.gender);    
-  
+                location.fieldState = results.response.entity;
+                addToRawTicker("stateEntered", "", location.fieldState);
+                session.send("State is now %s", location.fieldState);    
         } else {
             next();
-
         }
-        session.send("Away uniform is currently set to " + awayTeam.uniform);
-        builder.Prompts.text(session, "If you want to change it, please enter a new uniform color");
-
-    },
-    function (session, results) {
-
-        if (results.response) {
-                awayTeam.uniform = results.response;
-                addToRawTicker("awayUniformEntered", "", awayTeam.uniform);
-                session.send("Away Uniform is now %s", awayTeam.uniform);  
-        } else {
-            next();
-
-        }
-        
         session.endDialog();
-
     }
 ]);
-
-// bot.dialog('/location', [
-//     function (session) {
-//         session.send("Field Name is currently set to " + fieldName);
-//         builder.Prompts.text(session, "If you want to change it, please enter a new field name");
-
-//     // },
-//     // function (session, results) {
-
-//     //     if (results.response) {
-//     //             fieldName = results.response;
-//     //             addToRawTicker("fieldNameEntered", "", fieldName);
-//     //             session.send("Field name is now %s", fieldName);  
-//     //     } else {
-//     //         next();
-
-//     //     }
-//     //     session.send("Field number is currently set to " + fieldNumber);
-//     //     builder.Prompts.number(session, "If you want to change it, please enter a new field number");
-
-//     // },
-//     // function (session, results) {
-//     //     if (results.response) {
-//     //             fieldNumber = results.response;
-//     //             addToRawTicker("cityEntered", "", fieldCity);
-//     //             session.send("City is now %s", fieldCity);    
-  
-//     //     } else {
-//     //         next();
-
-//     //     }
-//     //     session.send("State is currently set to " + fieldState);
-//     //     builder.Prompts.text(session, "If you want to change it, please enter a new State");
-
-//     // },
-//     // function (session, results) {
-
-//     //     if (results.response) {
-//     //             awayTeam.ageGroup = results.response;
-//     //             addToRawTicker("stateEntered", "", fieldCity);
-//     //             session.send("State is now %s", fieldCity);  
-//     //     } else {
-//     //         next();
-
-//     //     }
-//     //     session.send("Country is currently set to " + fieldCountry);
-//     //     builder.Prompts.text(session, "If you want to change it, please enter ");
-
-//     // },
-//     // function (session, results) {
-//     //     if (results.response) {
-//     //             fieldState = results.response.entity;
-//     //             addToRawTicker("stateEntered", "", fieldState);
-//     //             session.send("State is now %s", fieldState);    
-//     //     } else {
-//     //         next();
-//     //     }
-//         session.endDialog();
-//     }
-// ]);
 
 bot.dialog('/schedule', [
     function (session) {
