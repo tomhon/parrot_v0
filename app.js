@@ -59,10 +59,10 @@ function team() {
 }
 
 function conditions() {
-    this.temperature = null;
+    this.temperature = 65;
     this.units = "F";
-    this.precipitation = string;
-    this.visibility = string;
+    this.precipitation = "Dry";
+    this.visibility = "Clear";
 }
 
 
@@ -949,7 +949,7 @@ bot.dialog('/location', [
     function (session, results) {
         if (results.response) {
                 location.fieldNumber = results.response;
-                addToRawTicker("fiekdNumberEntered", "", location.fieldNumber);
+                addToRawTicker("fieldNumberEntered", "", location.fieldNumber);
                 session.send("Field Number is now %s", location.fieldNumber);    
   
         } else {
@@ -1086,57 +1086,33 @@ bot.dialog('/weather', [
             next();
 
         }
-        session.send("Field number is currently set to " + location.fieldNumber);
-        builder.Prompts.number(session, "If you want to change it, please enter a new field number");
+        session.send("Right now I think it's " + weather.precipitation);
+        builder.Prompts.choice(session, "Is it fine, raining or snowing?", "Dry|Raining|Snowing");
 
     },
     function (session, results) {
         if (results.response) {
-                location.fieldNumber = results.response;
-                addToRawTicker("fiekdNumberEntered", "", location.fieldNumber);
-                session.send("Field Number is now %s", location.fieldNumber);    
+                weather.precipitation = results.response.entity;
+                addToRawTicker("precipitationEntered", "", weather.precipitation);
+                session.send("It's now %s", weather.precipitation);    
   
         } else {
             next();
 
         }
-        session.send("City is currently set to " + location.fieldCity);
-        builder.Prompts.text(session, "If you want to change it, please enter a new city");
+        session.send("Visibility is " + weather.visibility);
+        builder.Prompts.choice(session, "Is it sunny, partially cloudy or overcast?", "Sunny|Partially Cloudy|Overcast");
 
     },
     function (session, results) {
 
         if (results.response) {
-                location.fieldCity = results.response;
-                addToRawTicker("cityEntered", "", location.fieldCity);
-                session.send("City is now %s", location.fieldCity);    
+                weather.visibility = results.response.entity;
+                addToRawTicker("visibilityEntered", "", weather.visibility);
+                session.send("It's now %s", weather.visibility);    
         } else {
             next();
 
-        }
-        session.send("State is currently set to " + location.fieldState);
-        builder.Prompts.text(session, "If you want to change it, please enter a new state ");
-
-    },
-    function (session, results) {
-        if (results.response) {
-                location.fieldState = results.response;
-                addToRawTicker("stateEntered", "", location.fieldState);
-                session.send("State is now %s", location.fieldState);    
-        } else {
-            next();
-        }
-        session.send("Country is currently set to " + location.fieldCountryl);
-        builder.Prompts.text(session, "If you want to change it, please enter a new country");
-
-    },
-    function (session, results) {
-        if (results.response) {
-                location.fieldCountry = results.response;
-                addToRawTicker("countryEntered", "", location.fieldCountry);
-                session.send("Country is now %s", location.fieldCountry);    
-        } else {
-            next();
         }
         session.endDialog();
     }
