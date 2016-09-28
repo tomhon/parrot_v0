@@ -63,6 +63,7 @@ function conditions() {
     this.units = "F";
     this.precipitation = "Dry";
     this.visibility = "Clear";
+    this.wind = "Calm";
 }
 
 function schedule() {
@@ -77,6 +78,18 @@ function venue() {
     this.fieldState = "WA";
     this.fieldCountry = "USA";
 }
+
+function whichHalf() {
+    this.half = "First";
+    ticker.forEach(function(tick) {
+        if (tick.event == "kickoff_1stHalf" && tick.event == "finalWhistle_1stHalf") {
+                this.half = "Second";
+                break;
+            }   
+        });
+    return this.half;
+} 
+
 
 function tickerEvent () {
     this.timestamp = "";
@@ -406,6 +419,7 @@ bot.dialog('/whistle', [
                         builder.CardAction.imBack(session, "offside", "Offside"),
                         builder.CardAction.imBack(session, "penalty", "Penalty"),
                         builder.CardAction.imBack(session, "substitution", "Substitution"),
+                        builder.CardAction.imBack(session, "finalWhistle", "Half Time / Full Time"),                        
                         builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
@@ -427,7 +441,7 @@ bot.dialog('/whistle', [
                     ])
      
             ]);
-        builder.Prompts.choice(session, msg, "kickOff|foul|goalKick|corner|offside|penalty|substitution|matchProgress|goal|shot|matchDetails|overview|liveTicker|lineup|stats");
+        builder.Prompts.choice(session, msg, "kickOff|foul|goalKick|corner|offside|penalty|substitution|finalWhistle|matchProgress|goal|shot|matchDetails|overview|liveTicker|lineup|stats");
 
     },
     function (session, results) {
@@ -441,7 +455,8 @@ bot.dialog('/whistle', [
     },
     function (session, results) {
         // The menu runs a loop until the user chooses to (quit).
-        session.replaceDialog('/menu');
+        session.send("<returned to whistle dialog>");        
+        session.replaceDialog('/whistle');
     }
 ]).reloadAction('reloadMenu', null, { matches: /^menu|show menu/i });
 
@@ -1043,6 +1058,7 @@ bot.dialog('/schedule', [
 bot.dialog('/weather', [
     //TO DO reorder to include visibility before precipitation
     //To DO add celcius
+    //TO DO add wind speed
     function (session) {
         session.send("Temperature is currently set to " + weather.temperature);
         builder.Prompts.number(session, "If you want to change it, please enter a new temperature");
@@ -1194,8 +1210,22 @@ bot.dialog('/awayShot', [
 
 bot.dialog('/kickOff', [
     function (session) {
-        session.send("Which " + homeTeam.club + " Player Shot?");
-        builder.Prompts.number(session, "Now enter a number.");
+        if (whichHalf() == "First") {
+            session.send("1st Half Kick Off in the game %s vs %s", homeTeam.club, awayTeam.club);
+            addToRawTicker("kickoff_1stHalf");
+            session.endDialog();
+        } else {
+            session.send("2nd Half Kick Off in the game %s vs %s", homeTeam.club, awayTeam.club);
+            addToRawTicker("kickoff_2ndHalf");
+            session.endDialog();
+        }
+    }
+]);
+
+bot.dialog('/finalWhistle', [
+    function (session) {
+        session.send("Kick Off in the game %s vs %s", homeTeam.club, awayTeam.club);
+        addToRawTicker("Kickoff_1stHalf", homeTeam.roster[playerNumber], "");
     },
     function (session, results) {
         playerNumber = results.response;
