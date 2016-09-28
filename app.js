@@ -1025,7 +1025,7 @@ bot.dialog('/schedule', [
     },
     function (session, results) {
         if (results.response) {
-                kickoff.timeZoner = results.response;
+                kickoff.timeZone = results.response;
                 addToRawTicker("timeZoneEntered", "", kickoff.timeZone);
                 session.send("Kick off is now %s %s", kickoff.startTime, kickoff.timeZone);    
   
