@@ -506,7 +506,7 @@ bot.dialog('/matchDetails', [
                         builder.CardAction.imBack(session, "homeTeam", "Home Team"),
                         builder.CardAction.imBack(session, "awayTeam", "Away Team"),
                         // builder.CardAction.imBack(session, "location", "Location"),
-                        builder.CardAction.imBack(session, "awayTeam", "Location"),
+                        builder.CardAction.imBack(session, "location", "Location"),
                         builder.CardAction.imBack(session, "schedule", "Schedule"),
                         builder.CardAction.imBack(session, "weather", "Weather"),
                         builder.CardAction.imBack(session, "matchProgress", "What's happening?")
