@@ -71,11 +71,11 @@ function schedule() {
 }
 
 function venue() {
-    this.fieldName = "";
-    this.fieldNumber = null;
-    this.fieldCity = "";
-    this.fieldState = "";
-    this.fieldCountry = "";
+    this.fieldName = "60 Acres";
+    this.fieldNumber = 20;
+    this.fieldCity = "Redmond";
+    this.fieldState = "WA";
+    this.fieldCountry = "USA";
 }
 
 function tickerEvent () {
@@ -1039,6 +1039,7 @@ bot.dialog('/schedule', [
 
 bot.dialog('/weather', [
     //TO DO reorder to include visibility before precipitation
+    //To DO add celcius
     function (session) {
         session.send("Temperature is currently set to " + weather.temperature);
         builder.Prompts.number(session, "If you want to change it, please enter a new temperature");
