@@ -194,10 +194,11 @@ bot.dialog('/', [
     function (session) {
         // Send a greeting and show help.
         var card = new builder.HeroCard(session)
-            .title("Welcome to Parrot")
-            .text("Your commentator - wherever soccer is played.")
+            .title("Parrot - Your commentary - wherever soccer is played")
             .images([
-                 builder.CardImage.create(session, "http://docs.botframework.com/images/demo_bot_image.png")
+                 builder.CardImage.create(session, "http://img15.deviantart.net/ce34/i/2013/132/6/8/parrot_by_p0tluck-d650zzk.png")
+                //  builder.CardImage.create(session, "http://docs.botframework.com/images/demo_bot_image.png")            ]);
+                 
             ]);
         var msg = new builder.Message(session).attachments([card]);
         session.send(msg);
@@ -221,26 +222,13 @@ bot.dialog('/', [
 
 bot.dialog('/menu', [
     function (session) {
-        session.send("Let me know what's going on in the game and I can give you a summary anytime you need it.");
-        // builder.Prompts.choice(session, "What's the latest score?, What's happened so far?, It's a Goal!, Someone took a shot, Ref blew the whistle, Here are the match details", 
-        // ["Latest Score", "Ticker", "Goal", "Shot", "Whistle", "Match Details", "Actions"]);
-        // session.send("Current Ticker");
-        // ticker.forEach(function(tick) {
-        //     session.send(tick.timestamp.toString());
-        //     session.send(tick.user);
-        // });
-        // Ask the user to select an item from a carousel.
         var msg = new builder.Message(session)
             .textFormat(builder.TextFormat.xml)
             .attachmentLayout(builder.AttachmentLayout.carousel)
             .attachments([
                  new builder.HeroCard(session)
                     .title("Welcome to Parrot")
-                    // .text("The <b>Space Needle</b> is an observation tower in Seattle, Washington, a landmark of the Pacific Northwest, and an icon of Seattle.")
-                    // .images([
-                    //     builder.CardImage.create(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/320px-Seattlenighttimequeenanne.jpg")
-                    //         .tap(builder.CardAction.showImage(session, "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Seattlenighttimequeenanne.jpg/800px-Seattlenighttimequeenanne.jpg")),
-                    // ])
+
                     .buttons([
                         builder.CardAction.imBack(session, "login", "Login"),
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
