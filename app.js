@@ -1072,7 +1072,7 @@ bot.dialog('/schedule', [
 
 bot.dialog('/weather', [
     function (session) {
-        session.send("Temperature is currently set to " + weather.temperaturee);
+        session.send("Temperature is currently set to " + weather.temperature);
         builder.Prompts.number(session, "If you want to change it, please enter a new temperature");
 
     },
