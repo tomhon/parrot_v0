@@ -947,7 +947,7 @@ bot.dialog('/location', [
 
         }
         session.send("City is currently set to " + location.fieldCity);
-        builder.Prompts.text(session, "If you want to change it, please enter a new State");
+        builder.Prompts.text(session, "If you want to change it, please enter a new city");
 
     },
     function (session, results) {
@@ -961,7 +961,7 @@ bot.dialog('/location', [
 
         }
         session.send("State is currently set to " + location.fieldState);
-        builder.Prompts.text(session, "If you want to change it, please enter ");
+        builder.Prompts.text(session, "If you want to change it, please enter a new state ");
 
     },
     function (session, results) {
@@ -973,7 +973,7 @@ bot.dialog('/location', [
             next();
         }
         session.send("Country is currently set to " + location.fieldCountryl);
-        builder.Prompts.text(session, "If you want to change it, please enter ");
+        builder.Prompts.text(session, "If you want to change it, please enter a new country");
 
     },
     function (session, results) {
