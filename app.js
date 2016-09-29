@@ -4,6 +4,10 @@ var bodyParser = require('body-parser');
 var router = express.Router();
 
 var server = express();
+var request = require('request');
+
+var eventHubUrl = 'https://parrotrawevents.azurewebsites.net/api/HttpTriggerNodeJS1?code=n0rtoxjcoygj3v78iv7r885mi40dwr13vygz0wu74ftufcx47vihyflilseyuhj4oyw8jh71ra4i'
+
 
 //=========================================================
 // Web Server Setup
@@ -110,6 +114,11 @@ var addToRawTicker = function (event, player, details) {
     oTickerEvent.details = details;
     oTickerEvent.user = "Tom";
     ticker.push(oTickerEvent);
+    request( eventHubUrl + '&name=' + event, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+        console.log('logged to Event Hub - response = ' + body) 
+    }
+    })
 };
 
 function latestScores (team) {
@@ -194,7 +203,7 @@ bot.dialog('/', [
     function (session) {
         // Send a greeting and show help.
         var card = new builder.HeroCard(session)
-            .title("Parrot - Your commentary - wherever soccer is played")
+            .title("Parrot - your commentary - wherever soccer is played")
             .images([
                 //  builder.CardImage.create(session, "")
                  builder.CardImage.create(session, "http://docs.botframework.com/images/demo_bot_image.png") 

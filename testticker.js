@@ -1,10 +1,17 @@
 // var restify = require('restify');
 // var builder = require('botbuilder');
+var request = require('request');
 
 //=========================================================
 // Ticker Setup
 //=========================================================
 
+var eventHubUrl = 'https://parrotrawevents.azurewebsites.net/api/HttpTriggerNodeJS1?code=n0rtoxjcoygj3v78iv7r885mi40dwr13vygz0wu74ftufcx47vihyflilseyuhj4oyw8jh71ra4i'
+request( eventHubUrl + '&name=awayTeamGoal', function (error, response, body) {
+  if (!error && response.statusCode == 200) {
+    console.log(body) 
+  }
+})
 
 
 function player () {
@@ -59,6 +66,11 @@ var addToRawTicker = function (event, player, details) {
     oTickerEvent.details = details;
     oTickerEvent.user = "Tom";
     ticker.push(oTickerEvent);
+    request( eventHubUrl + '&name=' + event, function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+        console.log('logged to Event Hub - response = ' + body) 
+    }
+    })
 };
 
 function whichHalf() {
