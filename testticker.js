@@ -66,7 +66,7 @@ var addToRawTicker = function (event, player, details) {
     oTickerEvent.details = details;
     oTickerEvent.user = "Tom";
     ticker.push(oTickerEvent);
-    request( eventHubUrl + '&name=' + JSON.stringify(oTickerEvent), function (error, response, body) {
+    request( eventHubUrl + '&event=' + JSON.stringify(oTickerEvent), function (error, response, body) {
         if (!error && response.statusCode == 200) {
         console.log('logged to Event Hub - response = ' + body) 
     }
