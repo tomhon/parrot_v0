@@ -1193,7 +1193,7 @@ bot.dialog('/awayShot', [
         if (results.response == '1') {
                 // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
                 session.send(awayTeam.club + " Player '%s' %s%sshot on target!", playerNumber, awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].firstName + ' ' : '',awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("awayTeamShotOnTarget", homeTeam.roster[playerNumber], "");
+                addToRawTicker("awayTeamShotOnTarget", awayTeam.roster[playerNumber], "");
         } else {
                 session.send(awayTeam.club + " Player '%s' %s%sshot off target!", playerNumber, awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].firstName + ' ' : '',awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].lastName + ' ': '' );
                 addToRawTicker("awayTeamShotOffTarget", awayTeam.roster[playerNumber], "");
