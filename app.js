@@ -922,7 +922,7 @@ bot.dialog('/awayTeam', [
     function (session, results) {
         if (results.response) {
                 awayTeam.gender = results.response.entity;
-                addToRawTicker("awayGenerEntered", "", awayTeam.gender);
+                addToRawTicker("awayGenderEntered", "", awayTeam.gender);
                 session.send("Away gender is now %s", awayTeam.gender);    
   
         } else {
