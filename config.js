@@ -35,7 +35,10 @@ function team() {
     this.gender = "";
     this.uniform = "";
     this.coach = "";
-    this.roster = new Array();
+    this.roster = new Array(); //array of player
+    this.goals = new Array(); //array of goal
+    this.shots = new Array(); // array of shot
+    this.whistles = new Array(); //array of whistle
     }
 
 function goal() {
@@ -54,61 +57,45 @@ function whistle() {
     this.whistleType = ""
 }
 
+function weather() {
+    this.temperature = "",
+    this.precipitation = "",
+    this.visibility = ""
+}
+
+function schedule() {
+    this.startTime = "09:00";
+    this.timeZone = "PST";
+}
+
+function venue() {
+    this.fieldName = "60 Acres";
+    this.fieldNumber = 20;
+    this.fieldCity = "Redmond";
+    this.fieldState = "WA";
+    this.fieldCountry = "USA";
+}
+
+function game() {
+    this.id = "",
+    this.mappingId = "",
+    this.latestUpdateTime = new Date(),
+    this.homeTeam = new team(),
+    this.awayTeam = new team(),
+    this.weather = new weather()
+    this.schedule = new schedule();
+    this.venue = new venue();
+    this.events = new Array() //array of tickerEvent
+
+}
+
 
 config.documents = {
-    "game2": {
-        "id": "002",
-        "mappingId" : "002",
-        "latestUpdateTime" : new Date(),
-        "homeTeam": {
-            "teamDetails": new team,
-            "goals": [new goal],
-            "shots": [new shot],
-            "whistles": [new whistle]    
-            },
-        "awayTeam": {
-            "teamDetails": new team,
-            "goals": [new goal],
-            "shots": [new shot],
-            "whistles": [new whistle]             
-            },
-        "conditions": {
-                "location": "60 acres",
-                "weather": "sunny"
-            },
-        "tournamentOrLeague": {
-            "name": "",
-            "stage": ""
-            },
-        "events" : [new tickerEvent()]
-    },
-        "game3": {
-        "id": "003",
-        "mappingId" : "003",
-        "latestUpdateTime" : new Date(),
-        "homeTeam": {
-            "teamDetails": new team,
-            "goals": [new goal],
-            "shots": [new shot],
-            "whistles": [new whistle]    
-            },
-        "awayTeam": {
-            "teamDetails": new team,
-            "goals": [new goal],
-            "shots": [new shot],
-            "whistles": [new whistle]             
-            },
-        "conditions": {
-                "location": "Marymoor Park",
-                "weather": "sunny"
-            },
-        "tournamentOrLeague": {
-            "name": "",
-            "stage": ""
-            },
-        "events" : [new tickerEvent()]
-    },
-
+    "game2": new game(),
+    "game3": new game()
 };
+
+config.documents.game2.id = "002";
+config.documents.game3.id = "003";
 
 module.exports = config;

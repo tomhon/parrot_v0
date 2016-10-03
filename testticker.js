@@ -88,7 +88,7 @@ function queryCollection() {
     return new Promise((resolve, reject) => {
         client.queryDocuments(
             collectionUrl,
-            'SELECT * FROM root r WHERE r.mappingId = "003"'
+            'SELECT * FROM root r WHERE r.mappingId = "010"'
             // 'SELECT VALUE r.awayTeam.goals FROM root r WHERE r.mappingId = "003"'
         ).toArray((err, results) => {
             if (err) reject(err)
@@ -101,6 +101,21 @@ function queryCollection() {
                 }
                 console.log();
                 resolve(results);
+            }
+        });
+    });
+};
+
+function replaceFamilyDocument(document) {
+    var documentUrl = `${collectionUrl}/docs/${document.id}`;
+    console.log(`Replacing document:\n${document.id}\n`);
+    document.awayTeam.teamDetails.teamName = "Seattle United" ;
+
+    return new Promise((resolve, reject) => {
+        client.replaceDocument(documentUrl, document, (err, result) => {
+            if (err) reject(err);
+            else {
+                resolve(result);
             }
         });
     });
@@ -121,6 +136,10 @@ getDatabase()
 .then(() => getMatchDocument(config.documents.game3))
 .then(() => queryCollection())
 
+.then(() => replaceFamilyDocument(config.documents.game2))
+.then(() => queryCollection())
+
+
 .then(() => { exit(`Completed successfully`); })
 .catch((error) => { exit(`Completed with error ${JSON.stringify(error)}`) });
 
@@ -139,8 +158,17 @@ request( eventHubUrl + '&name=awayTeamGoal', function (error, response, body) {
 function player () {
     this.firstName = "";
     this.lastName = "";
+    this.jerseyNumber = "";
     this.position = "";
     this.photo = null;
+}
+
+function tickerEvent () {
+    this.timestamp = "";
+    this.event = "";
+    this.player = new player;
+    this.details = "";
+    this.user = "";
 }
 
 function team() {
@@ -149,34 +177,94 @@ function team() {
     this.ageGroup = "";
     this.gender = "";
     this.uniform = "";
-    this.roster = new Array();
-    this.latestScore = function(event) {
-        team.latestScore = 0; 
-        ticker.forEach(function(tick) {
-            if (tick.event == event) {
-                team.latestScore +=1;
-            }   
-        });
-        return team.latestScore;
-    } ;
+    this.coach = "";
+    this.roster = new Array(); //array of player
+    this.goals = new Array(); //array of goal
+    this.shots = new Array(); // array of shot
+    this.whistles = new Array(); //array of whistle
+    }
+
+function goal() {
+    this.time = "",
+    this.scorer = new player,
+    this.assist = new player
 }
 
+function shot() {
+    this.time = "",
+    this.shooter = new player
+}
+
+function whistle() {
+    this.time = "",
+    this.whistleType = ""
+}
+
+function weather() {
+    this.temperature = "",
+    this.precipitation = "",
+    this.visibility = ""
+}
+
+function schedule() {
+    this.startTime = "09:00";
+    this.timeZone = "PST";
+}
 
 function venue() {
-    this.fieldName = "";
-    this.fieldNumber = null;
-    this.fieldCity = "";
-    this.fieldState = "";
-    this.fieldCountry = "";
+    this.fieldName = "60 Acres";
+    this.fieldNumber = 20;
+    this.fieldCity = "Redmond";
+    this.fieldState = "WA";
+    this.fieldCountry = "USA";
 }
 
-function tickerEvent () {
-    this.timestamp = "";
-    this.event = "";
-    this.player = "";
-    this.details = "";
-    this.user = "";
+function game() {
+    this.id = "",
+    this.mappingId = "",
+    this.latestUpdateTime = new Date(),
+    this.homeTeam = new team(),
+    this.awayTeam = new team(),
+    this.weather = new weather()
+    this.schedule = new schedule();
+    this.venue = new venue();
+    this.events = new Array() //array of tickerEvent
+
 }
+
+
+//=========================================================
+// Game Setup
+//=========================================================
+
+
+
+var localGame = new game();
+localGame.id = "010";
+localGame.mappingId = localGame.id;
+console.log(localGame);
+console.log(localGame);
+
+
+// getDatabase()
+// .then(() => getCollection())
+// .then(() => {console.log('Got Collection')})
+// .then(() => getMatchDocument(config.documents.localGame))
+
+// .then(() => queryCollection())
+
+// // .then(() => replaceFamilyDocument(config.documents.game2))
+// // .then(() => queryCollection())
+
+
+// .then(() => { exit(`Completed successfully`); })
+// .catch((error) => { exit(`Completed with error ${JSON.stringify(error)}`) });
+
+
+
+
+
+
 
 var ticker = new Array();
 
@@ -207,7 +295,7 @@ function whichHalf() {
     return whichHalf.half;
 } 
 
-var currentGame = "";
+var currentSharedGame = ""; //local copy of DocDB instance of the game status
 
 
 // function latestScores (team,event) {
@@ -281,10 +369,10 @@ addToRawTicker("kickoff_1stHalf","unknown", "unknown");
 // console.log('Home Team latestScore ' + latestScores(homeTeam,'homeTeamGoal'));
 // console.log('Away Team latestScore ' + latestScores(awayTeam, 'awayTeamGoal'));
 
-var location = new venue();
+// var location = new venue();
 
-console.log('Home Team latestScore ' + homeTeam.latestScore('homeTeamGoal'));
-console.log('Away Team latestScore ' + awayTeam.latestScore('awayTeamGoal'));
+// console.log('Home Team latestScore ' + homeTeam.latestScore('homeTeamGoal'));
+// console.log('Away Team latestScore ' + awayTeam.latestScore('awayTeamGoal'));
 // // updateScores(awayTeam);
 
 // console.log('Home Team latestScore ' + latestScores(homeTeam));
