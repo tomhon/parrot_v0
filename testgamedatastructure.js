@@ -82,30 +82,6 @@ function getMatchDocument(document) {
     });
 };
 
-function queryCollection() {
-    console.log(`Querying collection through index:\n${config.collection.id}`);
-
-    return new Promise((resolve, reject) => {
-        client.queryDocuments(
-            collectionUrl,
-            'SELECT * FROM root r WHERE r.mappingId = "003"'
-            // 'SELECT VALUE r.awayTeam.goals FROM root r WHERE r.mappingId = "003"'
-        ).toArray((err, results) => {
-            if (err) reject(err)
-            else {
-                for (var queryResult of results) {
-                    var resultString = JSON.stringify(queryResult);
-                    currentGame = queryResult;
-                    console.log(`\tQuery returned ${resultString}`);
-                    console.log('break')
-                }
-                console.log();
-                resolve(results);
-            }
-        });
-    });
-};
-
 function exit(message) {
     console.log(message);
     console.log('Press any key to exit');
@@ -117,9 +93,8 @@ function exit(message) {
 getDatabase()
 .then(() => getCollection())
 .then(() => {console.log('Got Collection')})
-.then(() => getMatchDocument(config.documents.game2))
-.then(() => getMatchDocument(config.documents.game3))
-.then(() => queryCollection())
+.then(() => getMatchDocument(config.documents.game))
+// .then(() => getMatchDocument(config.documents.event))
 
 .then(() => { exit(`Completed successfully`); })
 .catch((error) => { exit(`Completed with error ${JSON.stringify(error)}`) });
@@ -135,65 +110,74 @@ request( eventHubUrl + '&name=awayTeamGoal', function (error, response, body) {
   }
 })
 
+var game = {
+    "id": "002",
+    "latestUpdateTime" : new Date(),
+        "homeTeam": {
+            "name": "Crossfire",
+            "goals": [{
+                "time": "10:05:00",
+                "scorer" : 7,
+                "assist" : 3
+            }, {
+                "time": "10:06",
+                "scorer" : 3,
+                "assist" : 7
+                }],
+            "shots": [{
+                "time": "10:09",
+                "type": "onTarget",
+                "shooter": 10
+                }],
+            "whistles": [{
+                "whistleType": "Foul",
+                "time": "10:09",
+                "onTarget": "yes",
+                "player": 11
+                }]         
+            },
+        "awayTeam": {
+            "name": "Seattle United",
+            "goals": [{
+                "time": "10:05",
+                "scorer" : 7,
+                "assist" : 3
+            }, {
+                "time": "10:06",
+                "scorer" : 3,
+                "assist" : 7
+                }],
+            "shots": [{
+                "time": "10:09",
+                "type": "onTarget",
+                "shooter": 10
+                }],
+            "whistles": [{
+                "whistleType": "Foul",
+                "time": "10:09",
+                "onTarget": "yes",
+                "player": 11
+                }]         
+            },
+            "conditions": {
+                "location": "60 acres",
+                "weather": "sunny"
+            },
+            "events" : [{
+                 "event": {
+                    "id" : "000",
+                    "timestamp" : new Date(),
+                    "eventType" : "goal",
+                    "player" : 7,
+                    "details" : "homeTeam",
+                    "user": "Tom"
+                    }
+            }]
+    },
 
-function player () {
-    this.firstName = "";
-    this.lastName = "";
-    this.position = "";
-    this.photo = null;
 }
 
-function team() {
-    this.teamName = "";
-    this.club = "";
-    this.ageGroup = "";
-    this.gender = "";
-    this.uniform = "";
-    this.roster = new Array();
-    this.latestScore = function(event) {
-        team.latestScore = 0; 
-        ticker.forEach(function(tick) {
-            if (tick.event == event) {
-                team.latestScore +=1;
-            }   
-        });
-        return team.latestScore;
-    } ;
-}
 
-
-function venue() {
-    this.fieldName = "";
-    this.fieldNumber = null;
-    this.fieldCity = "";
-    this.fieldState = "";
-    this.fieldCountry = "";
-}
-
-function tickerEvent () {
-    this.timestamp = "";
-    this.event = "";
-    this.player = "";
-    this.details = "";
-    this.user = "";
-}
-
-var ticker = new Array();
-
-var addToRawTicker = function (event, player, details) {
-    var oTickerEvent = new tickerEvent();
-    oTickerEvent.timestamp = new Date();
-    oTickerEvent.event = event;
-    oTickerEvent.player = player;
-    oTickerEvent.details = details;
-    oTickerEvent.user = "Tom";
-    ticker.push(oTickerEvent);
-    request( eventHubUrl + '&event=' + JSON.stringify(oTickerEvent), function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-        console.log('logged to Event Hub - response = ' + body) 
-    }
-    })
-};
 
 function whichHalf() {
     whichHalf.half = "First";
@@ -206,8 +190,6 @@ function whichHalf() {
         });
     return whichHalf.half;
 } 
-
-var currentGame = "";
 
 
 // function latestScores (team,event) {

@@ -9,69 +9,106 @@ config.database = {
 };
 
 config.collection = {
-    "id": "matches"
+    "id": "games"
 };
 
+function player () {
+    this.firstName = "";
+    this.lastName = "";
+    this.jerseyNumber = "";
+    this.position = "";
+    this.photo = null;
+}
+
+function tickerEvent () {
+    this.timestamp = "";
+    this.event = "";
+    this.player = new player;
+    this.details = "";
+    this.user = "";
+}
+
+function team() {
+    this.teamName = "";
+    this.club = "";
+    this.ageGroup = "";
+    this.gender = "";
+    this.uniform = "";
+    this.coach = "";
+    this.roster = new Array();
+    }
+
+function goal() {
+    this.time = "",
+    this.scorer = new player,
+    this.assist = new player
+}
+
+function shot() {
+    this.time = "",
+    this.shooter = new player
+}
+
+function whistle() {
+    this.time = "",
+    this.whistleType = ""
+}
+
+
 config.documents = {
-    "game": {
+    "game2": {
         "id": "002",
+        "mappingId" : "002",
+        "latestUpdateTime" : new Date(),
         "homeTeam": {
-            "name": "Crossfire",
-            "goals": [{
-                "time": "10:05",
-                "scorer" : 7,
-                "assist" : 3
-            }, {
-                "time": "10:06",
-                "scorer" : 3,
-                "assist" : 7
-                }],
-            "shots": [{
-                "time": "10:09",
-                "type": "onTarget",
-                "shooter": 10
-                }],
-            "whistles": [{
-                "whistleType": "Foul",
-                "time": "10:09",
-                "onTarget": "yes",
-                "player": 11
-                }]         
+            "teamDetails": new team,
+            "goals": [new goal],
+            "shots": [new shot],
+            "whistles": [new whistle]    
             },
         "awayTeam": {
-            "name": "Seattle United",
-            "goals": [{
-                "time": "10:05",
-                "scorer" : 7,
-                "assist" : 3
-            }, {
-                "time": "10:06",
-                "scorer" : 3,
-                "assist" : 7
-                }],
-            "shots": [{
-                "time": "10:09",
-                "type": "onTarget",
-                "shooter": 10
-                }],
-            "whistles": [{
-                "whistleType": "Foul",
-                "time": "10:09",
-                "onTarget": "yes",
-                "player": 11
-                }]         
+            "teamDetails": new team,
+            "goals": [new goal],
+            "shots": [new shot],
+            "whistles": [new whistle]             
             },
-            "location": "60 acres",
-            "weather": "sunny"
+        "conditions": {
+                "location": "60 acres",
+                "weather": "sunny"
+            },
+        "tournamentOrLeague": {
+            "name": "",
+            "stage": ""
+            },
+        "events" : [new tickerEvent()]
     },
-    "event": {
-        "id" : "000",
-        "timestamp" : new Date(),
-        "eventType" : "goal",
-        "player" : 7,
-        "details" : "homeTeam",
-        "user": "Tom"
-    }
+        "game3": {
+        "id": "003",
+        "mappingId" : "003",
+        "latestUpdateTime" : new Date(),
+        "homeTeam": {
+            "teamDetails": new team,
+            "goals": [new goal],
+            "shots": [new shot],
+            "whistles": [new whistle]    
+            },
+        "awayTeam": {
+            "teamDetails": new team,
+            "goals": [new goal],
+            "shots": [new shot],
+            "whistles": [new whistle]             
+            },
+        "conditions": {
+                "location": "Marymoor Park",
+                "weather": "sunny"
+            },
+        "tournamentOrLeague": {
+            "name": "",
+            "stage": ""
+            },
+        "events" : [new tickerEvent()]
+    },
+
 };
 
 module.exports = config;
