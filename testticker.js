@@ -129,19 +129,19 @@ function exit(message) {
     process.stdin.on('data', process.exit.bind(process, 0));
 }
 
-getDatabase()
-.then(() => getCollection())
-.then(() => {console.log('Got Collection')})
-.then(() => getMatchDocument(config.documents.game2))
-.then(() => getMatchDocument(config.documents.game3))
-.then(() => queryCollection())
+// getDatabase()
+// .then(() => getCollection())
+// .then(() => {console.log('Got Collection')})
+// .then(() => getMatchDocument(config.documents.game2))
+// .then(() => getMatchDocument(config.documents.game3))
+// .then(() => queryCollection())
 
-.then(() => replaceFamilyDocument(config.documents.game2))
-.then(() => queryCollection())
+// .then(() => replaceFamilyDocument(config.documents.game2))
+// .then(() => queryCollection())
 
 
-.then(() => { exit(`Completed successfully`); })
-.catch((error) => { exit(`Completed with error ${JSON.stringify(error)}`) });
+// .then(() => { exit(`Completed successfully`); })
+// .catch((error) => { exit(`Completed with error ${JSON.stringify(error)}`) });
 
 //=========================================================
 // Ticker Setup
@@ -244,21 +244,22 @@ localGame.id = "010";
 localGame.mappingId = localGame.id;
 console.log(localGame);
 console.log(localGame);
+config.documents.game = localGame;
 
 
-// getDatabase()
-// .then(() => getCollection())
-// .then(() => {console.log('Got Collection')})
-// .then(() => getMatchDocument(config.documents.localGame))
+getDatabase()
+.then(() => getCollection())
+.then(() => {console.log('Got Collection')})
+.then(() => getMatchDocument(config.documents.game))
 
+.then(() => queryCollection())
+
+// .then(() => replaceFamilyDocument(config.documents.game2))
 // .then(() => queryCollection())
 
-// // .then(() => replaceFamilyDocument(config.documents.game2))
-// // .then(() => queryCollection())
 
-
-// .then(() => { exit(`Completed successfully`); })
-// .catch((error) => { exit(`Completed with error ${JSON.stringify(error)}`) });
+.then(() => { exit(`Completed successfully`); })
+.catch((error) => { exit(`Completed with error ${JSON.stringify(error)}`) });
 
 
 
