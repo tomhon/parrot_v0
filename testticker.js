@@ -252,7 +252,7 @@ getDatabase()
 .then(() => getCollection())
 .then(() => {console.log('Got Collection')})
 .then(() => getMatchDocument(config.documents.game))
-
+.then(() => {addToRawTicker("Assist", homeTeam.roster[2]);})
 .then(() => queryCollection())
 
 // .then(() => replaceFamilyDocument(config.documents.game2))
@@ -354,6 +354,18 @@ awayTeam.teamName = "G04 Copa";
 addToRawTicker("awayTeamEntered",'',awayTeam.teamName);
 awayTeam.club = 'Seattle United';
 addToRawTicker("awayClubEntered",'',awayTeam.club);
+
+addToRawTicker("Goal", "unknown", "unknown");
+addToRawTicker("homeTeamGoal", "unknown", "unknown");
+addToRawTicker("awayTeamGoal", "unknown", "unknown");
+addToRawTicker("homeTeamGoal", "unknown", "unknown");
+addToRawTicker("awayTeamGoal", "unknown", "unknown");
+addToRawTicker("homeTeamGoal", "unknown", "unknown");
+addToRawTicker("Shot", "unknown", "unknown");
+addToRawTicker("Whistle", "unknown", "unknown");
+addToRawTicker("Goal","unknown", "unknown");
+addToRawTicker("Assist", homeTeam.roster[7]);
+addToRawTicker("kickoff_1stHalf","unknown", "unknown");
 
 addToRawTicker("Goal", "unknown", "unknown");
 addToRawTicker("homeTeamGoal", "unknown", "unknown");
