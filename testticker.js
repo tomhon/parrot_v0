@@ -164,7 +164,7 @@ function player () {
 }
 
 function tickerEvent () {
-    this.timestamp = "";
+    this.timestamp = new Date();
     this.event = "";
     this.player = new player;
     this.details = "";
@@ -222,7 +222,8 @@ function venue() {
 function game() {
     this.id = "",
     this.mappingId = "",
-    this.latestUpdateTime = new Date(),
+    this.latestUpdateTime = new Date()
+    ,
     this.homeTeam = new team(),
     this.awayTeam = new team(),
     this.weather = new weather()
@@ -240,7 +241,7 @@ function game() {
 
 
 var localGame = new game();
-localGame.id = "010";
+localGame.id = "001";
 localGame.mappingId = localGame.id;
 console.log(localGame);
 console.log(localGame);
@@ -269,15 +270,31 @@ getDatabase()
 
 var ticker = new Array();
 
+// var addToRawTicker = function (event, player, details) {
+//     var oTickerEvent = new tickerEvent();
+//     oTickerEvent.event = event;
+//     oTickerEvent.player = player;
+//     oTickerEvent.details = details;
+//     oTickerEvent.user = "Tom";
+//     ticker.push(oTickerEvent);
+//     request( eventHubUrl + '&game=' + JSON.stringify(oTickerEvent), function (error, response, body) {
+//         if (!error && response.statusCode == 200) {
+//         console.log('logged to Event Hub - response = ' + body) 
+//     }
+//     })
+// };
+
 var addToRawTicker = function (event, player, details) {
     var oTickerEvent = new tickerEvent();
-    oTickerEvent.timestamp = new Date();
     oTickerEvent.event = event;
     oTickerEvent.player = player;
     oTickerEvent.details = details;
     oTickerEvent.user = "Tom";
     ticker.push(oTickerEvent);
-    request( eventHubUrl + '&event=' + JSON.stringify(oTickerEvent), function (error, response, body) {
+    localGame.latestUpdateTime = new Date();
+    localGame.mappingId = (localGame.mappingId + '1');
+    localGame.events.push(oTickerEvent);
+    request( eventHubUrl + '&game=' + JSON.stringify(localGame), function (error, response, body) {
         if (!error && response.statusCode == 200) {
         console.log('logged to Event Hub - response = ' + body) 
     }
