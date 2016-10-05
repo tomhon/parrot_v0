@@ -116,6 +116,42 @@ function game() {
 }
 
 //=========================================================
+// Set up helper functions
+//=========================================================
+
+var eventHubUrl = 'https://parrotrawevents.azurewebsites.net/api/HttpTriggerNodeJS1?code=n0rtoxjcoygj3v78iv7r885mi40dwr13vygz0wu74ftufcx47vihyflilseyuhj4oyw8jh71ra4i'
+
+
+var addToRawTicker = function (event, player, details) {
+    var oTickerEvent = new tickerEvent();
+    oTickerEvent.event = event;
+    oTickerEvent.player = player;
+    oTickerEvent.details = details;
+    oTickerEvent.user = "Tom";
+    ticker.push(oTickerEvent);
+    localGame.latestUpdateTime = new Date();
+    localGame.mappingId = (localGame.mappingId + '1');
+    localGame.events.push(oTickerEvent);
+    request( eventHubUrl + '&game=' + JSON.stringify(localGame), function (error, response, body) {
+        if (!error && response.statusCode == 200) {
+        console.log('logged to Event Hub - response = ' + body) 
+    }
+    })
+};
+
+function whichHalf() {
+    whichHalf.half = "First";
+    ticker.forEach(function(tick) {
+        if (tick.event == "kickoff_1stHalf" || tick.event == "finalWhistle_1stHalf") {
+                console.log('2nd half');
+                whichHalf.half = "Second";
+                return whichHalf.half;
+            }   
+        });
+    return whichHalf.half;
+} 
+
+//=========================================================
 // Set up match data
 //=========================================================
 
