@@ -574,7 +574,7 @@ bot.dialog('/matchDetails', [
                         builder.CardAction.imBack(session, "shot", "Shot"),
                     ]),
                new builder.HeroCard(session)
-                    .title( "%s %s : %s %s",localTeam.homeTeam.club,localTeam.homeTeam.latestScore('homeTeamGoal'),localTeam.awayTeam.latestScore('awayTeamGoal'),localTeam.awayTeam.club)
+                    .title( "%s %s : %s %s",localTeam.homeTeam.club,localTeam.homeTeam.goals.length,localTeam.awayTeam.goals.length,localTeam.awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
