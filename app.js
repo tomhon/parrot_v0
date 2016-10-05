@@ -128,7 +128,7 @@ var addToRawTicker = function (event, player, details) {
     oTickerEvent.player = player;
     oTickerEvent.details = details;
     oTickerEvent.user = "Tom";
-    ticker.push(oTickerEvent);
+    // ticker.push(oTickerEvent);
     localGame.latestUpdateTime = new Date();
     localGame.mappingId = (localGame.mappingId + '1');
     localGame.events.push(oTickerEvent);
