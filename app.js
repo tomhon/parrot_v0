@@ -104,8 +104,7 @@ function venue() {
 function game() {
     this.id = "",
     this.mappingId = "",
-    this.latestUpdateTime = new Date()
-    ,
+    this.latestUpdateTime = new Date(),
     this.homeTeam = new team(),
     this.awayTeam = new team(),
     this.weather = new weather()
@@ -132,6 +131,7 @@ var addToRawTicker = function (event, player, details) {
     localGame.latestUpdateTime = new Date();
     localGame.mappingId = (localGame.mappingId + '1');
     localGame.events.push(oTickerEvent);
+    session.send("addingToRawTicker " + JSON.stringify(localGame));
     request( eventHubUrl + '&game=' + JSON.stringify(localGame), function (error, response, body) {
         if (!error && response.statusCode == 200) {
         console.log('logged to Event Hub - response = ' + body) 
