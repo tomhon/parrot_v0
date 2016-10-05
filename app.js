@@ -177,9 +177,9 @@ localGame.homeTeam.roster[2].lastName ="McQuade";
 
 
 localGame.awayTeam.teamName = "G04 Copa";
-addToRawTicker("awayTeamEntered",'',awayTeam.teamName);
+addToRawTicker("awayTeamEntered",'',localGame.awayTeam.teamName);
 localGame.awayTeam.club = 'Seattle United';
-addToRawTicker("awayClubEntered",'',awayTeam.club);
+addToRawTicker("awayClubEntered",'',localGame.awayTeam.club);
 localGame.awayTeam.roster[3] = new player;
 localGame.awayTeam.roster[3].firstName ="Andi";
 localGame.awayTeam.roster[3].lastName ="Miller";
