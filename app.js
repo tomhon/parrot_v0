@@ -40,8 +40,17 @@ server.get('/', function (req, res) {
 function player () {
     this.firstName = "";
     this.lastName = "";
+    this.jerseyNumber = "";
     this.position = "";
     this.photo = null;
+}
+
+function tickerEvent () {
+    this.timestamp = new Date();
+    this.event = "";
+    this.player = new player;
+    this.details = "";
+    this.user = "";
 }
 
 function team() {
@@ -50,24 +59,33 @@ function team() {
     this.ageGroup = "";
     this.gender = "";
     this.uniform = "";
-    this.roster = new Array();
-    this.latestScore = function(event) {
-        team.latestScore = 0; 
-        ticker.forEach(function(tick) {
-            if (tick.event == event) {
-                team.latestScore +=1;
-            }   
-        });
-        return team.latestScore;
-    } ;
+    this.coach = "";
+    this.roster = new Array(); //array of player
+    this.goals = new Array(); //array of goal
+    this.shots = new Array(); // array of shot
+    this.whistles = new Array(); //array of whistle
+    }
+
+function goal() {
+    this.time = "",
+    this.scorer = new player,
+    this.assist = new player
 }
 
-function conditions() {
-    this.temperature = 65;
-    this.units = "F";
-    this.precipitation = "Dry";
-    this.visibility = "Clear";
-    this.wind = "Calm";
+function shot() {
+    this.time = "",
+    this.shooter = new player
+}
+
+function whistle() {
+    this.time = "",
+    this.whistleType = ""
+}
+
+function weather() {
+    this.temperature = "",
+    this.precipitation = "",
+    this.visibility = ""
 }
 
 function schedule() {
@@ -83,89 +101,55 @@ function venue() {
     this.fieldCountry = "USA";
 }
 
-function whichHalf() {
-    whichHalf.half = "First";
-    ticker.forEach(function(tick) {
-        if (tick.event == "kickoff_1stHalf" || tick.event == "finalWhistle_1stHalf") {
-                console.log('2nd half');
-                whichHalf.half = "Second";
-                return whichHalf.half;
-            }   
-        });
-    return whichHalf.half;
-} 
+function game() {
+    this.id = "",
+    this.mappingId = "",
+    this.latestUpdateTime = new Date()
+    ,
+    this.homeTeam = new team(),
+    this.awayTeam = new team(),
+    this.weather = new weather()
+    this.schedule = new schedule();
+    this.venue = new venue();
+    this.events = new Array() //array of tickerEvent
 
-
-function tickerEvent () {
-    this.timestamp = "";
-    this.event = "";
-    this.player = new player;
-    this.details = "";
-    this.user = "";
-}
-
-var ticker = new Array();
-
-var addToRawTicker = function (event, player, details) {
-    var oTickerEvent = new tickerEvent();
-    oTickerEvent.timestamp = new Date();
-    oTickerEvent.event = event;
-    oTickerEvent.player = player;
-    oTickerEvent.details = details;
-    oTickerEvent.user = "Tom";
-    ticker.push(oTickerEvent);
-    request( eventHubUrl + '&event=' + JSON.stringify(oTickerEvent), function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-        // console.log('successfully logged to event hub'') ;
-        //TO DO Error handler
-    }
-    })
-};
-
-function latestScores (team) {
-    team.latestScore = team.latestScore + 1;
-    return team.latestScore;
 }
 
 //=========================================================
 // Set up match data
 //=========================================================
 
-var homeTeam = new team;
-homeTeam.club ="Home Team";
-var awayTeam = new team;
-awayTeam.club = "Away Team";
-var location = new venue();
-var kickoff = new schedule();
-var weather = new conditions();
+var localGame = new game();
+localGame.homeTeam.club = "Home Team";
+localGame.awayTeam.club = "Away Team";
 
 
 //=========================================================
 // Set up dummy data
 //=========================================================
 
-homeTeam.teamName = "G04 Schmetzer";
+localGame.homeTeam.teamName = "G04 Schmetzer";
 addToRawTicker("homeTeamEntered",'',homeTeam.teamName);
-homeTeam.club = 'Crossfire';
+localGame.homeTeam.club = 'Crossfire';
 addToRawTicker("homeClubEntered",'',homeTeam.club);
-homeTeam.roster[7] = new player;
-homeTeam.roster[7].firstName ="Poppy";
-homeTeam.roster[7].lastName ="Honeybone";
-homeTeam.roster[2] = new player;
-homeTeam.roster[2].firstName ="Riley";
-homeTeam.roster[2].lastName ="McQuade";
+localGame.homeTeam.roster[7] = new player;
+localGame.homeTeam.roster[7].firstName ="Poppy";
+localGame.homeTeam.roster[7].lastName ="Honeybone";
+localGame.homeTeam.roster[2] = new player;
+localGame.homeTeam.roster[2].firstName ="Riley";
+localGame.homeTeam.roster[2].lastName ="McQuade";
 
 
-awayTeam.teamName = "G04 Copa";
+localGame.awayTeam.teamName = "G04 Copa";
 addToRawTicker("awayTeamEntered",'',awayTeam.teamName);
-awayTeam.club = 'Seattle United';
+localGame.awayTeam.club = 'Seattle United';
 addToRawTicker("awayClubEntered",'',awayTeam.club);
-awayTeam.roster[3] = new player;
-awayTeam.roster[3].firstName ="Andi";
-awayTeam.roster[3].lastName ="Miller";
-awayTeam.roster[2] = new player;
-awayTeam.roster[2].firstName ="Anna";
-awayTeam.roster[2].lastName ="Menti";
+localGame.awayTeam.roster[3] = new player;
+localGame.awayTeam.roster[3].firstName ="Andi";
+localGame.awayTeam.roster[3].lastName ="Miller";
+localGame.awayTeam.roster[2] = new player;
+localGame.awayTeam.roster[2].firstName ="Anna";
+localGame.awayTeam.roster[2].lastName ="Menti";
   
 //=========================================================
 // Bot Setup
@@ -591,7 +575,7 @@ bot.dialog('/matchDetails', [
 bot.dialog('/overview', [
     function (session) {
         session.send("Current Ticker");
-        ticker.forEach(function(tick) {
+        localGame.events.forEach(function(tick) {
             session.send( tick.event + " " + tick.player + " " + tick.details + " " + tick.user + " " + tick.timestamp.toUTCString().slice(16,29) );
             // session.send(tick.user);
         });
@@ -641,7 +625,7 @@ bot.dialog('/overview', [
 bot.dialog('/liveTicker', [
     function (session) {
         session.send("Current Ticker");
-        ticker.forEach(function(tick) {
+        localGame.events.forEach(function(tick) {
             session.send( tick.event + " " + tick.player + " " + tick.details + " " + tick.user + " " + tick.timestamp.toUTCString().slice(16,29) );
             // session.send(tick.user);
         });
@@ -691,7 +675,7 @@ bot.dialog('/liveTicker', [
 bot.dialog('/lineup', [
     function (session) {
         session.send("Current Ticker");
-        ticker.forEach(function(tick) {
+        localGame.events.forEach(function(tick) {
             session.send( tick.event + " " + tick.player + " " + tick.details + " " + tick.user + " " + tick.timestamp.toUTCString().slice(16,29) );
             // session.send(tick.user);
         });
@@ -741,7 +725,7 @@ bot.dialog('/lineup', [
 bot.dialog('/stats', [
     function (session) {
         session.send("Current Ticker");
-        ticker.forEach(function(tick) {
+        localGame.events.forEach(function(tick) {
             session.send( tick.event + " " + tick.player + " " + tick.details + " " + tick.user + " " + tick.timestamp.toUTCString().slice(16,29) );
             // session.send(tick.user);
         });
@@ -802,65 +786,65 @@ bot.dialog('/homeTeam', [
     function (session, results) {
 
         if (results.response) {
-                homeTeam.club = results.response;
-                addToRawTicker("homeClubEntered", "", homeTeam.club);
-                session.send("Home club is now %s", homeTeam.club);  
+                localTeam.homeTeam.club = results.response;
+                addToRawTicker("homeClubEntered", "", localTeam.homeTeam.club);
+                session.send("Home club is now %s", localTeam.homeTeam.club);  
         } else {
             next();
 
         }
-        session.send("Home team name is currently set to " + homeTeam.teamName);
+        session.send("Home team name is currently set to " + localTeam.homeTeam.teamName);
         builder.Prompts.text(session, "If you want to change it, please enter a new team name");
 
     },
     function (session, results) {
         if (results.response) {
-                homeTeam.teamName = results.response;
-                addToRawTicker("homeNameEntered", "", homeTeam.teamName);
-                session.send("Home team is now %s", homeTeam.teamName);    
+                localTeam.homeTeam.teamName = results.response;
+                addToRawTicker("homeNameEntered", "", localTeam.homeTeam.teamName);
+                session.send("Home team is now %s", localTeam.homeTeam.teamName);    
   
         } else {
             next();
 
         }
-        session.send("Home age group name is currently set to " + homeTeam.ageGroup);
+        session.send("Home age group name is currently set to " + localTeam.homeTeam.ageGroup);
         builder.Prompts.text(session, "If you want to change it, please enter a new age group");
 
     },
     function (session, results) {
 
         if (results.response) {
-                homeTeam.ageGroup = results.response;
-                addToRawTicker("homeAgeEntered", "", homeTeam.ageGroup);
-                session.send("Home age group is now %s", homeTeam.ageGroup);  
+                localTeam.homeTeam.ageGroup = results.response;
+                addToRawTicker("homeAgeEntered", "", localTeam.homeTeam.ageGroup);
+                session.send("Home age group is now %s", localTeam.homeTeam.ageGroup);  
         } else {
             next();
 
         }
-        session.send("Home gender is currently set to " + homeTeam.gender);
+        session.send("Home gender is currently set to " + localTeam.homeTeam.gender);
         builder.Prompts.choice(session, "If you want to change it, please enter ", "Girls|Boys");
 
     },
     function (session, results) {
         if (results.response) {
-                homeTeam.gender = results.response.entity;
-                addToRawTicker("homeGenerEntered", "", homeTeam.gender);
-                session.send("Home gender is now %s", homeTeam.gender);    
+                localTeam.homeTeam.gender = results.response.entity;
+                addToRawTicker("homeGenerEntered", "", localTeam.homeTeam.gender);
+                session.send("Home gender is now %s", localTeam.homeTeam.gender);    
   
         } else {
             next();
 
         }
-        session.send("Home uniform is currently set to " + homeTeam.uniform);
+        session.send("Home uniform is currently set to " + localTeam.homeTeam.uniform);
         builder.Prompts.text(session, "If you want to change it, please enter a new uniform color");
 
     },
     function (session, results) {
 
         if (results.response) {
-                homeTeam.uniform = results.response;
-                addToRawTicker("homeUniformEntered", "", homeTeam.uniform);
-                session.send("Home Uniform is now %s", homeTeam.uniform);  
+                localTeam.homeTeam.uniform = results.response;
+                addToRawTicker("homeUniformEntered", "", localTeam.homeTeam.uniform);
+                session.send("Home Uniform is now %s", localTeam.homeTeam.uniform);  
         } else {
             next();
 
@@ -873,72 +857,72 @@ bot.dialog('/homeTeam', [
 
 bot.dialog('/awayTeam', [
     function (session) {
-        session.send("Away club name is currently set to " + awayTeam.club);
+        session.send("Away club name is currently set to " + localTeam.awayTeam.club);
         builder.Prompts.text(session, "If you want to change it, please enter a new club name");
 
     },
     function (session, results) {
 
         if (results.response) {
-                awayTeam.club = results.response;
-                addToRawTicker("awayClubEntered", "", awayTeam.club);
-                session.send("Away club is now %s", awayTeam.club);  
+                localTeam.awayTeam.club = results.response;
+                addToRawTicker("awayClubEntered", "", localTeam.awayTeam.club);
+                session.send("Away club is now %s", localTeam.awayTeam.club);  
         } else {
             next();
 
         }
-        session.send("Away team name is currently set to " + awayTeam.teamName);
+        session.send("Away team name is currently set to " + localTeam.awayTeam.teamName);
         builder.Prompts.text(session, "If you want to change it, please enter a new team name");
 
     },
     function (session, results) {
         if (results.response) {
-                awayTeam.teamName = results.response;
-                addToRawTicker("awayNameEntered", "", awayTeam.teamName);
-                session.send("Away team is now %s", awayTeam.teamName);    
+                localTeam.awayTeam.teamName = results.response;
+                addToRawTicker("awayNameEntered", "", localTeam.awayTeam.teamName);
+                session.send("Away team is now %s", localTeam.awayTeam.teamName);    
   
         } else {
             next();
 
         }
-        session.send("Away age group name is currently set to " + awayTeam.ageGroup);
+        session.send("Away age group name is currently set to " + localTeam.awayTeam.ageGroup);
         builder.Prompts.text(session, "If you want to change it, please enter a new age group");
 
     },
     function (session, results) {
 
         if (results.response) {
-                awayTeam.ageGroup = results.response;
-                addToRawTicker("awayAgeEntered", "", awayTeam.ageGroup);
-                session.send("Away age group is now %s", awayTeam.ageGroup);  
+                localTeam.awayTeam.ageGroup = results.response;
+                addToRawTicker("awayAgeEntered", "", localTeam.awayTeam.ageGroup);
+                session.send("Away age group is now %s", localTeam.awayTeam.ageGroup);  
         } else {
             next();
 
         }
-        session.send("Away gender is currently set to " + awayTeam.gender);
+        session.send("Away gender is currently set to " + localTeam.awayTeam.gender);
         builder.Prompts.choice(session, "If you want to change it, please enter ", "Girls|Boys");
 
     },
     function (session, results) {
         if (results.response) {
-                awayTeam.gender = results.response.entity;
-                addToRawTicker("awayGenderEntered", "", awayTeam.gender);
-                session.send("Away gender is now %s", awayTeam.gender);    
+                localTeam.awayTeam.gender = results.response.entity;
+                addToRawTicker("awayGenderEntered", "", localTeam.awayTeam.gender);
+                session.send("Away gender is now %s", localTeam.awayTeam.gender);    
   
         } else {
             next();
 
         }
-        session.send("Away uniform is currently set to " + awayTeam.uniform);
+        session.send("Away uniform is currently set to " + localTeam.awayTeam.uniform);
         builder.Prompts.text(session, "If you want to change it, please enter a new uniform color");
 
     },
     function (session, results) {
 
         if (results.response) {
-                awayTeam.uniform = results.response;
-                addToRawTicker("awayUniformEntered", "", awayTeam.uniform);
-                session.send("Away Uniform is now %s", awayTeam.uniform);  
+                localTeam.awayTeam.uniform = results.response;
+                addToRawTicker("awayUniformEntered", "", localTeam.awayTeam.uniform);
+                session.send("Away Uniform is now %s", localTeam.awayTeam.uniform);  
         } else {
             next();
 
@@ -951,69 +935,69 @@ bot.dialog('/awayTeam', [
 
 bot.dialog('/location', [
     function (session) {
-        session.send("Field Name is currently set to " + location.fieldName);
+        session.send("Field Name is currently set to " + localTeam.location.fieldName);
         builder.Prompts.text(session, "If you want to change it, please enter a new field name");
 
     },
     function (session, results) {
 
         if (results.response) {
-                location.fieldName = results.response;
-                addToRawTicker("fieldNameEntered", "", location.fieldName);
-                session.send("Field name is now %s", location.fieldName);  
+                localTeam.location.fieldName = results.response;
+                addToRawTicker("fieldNameEntered", "", localTeam.location.fieldName);
+                session.send("Field name is now %s", localTeam.location.fieldName);  
         } else {
             next();
 
         }
-        session.send("Field number is currently set to " + location.fieldNumber);
+        session.send("Field number is currently set to " + localTeam.location.fieldNumber);
         builder.Prompts.number(session, "If you want to change it, please enter a new field number");
 
     },
     function (session, results) {
         if (results.response) {
-                location.fieldNumber = results.response;
-                addToRawTicker("fieldNumberEntered", "", location.fieldNumber);
-                session.send("Field Number is now %s", location.fieldNumber);    
+                localTeam.location.fieldNumber = results.response;
+                addToRawTicker("fieldNumberEntered", "", localTeam.location.fieldNumber);
+                session.send("Field Number is now %s", localTeam.location.fieldNumber);    
   
         } else {
             next();
 
         }
-        session.send("City is currently set to " + location.fieldCity);
+        session.send("City is currently set to " + localTeam.location.fieldCity);
         builder.Prompts.text(session, "If you want to change it, please enter a new city");
 
     },
     function (session, results) {
 
         if (results.response) {
-                location.fieldCity = results.response;
-                addToRawTicker("cityEntered", "", location.fieldCity);
-                session.send("City is now %s", location.fieldCity);    
+                localTeam.location.fieldCity = results.response;
+                addToRawTicker("cityEntered", "", localTeam.location.fieldCity);
+                session.send("City is now %s", localTeam.location.fieldCity);    
         } else {
             next();
 
         }
-        session.send("State is currently set to " + location.fieldState);
+        session.send("State is currently set to " + localTeam.location.fieldState);
         builder.Prompts.text(session, "If you want to change it, please enter a new state ");
 
     },
     function (session, results) {
         if (results.response) {
-                location.fieldState = results.response;
-                addToRawTicker("stateEntered", "", location.fieldState);
-                session.send("State is now %s", location.fieldState);    
+                localTeam.location.fieldState = results.response;
+                addToRawTicker("stateEntered", "", localTeam.location.fieldState);
+                session.send("State is now %s", localTeam.location.fieldState);    
         } else {
             next();
         }
-        session.send("Country is currently set to " + location.fieldCountryl);
+        session.send("Country is currently set to " + localTeam.location.fieldCountryl);
         builder.Prompts.text(session, "If you want to change it, please enter a new country");
 
     },
     function (session, results) {
         if (results.response) {
-                location.fieldCountry = results.response;
-                addToRawTicker("countryEntered", "", location.fieldCountry);
-                session.send("Country is now %s", location.fieldCountry);    
+                localTeam.location.fieldCountry = results.response;
+                addToRawTicker("countryEntered", "", localTeam.location.fieldCountry);
+                session.send("Country is now %s", localTeam.location.fieldCountry);    
         } else {
             next();
         }
@@ -1023,29 +1007,29 @@ bot.dialog('/location', [
 
 bot.dialog('/schedule', [
     function (session) {
-        session.send("Kick off is currently set to " + kickoff.startTime);
+        session.send("Kick off is currently set to " + localTeam.kickoff.startTime);
         builder.Prompts.text(session, "If you want to change it, please enter a new time hh:mm");
 
     },
     function (session, results) {
 
         if (results.response) {
-                kickoff.startTime = results.response;
-                addToRawTicker("startTimeEntered", "", kickoff.startTime);
-                session.send("Kick off time is now %s", kickoff.startTime);  
+                localTeam.kickoff.startTime = results.response;
+                addToRawTicker("startTimeEntered", "", localTeam.kickoff.startTime);
+                session.send("Kick off time is now %s", localTeam.kickoff.startTime);  
         } else {
             next();
 
         }
-        session.send("Time Zone is set to " + kickoff.timeZone);
+        session.send("Time Zone is set to " + localTeam.kickoff.timeZone);
         builder.Prompts.text(session, "If you want to change it, please enter a new timezone TTT");
 
     },
     function (session, results) {
         if (results.response) {
-                kickoff.timeZone = results.response;
-                addToRawTicker("timeZoneEntered", "", kickoff.timeZone);
-                session.send("Kick off is now %s %s", kickoff.startTime, kickoff.timeZone);    
+                localTeam.kickoff.timeZone = results.response;
+                addToRawTicker("timeZoneEntered", "", localTeam.kickoff.timeZone);
+                session.send("Kick off is now %s %s", localTeam.kickoff.startTime, kickoff.timeZone);    
   
         } else {
             next();
@@ -1060,44 +1044,44 @@ bot.dialog('/weather', [
     //To DO add celcius
     //TO DO add wind speed
     function (session) {
-        session.send("Temperature is currently set to " + weather.temperature);
+        session.send("Temperature is currently set to " + localTeam.weather.temperature);
         builder.Prompts.number(session, "If you want to change it, please enter a new temperature");
 
     },
     function (session, results) {
 
         if (results.response) {
-                weather.temperature = results.response;
-                addToRawTicker("temperatureEntered", "", weather.temperature);
-                session.send("Temperature is now %s", weather.temperature);  
+                localTeam.weather.temperature = results.response;
+                addToRawTicker("temperatureEntered", "", localTeam.weather.temperature);
+                session.send("Temperature is now %s", localTeam.weather.temperature);  
         } else {
             next();
 
         }
-        session.send("Right now I think it's " + weather.precipitation);
+        session.send("Right now I think it's " + localTeam.weather.precipitation);
         builder.Prompts.choice(session, "Is it fine, raining or snowing?", "Dry|Raining|Snowing");
 
     },
     function (session, results) {
         if (results.response) {
-                weather.precipitation = results.response.entity;
-                addToRawTicker("precipitationEntered", "", weather.precipitation);
-                session.send("It's now %s", weather.precipitation);    
+                localTeam.weather.precipitation = results.response.entity;
+                addToRawTicker("precipitationEntered", "", localTeam.weather.precipitation);
+                session.send("It's now %s", localTeam.weather.precipitation);    
   
         } else {
             next();
 
         }
-        session.send("Visibility is " + weather.visibility);
+        session.send("Visibility is " + localTeam.weather.visibility);
         builder.Prompts.choice(session, "Is it sunny, partially cloudy or overcast?", "Sunny|Partially Cloudy|Overcast");
 
     },
     function (session, results) {
 
         if (results.response) {
-                weather.visibility = results.response.entity;
-                addToRawTicker("visibilityEntered", "", weather.visibility);
-                session.send("Thanks, I've got the weather as %s, %s and %s", weather.temperature, weather.precipitation, weather.visibility);    
+                localTeam.weather.visibility = results.response.entity;
+                addToRawTicker("visibilityEntered", "", localTeam.weather.visibility);
+                session.send("Thanks, I've got the weather as %s, %s and %s", localTeam.weather.temperature, weather.precipitation, weather.visibility);    
         } else {
             next();
 
@@ -1114,39 +1098,39 @@ bot.dialog('/weather', [
 
 bot.dialog('/homeScored', [
     function (session) {
-        session.send("Which " + homeTeam.club + " Player Scored?");
+        session.send("Which " + localTeam.homeTeam.club + " Player Scored?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
                //TO DO - add player names
-        session.send(homeTeam.club + " Player '%s' scored!", results.response);
-        addToRawTicker("homeTeamGoal", homeTeam.roster[results.response]);
+        session.send(localTeam.homeTeam.club + " Player '%s' scored!", results.response);
+        addToRawTicker("homeTeamGoal", localTeam.homeTeam.roster[results.response]);
                //TO DO - make assist optional
-        session.send("Which " + homeTeam.club + " Player Assisted?");
+        session.send("Which " + localTeam.homeTeam.club + " Player Assisted?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
-        session.send(homeTeam.club + " Player '%s' assisted!", results.response);
-        addToRawTicker("homeTeamAssist", homeTeam.roster[results.response]);
+        session.send(localTeam.homeTeam.club + " Player '%s' assisted!", results.response);
+        addToRawTicker("homeTeamAssist", localTeam.homeTeam.roster[results.response]);
         session.endDialog();
     }
 ]);
 
 bot.dialog('/awayScored', [
     function (session) {
-        session.send("Which " + awayTeam.club + " Player Scored?");
+        session.send("Which " + localTeam.awayTeam.club + " Player Scored?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
                        //TO DO - add player names
-        session.send(awayTeam.club + " Player '%s' scored!", results.response);
+        session.send(localTeam.awayTeam.club + " Player '%s' scored!", results.response);
         addToRawTicker("awayTeamGoal", results.response.toString());
         //TO DO - make assist optional
-        session.send("Which " + awayTeam.club + " Player Player Assisted?");
+        session.send("Which " + localTeam.awayTeam.club + " Player Player Assisted?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
-        session.send(awayTeam.club + " Player '%s' assisted!", results.response);
+        session.send(localTeam.awayTeam.club + " Player '%s' assisted!", results.response);
         addToRawTicker("awayTeamAssist", results.response.toString());
         session.endDialog();
     }
@@ -1158,22 +1142,22 @@ bot.dialog('/awayScored', [
 
 bot.dialog('/homeShot', [
     function (session) {
-        session.send("Which " + homeTeam.club + " Player Shot?");
+        session.send("Which " + localTeam.homeTeam.club + " Player Shot?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
         playerNumber = results.response;
-        builder.Prompts.confirm(session, "Was "+ homeTeam.club + " Player " + playerNumber + " shot on target?!");
+        builder.Prompts.confirm(session, "Was "+ localTeam.homeTeam.club + " Player " + playerNumber + " shot on target?!");
     },
     function (session, results) {
         session.send("You chose '%s'", results.response ? 'yes' : 'no');
         if (results.response == '1') {
                 // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
-                session.send(homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOnTarget", homeTeam.roster[playerNumber], "");
+                session.send(localTeam.homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
+                addToRawTicker("homeTeamShotOnTarget", localTeam.homeTeam.roster[playerNumber], "");
         } else {
-                session.send(homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("homeTeamShotOffTarget", homeTeam.roster[playerNumber], "");
+                session.send(localTeam.homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
+                addToRawTicker("homeTeamShotOffTarget", localTeam.homeTeam.roster[playerNumber], "");
         }
         session.endDialog();
     }
@@ -1181,22 +1165,22 @@ bot.dialog('/homeShot', [
 
 bot.dialog('/awayShot', [
     function (session) {
-        session.send("Which " + awayTeam.club + " Player Shot?");
+        session.send("Which " + localTeam.awayTeam.club + " Player Shot?");
         builder.Prompts.number(session, "Now enter a number.");
     },
     function (session, results) {
         playerNumber = results.response;
-        builder.Prompts.confirm(session, "Was "+ awayTeam.club + " Player " + playerNumber + " shot on target?!");
+        builder.Prompts.confirm(session, "Was "+ localTeam.awayTeam.club + " Player " + playerNumber + " shot on target?!");
     },
     function (session, results) {
         session.send("You chose '%s'", results.response ? 'yes' : 'no');
         if (results.response == '1') {
                 // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
-                session.send(awayTeam.club + " Player '%s' %s%sshot on target!", playerNumber, awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].firstName + ' ' : '',awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("awayTeamShotOnTarget", awayTeam.roster[playerNumber], "");
+                session.send(localTeam.awayTeam.club + " Player '%s' %s%sshot on target!", playerNumber, awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].firstName + ' ' : '',awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].lastName + ' ': '' );
+                addToRawTicker("awayTeamShotOnTarget", localTeam.awayTeam.roster[playerNumber], "");
         } else {
-                session.send(awayTeam.club + " Player '%s' %s%sshot off target!", playerNumber, awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].firstName + ' ' : '',awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].lastName + ' ': '' );
-                addToRawTicker("awayTeamShotOffTarget", awayTeam.roster[playerNumber], "");
+                session.send(localTeam.awayTeam.club + " Player '%s' %s%sshot off target!", playerNumber, awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].firstName + ' ' : '',awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].lastName + ' ': '' );
+                addToRawTicker("awayTeamShotOffTarget", localTeam.awayTeam.roster[playerNumber], "");
         }
         session.endDialog();
     }
@@ -1213,11 +1197,11 @@ bot.dialog('/awayShot', [
 bot.dialog('/kickOff', [
     function (session) {
         if (whichHalf() == "First") {
-            session.send("1st Half Kick Off in the %s vs %s game", homeTeam.club, awayTeam.club);
+            session.send("1st Half Kick Off in the %s vs %s game", localTeam.homeTeam.club, localTeam.awayTeam.club);
             addToRawTicker("kickoff_1stHalf");
             session.endDialog();
         } else {
-            session.send("2nd Half Kick Off in the %s vs %s game", homeTeam.club, awayTeam.club);
+            session.send("2nd Half Kick Off in the %s vs %s game", localTeam.homeTeam.club, localTeam.awayTeam.club);
             addToRawTicker("kickoff_2ndHalf");
             session.endDialog();
         }
@@ -1227,11 +1211,11 @@ bot.dialog('/kickOff', [
 bot.dialog('/finalWhistle', [
     function (session) {
         if (whichHalf() == "First") {
-            session.send("End of 1st Half in the %s vs %s game", homeTeam.club, awayTeam.club);
+            session.send("End of 1st Half in the %s vs %s game", localTeam.homeTeam.club, localTeam.awayTeam.club);
             addToRawTicker("finalWhistle_1stHalf");
             session.endDialog();
         } else {
-            session.send("End of 2nd Half in the %s vs %s game", homeTeam.club, awayTeam.club);
+            session.send("End of 2nd Half in the %s vs %s game", localTeam.homeTeam.club, localTeam.awayTeam.club);
             addToRawTicker("finalWhistle_2ndHalf");
             session.endDialog();
         }

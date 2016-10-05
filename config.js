@@ -98,4 +98,9 @@ config.documents = {
 config.documents.game2.id = "002";
 config.documents.game3.id = "003";
 
+
+
+
+
+
 module.exports = config;
