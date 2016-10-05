@@ -165,9 +165,9 @@ localGame.awayTeam.club = "Away Team";
 //=========================================================
 
 localGame.homeTeam.teamName = "G04 Schmetzer";
-addToRawTicker("homeTeamEntered",'',homeTeam.teamName);
+addToRawTicker("homeTeamEntered",'',localGame.homeTeam.teamName);
 localGame.homeTeam.club = 'Crossfire';
-addToRawTicker("homeClubEntered",'',homeTeam.club);
+addToRawTicker("homeClubEntered",'',localGame.homeTeam.club);
 localGame.homeTeam.roster[7] = new player;
 localGame.homeTeam.roster[7].firstName ="Poppy";
 localGame.homeTeam.roster[7].lastName ="Honeybone";
