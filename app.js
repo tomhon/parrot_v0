@@ -318,7 +318,7 @@ bot.dialog('/matchProgress', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
+                    .title( "%s %s : %s %s",localTeam.homeTeam.club,localTeam.homeTeam.latestScore('homeTeamGoal'),localTeam.awayTeam.latestScore('awayTeamGoal'),localTeam.awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -370,8 +370,8 @@ bot.dialog('/goal', [
                     .title("Tell me about the goal")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "homeScored", homeTeam.club + " Goal"),
-                        builder.CardAction.imBack(session, "awayScored", awayTeam.club + " Goal"),
+                        builder.CardAction.imBack(session, "homeScored",localTeam.homeTeam.club + " Goal"),
+                        builder.CardAction.imBack(session, "awayScored",localTeam.awayTeam.club + " Goal"),
                         builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
@@ -383,7 +383,7 @@ bot.dialog('/goal', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
+                    .title( "%s %s : %s %s",localTeam.homeTeam.club,localTeam.homeTeam.latestScore('homeTeamGoal'),localTeam.awayTeam.latestScore('awayTeamGoal'),localTeam.awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -451,7 +451,7 @@ bot.dialog('/whistle', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
+                    .title( "%s %s : %s %s",localTeam.homeTeam.club,localTeam.homeTeam.latestScore('homeTeamGoal'),localTeam.awayTeam.latestScore('awayTeamGoal'),localTeam.awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -499,8 +499,8 @@ bot.dialog('/shot', [
                     .title("Tell me about the shot")
 
                     .buttons([
-                        builder.CardAction.imBack(session, "homeShot", homeTeam.club + " Shot"),
-                        builder.CardAction.imBack(session, "awayShot", awayTeam.club + " Shot"),
+                        builder.CardAction.imBack(session, "homeShot",localTeam.homeTeam.club + " Shot"),
+                        builder.CardAction.imBack(session, "awayShot",localTeam.awayTeam.club + " Shot"),
                         builder.CardAction.imBack(session, "matchProgress", "What's happening?")
                     ]),
                 new builder.HeroCard(session)
@@ -512,7 +512,7 @@ bot.dialog('/shot', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
+                    .title( "%s %s : %s %s",localTeam.homeTeam.club,localTeam.homeTeam.latestScore('homeTeamGoal'),localTeam.awayTeam.latestScore('awayTeamGoal'),localTeam.awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -574,7 +574,7 @@ bot.dialog('/matchDetails', [
                         builder.CardAction.imBack(session, "shot", "Shot"),
                     ]),
                new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
+                    .title( "%s %s : %s %s",localTeam.homeTeam.club,localTeam.homeTeam.latestScore('homeTeamGoal'),localTeam.awayTeam.latestScore('awayTeamGoal'),localTeam.awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -630,7 +630,7 @@ bot.dialog('/overview', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
+                    .title( "%s %s : %s %s",localTeam.homeTeam.club,localTeam.homeTeam.latestScore('homeTeamGoal'),localTeam.awayTeam.latestScore('awayTeamGoal'),localTeam.awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -680,7 +680,7 @@ bot.dialog('/liveTicker', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
+                    .title( "%s %s : %s %s",localTeam.homeTeam.club,localTeam.homeTeam.latestScore('homeTeamGoal'),localTeam.awayTeam.latestScore('awayTeamGoal'),localTeam.awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -730,7 +730,7 @@ bot.dialog('/lineup', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
+                    .title( "%s %s : %s %s",localTeam.homeTeam.club,localTeam.homeTeam.latestScore('homeTeamGoal'),localTeam.awayTeam.latestScore('awayTeamGoal'),localTeam.awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -780,7 +780,7 @@ bot.dialog('/stats', [
                         builder.CardAction.imBack(session, "matchDetails", "Match Details")
                     ]),
                new builder.HeroCard(session)
-                    .title( "%s %s : %s %s", homeTeam.club, homeTeam.latestScore('homeTeamGoal'), awayTeam.latestScore('awayTeamGoal'), awayTeam.club)
+                    .title( "%s %s : %s %s",localTeam.homeTeam.club,localTeam.homeTeam.latestScore('homeTeamGoal'),localTeam.awayTeam.latestScore('awayTeamGoal'),localTeam.awayTeam.club)
 
                     .buttons([
                         builder.CardAction.imBack(session, "overview", "Overview"),
@@ -815,7 +815,7 @@ bot.dialog('/stats', [
 
 bot.dialog('/homeTeam', [
     function (session) {
-        session.send("Home club name is currently set to " + homeTeam.club);
+        session.send("Home club name is currently set to " +localTeam.homeTeam.club);
         builder.Prompts.text(session, "If you want to change it, please enter a new club name");
 
     },
@@ -1188,11 +1188,11 @@ bot.dialog('/homeShot', [
     function (session, results) {
         session.send("You chose '%s'", results.response ? 'yes' : 'no');
         if (results.response == '1') {
-                // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
-                session.send(localTeam.homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
+                // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber,localTeam.homeTeam.roster[playerNumber].firstName,localTeam.homeTeam.roster[playerNumber].lastName );
+                session.send(localTeam.homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber,localTeam.homeTeam.roster[playerNumber]?localTeam.homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]?localTeam.homeTeam.roster[playerNumber].lastName + ' ': '' );
                 addToRawTicker("homeTeamShotOnTarget", localTeam.homeTeam.roster[playerNumber], "");
         } else {
-                session.send(localTeam.homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber, homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]? homeTeam.roster[playerNumber].lastName + ' ': '' );
+                session.send(localTeam.homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber,localTeam.homeTeam.roster[playerNumber]?localTeam.homeTeam.roster[playerNumber].firstName + ' ' : '',homeTeam.roster[playerNumber]?localTeam.homeTeam.roster[playerNumber].lastName + ' ': '' );
                 addToRawTicker("homeTeamShotOffTarget", localTeam.homeTeam.roster[playerNumber], "");
         }
         session.endDialog();
@@ -1211,11 +1211,11 @@ bot.dialog('/awayShot', [
     function (session, results) {
         session.send("You chose '%s'", results.response ? 'yes' : 'no');
         if (results.response == '1') {
-                // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber, homeTeam.roster[playerNumber].firstName, homeTeam.roster[playerNumber].lastName );
-                session.send(localTeam.awayTeam.club + " Player '%s' %s%sshot on target!", playerNumber, awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].firstName + ' ' : '',awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].lastName + ' ': '' );
+                // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber,localTeam.homeTeam.roster[playerNumber].firstName,localTeam.homeTeam.roster[playerNumber].lastName );
+                session.send(localTeam.awayTeam.club + " Player '%s' %s%sshot on target!", playerNumber,localTeam.awayTeam.roster[playerNumber]?localTeam.awayTeam.roster[playerNumber].firstName + ' ' : '',awayTeam.roster[playerNumber]?localTeam.awayTeam.roster[playerNumber].lastName + ' ': '' );
                 addToRawTicker("awayTeamShotOnTarget", localTeam.awayTeam.roster[playerNumber], "");
         } else {
-                session.send(localTeam.awayTeam.club + " Player '%s' %s%sshot off target!", playerNumber, awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].firstName + ' ' : '',awayTeam.roster[playerNumber]? awayTeam.roster[playerNumber].lastName + ' ': '' );
+                session.send(localTeam.awayTeam.club + " Player '%s' %s%sshot off target!", playerNumber,localTeam.awayTeam.roster[playerNumber]?localTeam.awayTeam.roster[playerNumber].firstName + ' ' : '',awayTeam.roster[playerNumber]?localTeam.awayTeam.roster[playerNumber].lastName + ' ': '' );
                 addToRawTicker("awayTeamShotOffTarget", localTeam.awayTeam.roster[playerNumber], "");
         }
         session.endDialog();
