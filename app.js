@@ -1197,7 +1197,7 @@ bot.dialog('/homeShot', [
         session.send("You chose '%s'", results.response ? 'yes' : 'no');
         if (results.response == '1') {
                 // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber,localGame.homeTeam.roster[playerNumber].firstName,localGame.homeTeam.roster[playerNumber].lastName );
-                session.send(localGame.homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, ((localGame.homeTeam.roster[playerNumber].firstName + " ") || "") , ((localGame.homeTeam.roster[playerNumber].lastName + " ") || "" ));
+                session.send(localGame.homeTeam.club + " Player '%s' %s%sshot on target!", playerNumber, ((localGame.homeTeam.roster[playerNumber].firstName) || "-") + " " , ((localGame.homeTeam.roster[playerNumber].lastName) || "" ) + " ");
                 addToRawTicker("homeTeamShotOnTarget", localGame.homeTeam.roster[playerNumber], "");
         } else {
                 session.send(localGame.homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber,localGame.homeTeam.roster[playerNumber].firstName + " ", localGame.homeTeam.roster[playerNumber].lastName + " " );
