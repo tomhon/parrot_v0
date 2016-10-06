@@ -115,6 +115,14 @@ function game() {
 }
 
 //=========================================================
+// Set up match data
+//=========================================================
+
+var localGame = new game();
+localGame.homeTeam.club = "Home Team";
+localGame.awayTeam.club = "Away Team";
+
+//=========================================================
 // Set up helper functions
 //=========================================================
 
@@ -131,7 +139,7 @@ var addToRawTicker = function (event, player, details) {
     localGame.latestUpdateTime = new Date();
     localGame.mappingId = (localGame.mappingId + '1');
     localGame.events.push(oTickerEvent);
-    session.send("addingToRawTicker " + JSON.stringify(localGame));
+
     request( eventHubUrl + '&game=' + JSON.stringify(localGame), function (error, response, body) {
         if (!error && response.statusCode == 200) {
         console.log('logged to Event Hub - response = ' + body) 
