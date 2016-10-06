@@ -1200,7 +1200,7 @@ bot.dialog('/homeShot', [
                 session.send(localGame.homeTeam.club + " Player '%s' shot on target!", playerNumber);
                 addToRawTicker("homeTeamShotOnTarget", localGame.homeTeam.roster[playerNumber], "");
         } else {
-                session.send(localGame.homeTeam.club + " Player '%s' %s%sshot off target!", playerNumber);
+                session.send(localGame.homeTeam.club + " Player '%s' shot off target!", playerNumber);
                 addToRawTicker("homeTeamShotOffTarget", localGame.homeTeam.roster[playerNumber], "");
         }
         session.endDialog();
@@ -1220,10 +1220,10 @@ bot.dialog('/awayShot', [
         session.send("You chose '%s'", results.response ? 'yes' : 'no');
         if (results.response == '1') {
                 // session.send(homeTeam.club + " Player '%s' %s %s shot on target!", playerNumber,localGame.homeTeam.roster[playerNumber].firstName,localGame.homeTeam.roster[playerNumber].lastName );
-                session.send(localGame.awayTeam.club + " Player '%s' %s%sshot on target!", playerNumber);
+                session.send(localGame.awayTeam.club + " Player '%s' shot on target!", playerNumber);
                 addToRawTicker("awayTeamShotOnTarget", localGame.awayTeam.roster[playerNumber], "");
         } else {
-                session.send(localGame.awayTeam.club + " Player '%s' %s%sshot off target!", playerNumber);
+                session.send(localGame.awayTeam.club + " Player '%s' shot off target!", playerNumber);
                 addToRawTicker("awayTeamShotOffTarget", localGame.awayTeam.roster[playerNumber], "");
         }
         session.endDialog();
